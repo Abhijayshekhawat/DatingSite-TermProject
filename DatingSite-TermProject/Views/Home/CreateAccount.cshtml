@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewData["Title"] = "CreateAccount";
+}
+@{
+    Layout = null; // Assuming you don't want to use a layout page
+}
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Welcome to MatchUp</title>
+    <link href="~/css/login.css" rel="Stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="leftcontainer">
+        <header class="header">
+            <img src="~/css/Logo.png" alt="logo" class="logo" />
+        </header>
+        <div class="form-container">
+            @using (Html.BeginForm("ActionName", "ControllerName", FormMethod.Post, new { @id = "form1" }))
+            {
+                <h1>Create a new Account</h1>
+                <div class="login-link">
+                    <label>Already A Member? </label>
+                    <button type="submit" class="login" formaction="@Url.Action("LoginAction", "AccountController")">Log In</button>
+                </div>
+                <div class="input-group">
+                    <input type="text" name="FirstName" class="form-control" placeholder="First name" />
+                    <input type="text" name="LastName" class="form-control" placeholder="Last name" />
+                </div>
+                <input type="email" name="Email" class="form-control" placeholder="Email" />
+                <input type="text" name="UserName" class="form-control" placeholder="User Name" />
+                <input type="password" name="Password" class="form-control" placeholder="Password" />
+                <input type="password" name="ConfirmPassword" class="form-control" placeholder="Confirm Password" />
+                <button type="submit" class="btn btn-primary">Create account</button>
+                <label></label> <!--lblCAError-->
+            }
+        </div>
+    </div>
+    <div class="rightcontainer">
+    </div>
+</body>
+</html>
