@@ -17,7 +17,10 @@ namespace DatingSite_TermProject.Controllers
         {
             return View();
         }
-
+        public IActionResult Login()
+        {
+            return View();
+        }
 
 
 
