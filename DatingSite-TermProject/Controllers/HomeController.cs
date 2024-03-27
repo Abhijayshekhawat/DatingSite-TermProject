@@ -18,6 +18,9 @@ namespace DatingSite_TermProject.Controllers
             return View();
         }
 
+
+
+
         public IActionResult Privacy()
         {
             return View();
