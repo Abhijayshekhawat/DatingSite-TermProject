@@ -11,10 +11,10 @@ namespace Utilities
     public class DBConnect
     {
         // Main Connection String - used for the published web application and project submissions.
-        String SqlConnectString = "server=cis-mssql1.temple.edu;Database=sp24_3342_tuh18229;User id=tuh18229;Password=Roociepi4X";
+        String SqlConnectString = "server=cis-mssql1.temple.edu;Database=sp24_3342_tuj64276;User id=tuj64276;Password=Maefiwa9qu";
 
-        // Home Connection String - used for working from home using SSH Tunneling.
-        //String SqlConnectString = "server=127.0.0.1,5555;Database=sp24_3342_tuh18229;User id=tuh18229;Password=Roociepi4X";
+        //Home Connection String - used for working from home using SSH Tunneling.
+        //String SqlConnectString = "server=127.0.0.1,5555;Database=sp24_3342_tuj64276;User id=tuj64276;Password=Maefiwa9qu";
 
         SqlConnection myConnectionSql;
         SqlCommand objCmd;
@@ -157,8 +157,6 @@ namespace Utilities
                 return -1;
             }
         }
-
-
 
         public DataSet GetDataSetUsingCmdObj(SqlCommand theCommand)
         {
