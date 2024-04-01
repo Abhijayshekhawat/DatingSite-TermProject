@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Utilities;
 using System.Data;
 using System.Data.SqlClient;
-using Microsoft.Data.SqlClient;
+
 
 namespace DatingSiteCoreAPI.Controllers
 {
@@ -12,10 +12,34 @@ namespace DatingSiteCoreAPI.Controllers
     [ApiController]
     public class DBUserAccountController : ControllerBase
     {
+        [HttpPost()]
+        [HttpPost("AddPrivateInfo")]
 
-       
+        public bool AddPrivateInfo(PrivateUserInfo privateinfo) 
+        
+        {
+
+
+
+
+
+            
+            
+            return true; 
+        
+        
+        
+        
+        
+        }
+
+
+
+
 
     }
+
+
 
 
 
