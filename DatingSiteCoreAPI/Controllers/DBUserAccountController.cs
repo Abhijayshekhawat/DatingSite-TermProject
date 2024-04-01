@@ -22,7 +22,7 @@ namespace DatingSiteCoreAPI.Controllers
         {
 
             // then this one will private info properties 
-            bool result = false;
+            bool result;
             PrivateUserInfo privateinfo = new PrivateUserInfo();
 
            int successfuladd = privateinfo.CreateAccount(PrivateId,FirstName,LastName,Email,PrivateUsername,Password); 
