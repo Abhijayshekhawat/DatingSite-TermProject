@@ -22,30 +22,32 @@ namespace DatingSiteCoreAPI
 
         }
 
-        public int CreateAccount(PrivateUserInfo privateinfo)
+        public int CreateAccount(int PrivateId, string FirstName, string LastName, string Email, string PrivateUsername, string Password)
         {
+            // enter parameters! for this one 
+            PrivateUserInfo privateinfo = new PrivateUserInfo();
             DBConnect objDB = new DBConnect();
 
             SqlCommand objCommand = new SqlCommand();
 
             objCommand.CommandType = CommandType.StoredProcedure;
             objCommand.CommandText = "CreateAccount";
-            SqlParameter inputParameter = new SqlParameter("@PUserId", privateinfo.PrivateId);
+            SqlParameter inputParameter = new SqlParameter("@PUserId",PrivateId);
             objCommand.Parameters.Add(inputParameter);
 
-            SqlParameter inputParameter2 = new SqlParameter("@FirstName", privateinfo.FirstName);
+            SqlParameter inputParameter2 = new SqlParameter("@FirstName", FirstName);
             objCommand.Parameters.Add(inputParameter2);
 
-            SqlParameter inputParameter3 = new SqlParameter("@LastName", privateinfo.LastName);
+            SqlParameter inputParameter3 = new SqlParameter("@LastName", LastName);
             objCommand.Parameters.Add(inputParameter3);
 
 
-            SqlParameter inputParameter4 = new SqlParameter("@Email", privateinfo.Email);
+            SqlParameter inputParameter4 = new SqlParameter("@Email", Email);
             objCommand.Parameters.Add(inputParameter4);
 
-            SqlParameter inputParameter5 = new SqlParameter("@PrivateUsername", privateinfo.PrivateUsername);
+            SqlParameter inputParameter5 = new SqlParameter("@PrivateUsername", PrivateUsername);
             objCommand.Parameters.Add(inputParameter5);
-            SqlParameter inputParameter6 = new SqlParameter("@Password", privateinfo.Password);
+            SqlParameter inputParameter6 = new SqlParameter("@Password", Password);
             objCommand.Parameters.Add(inputParameter6);
 
             int AddUser = objDB.DoUpdateUsingCmdObj(objCommand);
