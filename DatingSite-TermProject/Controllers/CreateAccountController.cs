@@ -18,6 +18,7 @@ namespace DatingSite_TermProject.Controllers
     {
 
         string CreateAccountAPI_Url = "http://localhost:5046/";
+        // string CreateAccountAPI_Url = "" ;     // have your URL then we comment and uncomment off whenever who uses it.
 
 
 
