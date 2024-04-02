@@ -22,19 +22,20 @@ namespace DatingSite_TermProject.Controllers
         [HttpPost]
         public IActionResult CreateAccount()
         {
-            // get the data from the form   
-            string firstName = Request.Form["FirstName"].ToString();
-            string lastName = Request.Form["LastName"].ToString();
-            string email = Request.Form["Email"].ToString();
-            string username = Request.Form["Username"].ToString();
-            string password = Request.Form["Password"].ToString();
+            PrivateUserInfoModel privateinfo = new PrivateUserInfoModel();  
+            // get the data from the form / model PrivateUserInfoModel  
+            privateinfo.FirstName = Request.Form["FirstName"].ToString();
+            privateinfo.LastName = Request.Form["LastName"].ToString();
+            privateinfo.Email = Request.Form["Email"].ToString();
+            privateinfo.PrivateUsername = Request.Form["Username"].ToString();
+            privateinfo.Password = Request.Form["Password"].ToString();
             var payload = new
             {
-                FirstName = firstName,
-                LastName = lastName,
-                Email = email,
-                PrivateUsername = username,
-                Password = password
+                FirstName = privateinfo.FirstName,
+                LastName = privateinfo.LastName,
+                Email = privateinfo.Email,
+                Username = privateinfo.PrivateUsername,
+                Password = privateinfo.Password 
             };
             // Serialize an Account object into a JSON string.
             var jsonPayload = System.Text.Json.JsonSerializer.Serialize(payload);
@@ -62,26 +63,12 @@ namespace DatingSite_TermProject.Controllers
                     ViewBag.ErrorMessage = "The customer was successfully saved to the database.";
                 else
                     ViewBag.ErrorMessage = "A problem occurred while adding the customer to the database. The data wasn't recorded.";
-
-            }
-            catch (WebException ex)
-            {
-                string responseText = string.Empty;
-                if (ex.Response != null)
-                {
-                    using (var stream = ex.Response.GetResponseStream())
-                    using (var reader = new StreamReader(stream))
-                    {
-                        responseText = reader.ReadToEnd();
-                    }
-                }
-                ViewBag.ErrorMessage = "API Error: " + responseText;
             }
             catch (Exception ex)
             {
                 ViewBag.ErrorMessage = "Error: " + ex.Message;
             }
-            return View("~/Views/Home/CreateAccount.cshtml");
+            return View();
         }
     }
 }
