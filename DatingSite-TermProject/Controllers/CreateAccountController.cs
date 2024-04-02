@@ -34,7 +34,7 @@ namespace DatingSite_TermProject.Controllers
                 FirstName = privateinfo.FirstName,
                 LastName = privateinfo.LastName,
                 Email = privateinfo.Email,
-                Username = privateinfo.PrivateUsername,
+                PrivateUsername = privateinfo.PrivateUsername,
                 Password = privateinfo.Password 
             };
             // Serialize an Account object into a JSON string.
