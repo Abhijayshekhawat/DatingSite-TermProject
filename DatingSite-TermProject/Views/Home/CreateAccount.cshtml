@@ -19,12 +19,11 @@
             <img src="~/css/Logo.png" alt="logo" class="logo" />
         </header>
         <div class="form-container">
-            @using (Html.BeginForm("CreateAccount", "CreateAccount", FormMethod.Post, new { @id = "form1" }))
-            {
+            <form asp-controller="CreateAccount" asp-action="CreateAccount" method="post">
                 <h1>Create a new Account</h1>
                 <div class="login-link">
                     <label>Already A Member? </label>
-                    <button type="submit" class="login" formaction="@Url.Action("LoginAction", "AccountController")">Log In</button>
+                    <button type="submit" class="login" >Log In</button>
                 </div>
                 <div class="input-group">
                     <input type="text" name="FirstName" class="form-control" placeholder="First name" />
@@ -36,7 +35,7 @@
                 <input type="password" name="ConfirmPassword" class="form-control" placeholder="Confirm Password" />
                 <button type="submit" class="btn btn-primary">Create account</button>
                 <label name="lblCAError">@ViewBag.ErrorMessage</label> <!--lblCAError-->
-            }
+            </form>
         </div>
     </div>
     <div class="rightcontainer">

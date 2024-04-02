@@ -33,7 +33,7 @@ namespace DatingSite_TermProject.Controllers
                 FirstName = firstName,
                 LastName = lastName,
                 Email = email,
-                Username = username,
+                PrivateUsername = username,
                 Password = password
             };
             // Serialize an Account object into a JSON string.
@@ -62,12 +62,26 @@ namespace DatingSite_TermProject.Controllers
                     ViewBag.ErrorMessage = "The customer was successfully saved to the database.";
                 else
                     ViewBag.ErrorMessage = "A problem occurred while adding the customer to the database. The data wasn't recorded.";
+
+            }
+            catch (WebException ex)
+            {
+                string responseText = string.Empty;
+                if (ex.Response != null)
+                {
+                    using (var stream = ex.Response.GetResponseStream())
+                    using (var reader = new StreamReader(stream))
+                    {
+                        responseText = reader.ReadToEnd();
+                    }
+                }
+                ViewBag.ErrorMessage = "API Error: " + responseText;
             }
             catch (Exception ex)
             {
                 ViewBag.ErrorMessage = "Error: " + ex.Message;
             }
-            return View();
+            return View("~/Views/Home/CreateAccount.cshtml");
         }
     }
 }

@@ -22,7 +22,7 @@ namespace DatingSiteCoreAPI
 
         }
         
-        public int CreateAccount(int PrivateId, string FirstName, string LastName, string Email, string PrivateUsername, string Password)
+        public int CreateAccount(string FirstName, string LastName, string Email, string PrivateUsername, string Password)
         {
             // enter parameters! for this one 
             PrivateUserInfo privateinfo = new PrivateUserInfo();
@@ -32,8 +32,6 @@ namespace DatingSiteCoreAPI
 
             objCommand.CommandType = CommandType.StoredProcedure;
             objCommand.CommandText = "CreateAccount";
-            SqlParameter inputParameter = new SqlParameter("@PUserId",PrivateId);
-            objCommand.Parameters.Add(inputParameter);
 
             SqlParameter inputParameter2 = new SqlParameter("@FirstName", FirstName);
             objCommand.Parameters.Add(inputParameter2);
