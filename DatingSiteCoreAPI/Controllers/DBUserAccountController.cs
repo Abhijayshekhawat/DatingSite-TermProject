@@ -45,19 +45,6 @@ namespace DatingSiteCoreAPI.Controllers
         }
 
 
-
-
-
     }
-
-
-
-
-
-
-
-
-
-
 
 }
