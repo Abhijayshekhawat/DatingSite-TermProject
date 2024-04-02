@@ -42,7 +42,7 @@ namespace DatingSite_TermProject.Controllers
             {
                 // Send the account object to the Web API that will be used to store a new account record in the database.
                 // Setup an HTTP POST Web Request and get the HTTP Web Response from the server.
-                WebRequest request = WebRequest.Create(CreateAccountAPI_Url + "AddPrivateInfo/");
+                WebRequest request = WebRequest.Create(CreateAccountAPI_Url + "/AddPrivateInfo");
                 request.Method = "POST";
                 request.ContentLength = jsonPayload.Length;
                 request.ContentType = "application/json";
