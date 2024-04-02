@@ -28,6 +28,43 @@
         }
 
 
+        public int PrivateId
+        {
+            get { return privateid; }
+            set { privateid = value; }
+        }
+
+        public string FirstName
+        {
+            get { return firstname; }
+            set { firstname = value; }
+        }
+        public string LastName
+        {
+            get { return lastname; }
+            set { lastname = value; }
+        }
+
+        public string Email
+        {
+            get { return email; }
+            set { email = value; }
+
+        }
+
+        public string PrivateUsername
+        {
+            get { return privateusername; }
+            set { privateusername = value; }
+        }
+
+        public string Password
+        {
+            get { return password; }
+            set { password = value; }
+        }
+
+
 
     }
 }
