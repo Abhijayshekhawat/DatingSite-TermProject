@@ -40,17 +40,6 @@ namespace DatingSiteCoreAPI.Controllers
 
 
             return result;
-
-
-
-
-
-
-
-             
-        
-        
-        
         
         
         }
