@@ -22,19 +22,20 @@ namespace DatingSite_TermProject.Controllers
         [HttpPost]
         public IActionResult CreateAccount()
         {
-            // get the data from the form   
-            string firstName = Request.Form["FirstName"].ToString();
-            string lastName = Request.Form["LastName"].ToString();
-            string email = Request.Form["Email"].ToString();
-            string username = Request.Form["Username"].ToString();
-            string password = Request.Form["Password"].ToString();
+            PrivateUserInfoModel privateinfo = new PrivateUserInfoModel();  
+            // get the data from the form / model PrivateUserInfoModel  
+            privateinfo.FirstName = Request.Form["FirstName"].ToString();
+            privateinfo.LastName = Request.Form["LastName"].ToString();
+            privateinfo.Email = Request.Form["Email"].ToString();
+            privateinfo.PrivateUsername = Request.Form["Username"].ToString();
+            privateinfo.Password = Request.Form["Password"].ToString();
             var payload = new
             {
-                FirstName = firstName,
-                LastName = lastName,
-                Email = email,
-                Username = username,
-                Password = password
+                FirstName = privateinfo.FirstName,
+                LastName = privateinfo.LastName,
+                Email = privateinfo.Email,
+                Username = privateinfo.PrivateUsername,
+                Password = privateinfo.Password 
             };
             // Serialize an Account object into a JSON string.
             var jsonPayload = System.Text.Json.JsonSerializer.Serialize(payload);
