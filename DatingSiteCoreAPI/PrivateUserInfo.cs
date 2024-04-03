@@ -55,6 +55,32 @@ namespace DatingSiteCoreAPI
 
         }
 
+        public int Login(string username, string password)
+        {
+            DBConnect objDB = new DBConnect();
+
+            SqlCommand objCommand = new SqlCommand();
+
+            objCommand.CommandType = CommandType.StoredProcedure;
+
+            objCommand.CommandText = "Login";
+
+            SqlParameter inputParameter = new SqlParameter("@Username", username);
+            objCommand.Parameters.Add(inputParameter);
+
+            SqlParameter inputParameter2 = new SqlParameter("@Password", password);
+            objCommand.Parameters.Add(inputParameter2);
+
+           
+
+            DataSet ds = objDB.GetDataSet(objCommand);
+
+            int SuccessfulLogin = ds.Tables[0].Rows.Count;
+
+            return SuccessfulLogin;
+        }
+
+
         public PrivateUserInfo(int privateid, string firstname, string lastname, string email, string privateusername, string password)
         {
             this.privateid = privateid;

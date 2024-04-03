@@ -12,32 +12,53 @@ namespace DatingSiteCoreAPI.Controllers
     [ApiController]
     public class DBUserAccountController : ControllerBase
     {
-       
-        
+
+
         [HttpPost()]
         [HttpPost("AddPrivateInfo")]
 
-        public bool AddPrivateInfo([FromBody] PrivateUserInfo acc) 
-        
+        public bool AddPrivateInfo([FromBody] PrivateUserInfo acc)
+
         {
 
             // then this one will private info properties 
             bool result;
             PrivateUserInfo privateinfo = acc;
 
-           int successfuladd = privateinfo.CreateAccount(acc.FirstName,acc.LastName,acc.Email,acc.PrivateUsername,acc.Password); 
+            int successfuladd = privateinfo.CreateAccount(acc.FirstName, acc.LastName, acc.Email, acc.PrivateUsername, acc.Password);
 
-            if(successfuladd > 0)
+            if (successfuladd > 0)
             {
                 result = true;
             }
             else { result = false; }
             return result;
-        
-        
+
+
         }
 
+        [HttpGet()]
+        [HttpGet("Login")]
 
-    }
+        public bool Login([FromBody] PrivateUserInfo user)
+        {
+            bool result;
+            PrivateUserInfo privateinfo = user;
+
+            int Login = privateinfo.Login(user.PrivateUsername, user.Password);
+
+            if (Login > 0)
+            {
+                result = true;
+            }
+            else { result = false; }
+            return result;
+
+
+
+           }
+
+
+        }
 
 }

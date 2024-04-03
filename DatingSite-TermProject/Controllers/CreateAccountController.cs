@@ -31,7 +31,7 @@ namespace DatingSite_TermProject.Controllers
             privateinfo.Password = Request.Form["Password"].ToString();
             
             // Serialize an Account object into a JSON string.
-            var jsonPayload = System.Text.Json.JsonSerializer.Serialize(privateinfo);
+            var jsonPayload = JsonSerializer.Serialize(privateinfo);
             try
             {
                 // Send the account object to the Web API that will be used to store a new account record in the database.
