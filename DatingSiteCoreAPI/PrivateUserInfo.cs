@@ -63,7 +63,7 @@ namespace DatingSiteCoreAPI
 
             objCommand.CommandType = CommandType.StoredProcedure;
 
-            objCommand.CommandText = "Login";
+            objCommand.CommandText = "UserLogin"; 
 
             SqlParameter inputParameter = new SqlParameter("@Username", username);
             objCommand.Parameters.Add(inputParameter);
