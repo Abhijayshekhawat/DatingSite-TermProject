@@ -68,14 +68,14 @@ namespace DatingSite_TermProject.Controllers
 
                         UserEmail = dr["Email"].ToString();
                         FirstName = dr["FirstName"].ToString();
-                        LastName = dr["LastName"].ToString();
+                       
                     }
 
 
                     //get email from db
 
                     EmailModel objEmail = new EmailModel();
-                    String strTO = "tuh18229@temple.edu";
+                    String strTO = "tuj64276@temple.edu";
                     //String strFROM = "Verification-Matchup@gmail.com";
                     String strFROM = "johnson@gmail.com";
                     String strSubject = "txtSubject.Text";

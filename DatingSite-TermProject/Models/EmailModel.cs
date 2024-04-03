@@ -28,7 +28,7 @@ namespace DatingSite_TermProject.Models
 
 
 
-        /*public void SendMail(String recipient, String sender, String subject, String body, String cc = "", String bcc = "")
+        public void SendMail(String recipient, String sender, String subject, String body, String cc = "", String bcc = "")
 
         {
 
@@ -100,40 +100,9 @@ namespace DatingSite_TermProject.Models
 
 
 
-        }*/
-
-        public void SendMail(string recipient, string sender, string subject, string body, string cc = "", string bcc = "")
-        {
-            try
-            {
-                MailMessage mailMessage = new MailMessage
-                {
-                    From = new MailAddress(sender),
-                    Subject = subject,
-                    Body = body,
-                    IsBodyHtml = true // Set to true if the body contains HTML
-                };
-                mailMessage.To.Add(recipient);
-
-                if (!string.IsNullOrEmpty(cc))
-                    mailMessage.CC.Add(cc);
-
-                if (!string.IsNullOrEmpty(bcc))
-                    mailMessage.Bcc.Add(bcc);
-
-                using (SmtpClient smtpClient = new SmtpClient("TU_ACCESSNET_ACCOUNT@cis-linux2.temple.edu",25))
-                {
-                    smtpClient.Credentials = new NetworkCredential("TU_ACCESSNET_ACCOUNT", "TU_ACCESSNET_PASSWORD");
-                    smtpClient.EnableSsl = true; // Set to true if your SMTP server requires SSL
-
-                    smtpClient.Send(mailMessage);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
         }
+
+
 
 
         public Boolean SendMail()
