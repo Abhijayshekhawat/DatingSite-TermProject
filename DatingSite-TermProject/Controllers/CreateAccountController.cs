@@ -11,7 +11,8 @@ using Microsoft.AspNetCore.Http; // need for cookies
 
 
 
-
+// creating cookies using Microsoft.AspNetCore.Http class ---> use request.cookie to create one
+// 
 
 namespace DatingSite_TermProject.Controllers
 {
