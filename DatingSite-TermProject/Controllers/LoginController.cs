@@ -48,16 +48,21 @@ namespace DatingSite_TermProject.Controllers
                 if (data == "true")
                 {
                     Random Verfication = new Random();
-                    Verfication.Next(100000, 1000000);
+                   
+                    string code = "";
+                    code = Verfication.Next(100000, 1000000).ToString();
+                    // 
+                    //email method
+                    // ** email name + code
 
-                    // **
-                    // need to change this to going into the view with two step verification
-                    //**
                     ViewBag.ErrorMessage = "The customer was successfully loggedin.";
-                    return View("~/Views/Main/Dashboard.cshtml");
 
                 }
-                else { 
+                // **
+                // need to change this to going into the view with two step verification
+                //**
+              
+                else
                     ViewBag.ErrorMessage = "A problem occurred while logging in.";
                 }
 
