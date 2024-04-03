@@ -38,7 +38,7 @@ namespace DatingSite_TermProject.Controllers
                 Password = privateinfo.Password 
             };
             // Serialize an Account object into a JSON string.
-            var jsonPayload = System.Text.Json.JsonSerializer.Serialize(payload);
+            var jsonPayload = System.Text.Json.JsonSerializer.Serialize(privateinfo);
             try
             {
                 // Send the account object to the Web API that will be used to store a new account record in the database.
@@ -68,7 +68,7 @@ namespace DatingSite_TermProject.Controllers
             {
                 ViewBag.ErrorMessage = "Error: " + ex.Message;
             }
-            return View();
+            return View("~/Views/Home/CreateAccount.cshtml");
         }
     }
 }

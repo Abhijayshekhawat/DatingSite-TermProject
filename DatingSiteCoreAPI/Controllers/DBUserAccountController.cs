@@ -17,28 +17,21 @@ namespace DatingSiteCoreAPI.Controllers
         [HttpPost()]
         [HttpPost("AddPrivateInfo")]
 
-        public bool AddPrivateInfo(string FirstName, string LastName, string Email, string PrivateUsername, string Password) 
+        public bool AddPrivateInfo([FromBody] PrivateUserInfo acc) 
         
         {
 
             // then this one will private info properties 
             bool result;
-            PrivateUserInfo privateinfo = new PrivateUserInfo();
+            PrivateUserInfo privateinfo = acc;
 
-           int successfuladd = privateinfo.CreateAccount(FirstName,LastName,Email,PrivateUsername,Password); 
+           int successfuladd = privateinfo.CreateAccount(acc.FirstName,acc.LastName,acc.Email,acc.PrivateUsername,acc.Password); 
 
             if(successfuladd > 0)
-            
             {
-
-
                 result = true;
-            
             }
-
             else { result = false; }
-
-
             return result;
         
         

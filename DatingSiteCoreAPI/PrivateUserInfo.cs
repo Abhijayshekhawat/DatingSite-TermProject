@@ -49,16 +49,7 @@ namespace DatingSiteCoreAPI
             objCommand.Parameters.Add(inputParameter6);
 
             int AddUser = objDB.DoUpdateUsingCmdObj(objCommand);
-
-
-
-
-
-
-
-
-
-
+            
             return AddUser;
 
 
