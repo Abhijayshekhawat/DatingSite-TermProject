@@ -48,11 +48,12 @@ namespace DatingSite_TermProject.Controllers
                 if (data == "true")
                 {
                     Random Verfication = new Random();
-                    Verfication.Next(100000, 1000000);
-
+                   
+                    string code = "";
+                    code = Verfication.Next(100000, 1000000).ToString();
                     // 
-                    //
-
+                    //email method
+                    // ** email name + code
 
                     ViewBag.ErrorMessage = "The customer was successfully loggedin.";
 

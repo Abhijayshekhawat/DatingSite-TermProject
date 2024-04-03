@@ -14,6 +14,8 @@
         public PrivateUserInfoModel()
         {
 
+
+
         }
 
         public PrivateUserInfoModel(int privateid, string firstname, string lastname, string email, string privateusername, string password)
