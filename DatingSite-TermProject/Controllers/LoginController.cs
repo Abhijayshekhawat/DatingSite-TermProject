@@ -45,20 +45,26 @@ namespace DatingSite_TermProject.Controllers
                 reader.Close();
                 response.Close();
                 if (data == "true")
+                {
 
                     // **
                     // need to change this to going into the view with two step verification
                     //**
                     ViewBag.ErrorMessage = "The customer was successfully loggedin.";
-                else
+                    return View("~/Views/Main/Dashboard.cshtml");
+
+                }
+                else { 
                     ViewBag.ErrorMessage = "A problem occurred while logging in.";
+                }
+
             }
             catch (Exception ex)
             {
                 ViewBag.ErrorMessage = "Error: " + ex.Message;
             }
-
             return View("~/Views/Home/Login.cshtml");
+
         }
     }
 }

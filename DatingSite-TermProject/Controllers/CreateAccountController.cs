@@ -56,7 +56,11 @@ namespace DatingSite_TermProject.Controllers
                 reader.Close();
                 response.Close();
                 if (data == "true")
+                {
                     ViewBag.ErrorMessage = "The customer was successfully saved to the database.";
+                    return View("~/Views/Profile/Profile.cshtml");
+
+                }
                 else
                     ViewBag.ErrorMessage = "A problem occurred while adding the customer to the database. The data wasn't recorded.";
             }

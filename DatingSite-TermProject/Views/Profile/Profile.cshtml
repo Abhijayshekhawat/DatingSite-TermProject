@@ -1,5 +1,68 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    Layout = null; // Assuming you don't want to use a layout page
 }
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Build your Profile</title>
+    <link href="~/css/update.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="navbar">
+    </div>
+    <div class="content-wrapper">
+        <header>
+            <h1>Build Your Profile</h1>
+        </header>
+        <!-- Start of the form -->
+        <form>
+            <div class="form-section">
+                <h2>Public Information</h2>
+                <!-- For simplicity, assuming model properties match input names -->
+                <input type="url" name="ProfilePhotoURL" placeholder="Profile Photo URL" class="form-control" />
+                <textarea name="Description" placeholder="Description" class="form-control"></textarea>
+                <input type="text" name="City" placeholder="City" class="form-control" />
+                <!-- Continue with other fields in a similar manner -->
+            </div>
+
+            <div class="form-section">
+                <h2>Private Information</h2>
+                <!-- Private information fields -->
+                <!-- Continue with other fields in a similar manner -->
+            </div>
+
+            <!-- Interests checkboxes -->
+            <!-- Replace asp:CheckBoxList with explicit HTML inputs for each interest -->
+            <!-- Example -->
+            <label for="interests-cooking">Cooking</label>
+            <input type="checkbox" name="Interests" value="Cooking" id="interests-cooking" />
+
+            <!-- Continue with other interests -->
+            <!-- Favorite cuisine checkboxes -->
+            <!-- Similar approach as Interests -->
+            <!-- Favorite Movie Genre dropdown -->
+            <select name="MovieGenre" class="form-control">
+                <option value="Action">Action</option>
+                <!-- Continue with other options -->
+            </select>
+
+            <!-- Commitment Type dropdown -->
+            <!-- Similar approach as Movie Genre dropdown -->
+            <!-- Profile Visibility Radios -->
+            <label>
+                <input type="radio" name="ProfileVisibility" value="Yes" checked /> Yes
+            </label>
+            <label>
+                <input type="radio" name="ProfileVisibility" value="No" /> No
+            </label>
+
+            <button type="submit" class="btn btn-primary">Save Profile</button>
+        </form>
+    </div>
+    <footer>
+        <p>2024 MatchUp by Abhijay Shekhawat.</p>
+    </footer>
+</body>
+</html>

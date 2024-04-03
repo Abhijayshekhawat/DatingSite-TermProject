@@ -1,5 +1,82 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    Layout = null; // Assuming you don't want to use a layout page
 }
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Dashboard-MatchUp</title>
+    <link href="~/css/update.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/main.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-left">
+            <img src="~/css/logo.png" alt="Logo" class="logo" />
+            <nav>
+                <a class="active">Dashboard</a>
+                <a>Matches</a>
+                <a>Likes</a>
+                <a>Dates</a>
+                <a>Plan Date</a>
+                <a>Edit Profile</a>
+            </nav>
+        </div>
+        <div class="navbar-right">
+            <span class="user-name">User Name goes here</span> <!-- Example of displaying user name -->
+            <img src="~/css/logo.png") alt="User Image" class="user-img" />
+            <form>
+                <button type="submit" class="logout-button">Logout</button>
+            </form>
+        </div>
+    </div>
+    <div class="content-wrapper">
+        <header>
+            <h1>Dashboard</h1>
+            <h3>
+                <!-- Display some status from the model -->
+            </h3>
+        </header>
+        <div class="dashboard-layout">
+            <div class="filters-wrapper">
+                <div class="filters-section">
+                    <h2>Filters</h2>
+                    <!-- Filters form -->
+                    <form>
+                        <!-- Generate filters here -->
+                        <button type="submit" class="btnFilter">Apply Filters</button>
+                        <button type="reset" class="btnFilter">Reset Filters</button>
+                    </form>
+                </div>
+            </div>
+            <div class="cards-container">
+                <div class="container">
+                        <div class="card">
+                            <img src="ProfilePhotoURL" alt="Profile Image">
+                            <div class="card-body">
+                                <h5 class="card-title">FullName</h5>
+                                <p class="card-text">Description</p>
+                                <p class="card-text">City, State</p>
+                            </div>
+                        </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>2024 MatchUp by Abhijay Shekhawat.</p>
+    </footer>
+
+    <script type="text/javascript">
+        function closeProfileDetail() {
+            var profileDetail = document.getElementById('profileDetail');
+            if (profileDetail) {
+                profileDetail.style.display = "none";
+            }
+            return false;
+        }
+    </script>
+</body>
+</html>
