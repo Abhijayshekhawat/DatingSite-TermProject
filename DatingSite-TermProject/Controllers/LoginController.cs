@@ -61,8 +61,8 @@ namespace DatingSite_TermProject.Controllers
                 // **
                 // need to change this to going into the view with two step verification
                 //**
-              
-                else
+
+                else { 
                     ViewBag.ErrorMessage = "A problem occurred while logging in.";
                 }
 
