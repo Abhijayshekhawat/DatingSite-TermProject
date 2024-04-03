@@ -5,6 +5,7 @@ using System.Text.Json;  // needed for JSON serializers
 using System.IO;    // needed for Stream and Stream Reader
 using System.Net;
 using Newtonsoft.Json.Linq;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 
 
 namespace DatingSite_TermProject.Controllers
@@ -51,11 +52,24 @@ namespace DatingSite_TermProject.Controllers
                    
                     string code = "";
                     code = Verfication.Next(100000, 1000000).ToString();
-                    // 
-                    //email method
-                    // ** email name + code
 
+                    //get email from db
+
+                    EmailModel objEmail = new EmailModel();
+                    String strTO = "tuh18229@temple.edu";
+                    String strFROM = "Verification-Matchup@gmail.com";
+                    String strSubject = "txtSubject.Text";
+                    String strMessage = code;
+                    try
+                    {
+                        objEmail.SendMail(strTO, strFROM, strSubject, strMessage);
+                    }
+                    catch (Exception ex)
+                    {
+                        ViewBag.ErrorMessage = "The email wasn't sent because one of the required fields was missing.";
+                    }
                     ViewBag.ErrorMessage = "The customer was successfully loggedin.";
+                    return View("~/Views/Home/Verification.cshtml");
 
                 }
                 // **
