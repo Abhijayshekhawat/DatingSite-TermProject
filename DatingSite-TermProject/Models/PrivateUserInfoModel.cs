@@ -42,7 +42,7 @@ namespace DatingSite_TermProject.Models
             SqlCommand objCommand = new SqlCommand();
 
             objCommand.CommandType = CommandType.StoredProcedure;
-            objCommand.CommandText = "TP_CreateAccount";
+            objCommand.CommandText = "TP_GetUserInfo";
 
             SqlParameter inputParameter2 = new SqlParameter("@Username", username);
             objCommand.Parameters.Add(inputParameter2);
