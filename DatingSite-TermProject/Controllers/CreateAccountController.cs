@@ -29,14 +29,7 @@ namespace DatingSite_TermProject.Controllers
             privateinfo.Email = Request.Form["Email"].ToString();
             privateinfo.PrivateUsername = Request.Form["Username"].ToString();
             privateinfo.Password = Request.Form["Password"].ToString();
-            var payload = new
-            {
-                FirstName = privateinfo.FirstName,
-                LastName = privateinfo.LastName,
-                Email = privateinfo.Email,
-                PrivateUsername = privateinfo.PrivateUsername,
-                Password = privateinfo.Password 
-            };
+            
             // Serialize an Account object into a JSON string.
             var jsonPayload = System.Text.Json.JsonSerializer.Serialize(privateinfo);
             try
