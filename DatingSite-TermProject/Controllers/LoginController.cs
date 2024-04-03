@@ -6,6 +6,8 @@ using System.IO;    // needed for Stream and Stream Reader
 using System.Net;
 using Newtonsoft.Json.Linq;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
+using System.Data;
+using Microsoft.AspNetCore.Identity;
 
 
 namespace DatingSite_TermProject.Controllers
@@ -23,7 +25,11 @@ namespace DatingSite_TermProject.Controllers
             privateinfo.Email = "NoValue";
             privateinfo.PrivateUsername = Request.Form["Username"].ToString();
             privateinfo.Password = Request.Form["Password"].ToString();
-
+            //email
+            string UserEmail = "";
+            // for email
+            string FirstName = "";
+            string LastName = "";
             // Serialize an Account object into a JSON string.
             var jsonPayload = JsonSerializer.Serialize(privateinfo);
             try
@@ -52,6 +58,19 @@ namespace DatingSite_TermProject.Controllers
                    
                     string code = "";
                     code = Verfication.Next(100000, 1000000).ToString();
+                    // 
+                    //email method
+                    // ** email name + code
+                   DataSet mydata = privateinfo.GetUserInfo(privateinfo.PrivateUsername);
+                   DataTable dt = mydata.Tables[0];
+                    foreach (DataRow dr in dt.Rows)
+                    {
+
+                        UserEmail = dr["Email"].ToString();
+                        FirstName = dr["FirstName"].ToString();
+                        LastName = dr["LastName"].ToString();
+                    }
+
 
                     //get email from db
 

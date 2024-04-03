@@ -1,4 +1,9 @@
-﻿namespace DatingSite_TermProject.Models
+﻿using DatingSiteCoreAPI;
+using System.Data;
+using System.Data.SqlClient;
+using Utilities;
+
+namespace DatingSite_TermProject.Models
 {
     public class PrivateUserInfoModel
     {
@@ -27,6 +32,26 @@
             this.privateusername = privateusername;
             this.password = password;
 
+        }
+
+        public DataSet GetUserInfo(string username)
+        {
+            PrivateUserInfo privateinfo = new PrivateUserInfo();
+            DBConnect objDB = new DBConnect();
+
+            SqlCommand objCommand = new SqlCommand();
+
+            objCommand.CommandType = CommandType.StoredProcedure;
+            objCommand.CommandText = "TP_CreateAccount";
+
+            SqlParameter inputParameter2 = new SqlParameter("@Username", username);
+            objCommand.Parameters.Add(inputParameter2);
+
+            
+
+            DataSet ds = objDB.GetDataSet(objCommand);
+
+            return ds;
         }
 
 
