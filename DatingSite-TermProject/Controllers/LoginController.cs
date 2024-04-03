@@ -50,6 +50,9 @@ namespace DatingSite_TermProject.Controllers
                     Random Verfication = new Random();
                     Verfication.Next(100000, 1000000);
 
+                    // 
+                    //
+
 
                     ViewBag.ErrorMessage = "The customer was successfully loggedin.";
 
