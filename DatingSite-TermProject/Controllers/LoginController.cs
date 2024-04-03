@@ -12,6 +12,7 @@ namespace DatingSite_TermProject.Controllers
     {
 
         string CreateAccountAPI_Url = "http://localhost:5046/api/CreateAccount";
+
         public IActionResult Login()
         {
             PrivateUserInfoModel privateinfo = new PrivateUserInfoModel();
@@ -55,7 +56,7 @@ namespace DatingSite_TermProject.Controllers
                 ViewBag.ErrorMessage = "Error: " + ex.Message;
             }
 
-            return View();
+            return View("~/Views/Home/Login.cshtml");
         }
     }
 }

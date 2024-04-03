@@ -37,8 +37,8 @@ namespace DatingSiteCoreAPI.Controllers
 
         }
 
-        [HttpGet()]
-        [HttpGet("Login")]
+        [HttpPost()]
+        [HttpPost("Login")]
 
         public bool Login([FromBody] PrivateUserInfo user)
         {
