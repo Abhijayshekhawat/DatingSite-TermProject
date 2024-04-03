@@ -16,7 +16,9 @@ namespace DatingSite_TermProject.Controllers
         public IActionResult Login()
         {
             PrivateUserInfoModel privateinfo = new PrivateUserInfoModel();
-
+            privateinfo.FirstName = "NoValue";
+            privateinfo.LastName = "NoValue";
+            privateinfo.Email = "NoValue";
             privateinfo.PrivateUsername = Request.Form["Username"].ToString();
             privateinfo.Password = Request.Form["Password"].ToString();
 
@@ -47,9 +49,9 @@ namespace DatingSite_TermProject.Controllers
                     // **
                     // need to change this to going into the view with two step verification
                     //**
-                    ViewBag.ErrorMessage = "The customer was successfully saved to the database.";
+                    ViewBag.ErrorMessage = "The customer was successfully loggedin.";
                 else
-                    ViewBag.ErrorMessage = "A problem occurred while adding the customer to the database. The data wasn't recorded.";
+                    ViewBag.ErrorMessage = "A problem occurred while logging in.";
             }
             catch (Exception ex)
             {
