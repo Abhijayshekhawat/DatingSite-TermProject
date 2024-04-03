@@ -6,6 +6,7 @@ using System.IO;    // needed for Stream and Stream Reader
 using System.Net;
 using Newtonsoft.Json.Linq;
 
+
 namespace DatingSite_TermProject.Controllers
 {
     public class LoginController : Controller
@@ -23,7 +24,7 @@ namespace DatingSite_TermProject.Controllers
             privateinfo.Password = Request.Form["Password"].ToString();
 
             // Serialize an Account object into a JSON string.
-            var jsonPayload =  JsonSerializer.Serialize(privateinfo);
+            var jsonPayload = JsonSerializer.Serialize(privateinfo);
             try
             {
                 // Send the account object to the Web API that will be used to store a new account record in the database.
@@ -46,6 +47,8 @@ namespace DatingSite_TermProject.Controllers
                 response.Close();
                 if (data == "true")
                 {
+                    Random Verfication = new Random();
+                    Verfication.Next(100000, 1000000);
 
                     // **
                     // need to change this to going into the view with two step verification
