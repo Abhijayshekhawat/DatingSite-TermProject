@@ -1,4 +1,5 @@
-﻿@{
+﻿@model DatingSite_TermProject.Models.ProfileModel
+@{
     Layout = null; // Assuming you don't want to use a layout page
 }
 
@@ -17,48 +18,149 @@
             <h1>Build Your Profile</h1>
         </header>
         <!-- Start of the form -->
-        <form>
+        <form asp-action="SaveProfile" method="post">
             <div class="form-section">
                 <h2>Public Information</h2>
-                <!-- For simplicity, assuming model properties match input names -->
-                <input type="url" name="ProfilePhotoURL" placeholder="Profile Photo URL" class="form-control" />
-                <textarea name="Description" placeholder="Description" class="form-control"></textarea>
-                <input type="text" name="City" placeholder="City" class="form-control" />
-                <!-- Continue with other fields in a similar manner -->
+                <h4>This information can be view by potential users.</h4>
+
+                <!-- Public information fields-->
+                <label asp-for="ProfilePhotoURL">Profile Photo URL:</label>
+                <input asp-for="ProfilePhotoURL" name="ProfilePhotoURL" placeholder="Please enter a valid image URL." class="form-control" />
+                <span asp-validation-for="ProfilePhotoURL" class="text-danger"></span>
+
+                <label asp-for="Description">Description:</label>
+                <textarea asp-for="Description" name="Description" placeholder="Please describe yourself." class="form-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+
+                <label asp-for="City">City:</label>
+                <input asp-for="City" name="City" placeholder="Enter your city" class="form-control" required />
+                <span asp-validation-for="City" class="text-danger"></span>
+
+                <label asp-for="State">State:</label>
+                <input asp-for="State" name="State" placeholder="Enter your State" class="form-control" required />
+                <span asp-validation-for="State" class="text-danger"></span>
+                
+                <label asp-for="FavouriteQuote">Your Favourite Quote:</label>
+                <textarea asp-for="FavouriteQuote" name="FavouriteQuote" placeholder="Enter your favourite quote." class="form-control"></textarea>
+                <span asp-validation-for="FavouriteQuote" class="text-danger"></span>
+
+                <label asp-for="Goals">What are some of your goals:</label>
+                <textarea asp-for="Goals" name="Goals" placeholder="Enter your goals" class="form-control"></textarea>
+                <span asp-validation-for="Goals" class="text-danger"></span>
+
+            </div>
+            <div class="form-section">
+                <h2>Private Information</h2>
+                <h4>This information will only be shared once there has been a match between 2 users.</h4>
+                
+                <!-- Private information fields-->
+                <label asp-for="Age">Age:</label>
+                <input asp-for="Age" name="Age" placeholder="Enter your Age" class="form-control" />
+                <span asp-validation-for="Occupation" class="text-danger"></span>
+
+                <label asp-for="Height">Height:</label>
+                <input asp-for="Height" name="Height" placeholder="Enter your Height" class="form-control" />
+                <span asp-validation-for="Height" class="text-danger"></span>
+
+                <label asp-for="Weight">Weight:</label>
+                <input asp-for="Weight" name="Weight" placeholder="Enter your Weight" class="form-control" />
+                <span asp-validation-for="Weight" class="text-danger"></span>
+
+                <label asp-for="Address">Address:</label>
+                <textarea asp-for="Address" name="Address" placeholder="Enter your address." class="form-control"></textarea>
+                <span asp-validation-for="Address" class="text-danger"></span>
+
+                <label asp-for="PhoneNumber">Phone Number:</label>
+                <input asp-for="PhoneNumber" name="PhoneNumber" placeholder="Enter your Phone Number" class="form-control" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+
+                <label asp-for="Occupation">Occupation:</label>
+                <input asp-for="Occupation" name="Occupation" placeholder="Enter your Occupation" class="form-control" />
+                <span asp-validation-for="Occupation" class="text-danger"></span>
+
+                <div class="preference-section">
+                    <label>Your Interests:</label>
+                    <div class="form-control">
+                        @foreach (var interest in new List<string> { "Cooking", "Watching Sports", "Watching Movies/Shows", "Playing Sports", "Playing Instruments", "Gaming", "Dancing", "Reading" })
+                        {
+                            <input type="checkbox" name="Interests" value="@interest" id="interest-@interest" />
+                            <label for="interest-@interest">@interest</label>
+
+                            <br />
+                        }
+                    </div>
+                </div>
+
+                <div class="preference-section">
+                    <label>Favorite Cuisine:</label>
+                    <div class="form-control">
+                        @foreach (var cuisine in new List<string> { "Indian", "Mexican", "Korean", "Chinese", "Fast-Food", "French", "Dessert", "Sea-Food" })
+                        {
+                            <input type="checkbox" name="Cuisines" value="@cuisine" id="cuisine-@cuisine" />
+                            <label for="cuisine-@cuisine">@cuisine</label>
+
+                            <br />
+                        }
+                    </div>
+                </div>
+
+                <div class="preference-section">
+                    <label for="MovieGenres">Favorite Movie Genre:</label>
+                    <select name="MovieGenres" id="MovieGenres" class="form-control">
+                        <option value="Action">Action</option>
+                        <option value="Comedy">Comedy</option>
+                        <option value="Drama">Drama</option>
+                        <option value="Fantasy">Fantasy</option>
+                        <option value="Horror">Horror</option>
+                    </select>
+                </div>
+
+                <div class="preference-section">
+                    <label for="BookGenres">Favorite Book Genre:</label>
+                    <select name="BookGenres" id="BookGenres" class="form-control">
+                        <option value="Fiction">Fiction</option>
+                        <option value="Non-Fiction">Non-Fiction</option>
+                        <option value="Mystery">Mystery</option>
+                        <option value="Sci-Fi">Sci-Fi</option>
+                        <option value="Biography">Biography</option>
+                    </select>
+                </div>
+
+                <div class="preference-section">
+                    <label for="Commitment">Commitment Type:</label>
+                    <select name="Commitment" id="Commitment" class="form-control">
+                        <option value="Friends">Friends</option>
+                        <option value="Relationship">Relationship</option>
+                        <option value="Marriage">Marriage</option>
+                    </select>
+                </div>
+
+                <div>
+                    <h3>Make Profile Visible?</h3>
+                    <input type="radio" id="VisibilityYes" name="ProfileVisibility" value="Yes" checked />
+                    <label for="VisibilityYes">Yes</label>
+                    <input type="radio" id="VisibilityNo" name="ProfileVisibility" value="No" />
+                    <label for="VisibilityNo">No</label>
+                </div>
             </div>
 
             <div class="form-section">
-                <h2>Private Information</h2>
-                <!-- Private information fields -->
-                <!-- Continue with other fields in a similar manner -->
+                <h2>Security Questions</h2>
+                <h4>This information will be used in case you forget your password.</h4>
+
+                <!-- Security questions and answers -->
+                <input type="text" name="SecurityQuestion1" placeholder="Security Question 1" class="form-control" required />
+                <input type="text" name="SecurityAnswer1" placeholder="Answer 1" class="form-control" required />
+
+                <input type="text" name="SecurityQuestion2" placeholder="Security Question 2" class="form-control" required />
+                <input type="text" name="SecurityAnswer2" placeholder="Answer 2" class="form-control" required />
+
+                <input type="text" name="SecurityQuestion3" placeholder="Security Question 3" class="form-control" required />
+                <input type="text" name="SecurityAnswer3" placeholder="Answer 3" class="form-control" required />
             </div>
-
-            <!-- Interests checkboxes -->
-            <!-- Replace asp:CheckBoxList with explicit HTML inputs for each interest -->
-            <!-- Example -->
-            <label for="interests-cooking">Cooking</label>
-            <input type="checkbox" name="Interests" value="Cooking" id="interests-cooking" />
-
-            <!-- Continue with other interests -->
-            <!-- Favorite cuisine checkboxes -->
-            <!-- Similar approach as Interests -->
-            <!-- Favorite Movie Genre dropdown -->
-            <select name="MovieGenre" class="form-control">
-                <option value="Action">Action</option>
-                <!-- Continue with other options -->
-            </select>
-
-            <!-- Commitment Type dropdown -->
-            <!-- Similar approach as Movie Genre dropdown -->
-            <!-- Profile Visibility Radios -->
-            <label>
-                <input type="radio" name="ProfileVisibility" value="Yes" checked /> Yes
-            </label>
-            <label>
-                <input type="radio" name="ProfileVisibility" value="No" /> No
-            </label>
-
-            <button type="submit" class="btn btn-primary">Save Profile</button>
+            <div class="button-container">
+                <button type="submit" class="btn btn-primary">Save Profile</button>
+            </div>
         </form>
     </div>
     <footer>
