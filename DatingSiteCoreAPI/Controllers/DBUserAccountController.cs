@@ -60,8 +60,31 @@ namespace DatingSiteCoreAPI.Controllers
 
            }
 
-       // [HttpPost()]
-       // [HttpPost("AddUserInfo")]
+        [HttpPost()]
+        [HttpPost("AddUserInfo")]
+
+        public bool AddUserInfo([FromBody] UserProfile acc)
+        {
+            bool result = true;
+
+            UserProfile UserProfile = acc;
+
+            //int Login = UserProfile.Login(user.PrivateUsername, user.Password);
+
+            //if (Login > 0)
+            //{
+            //    result = true;
+            //}
+            //else { result = false; }
+            return result;
+
+
+
+
+
+
+
+        }
 
 
         }
