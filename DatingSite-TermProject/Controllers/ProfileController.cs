@@ -18,9 +18,10 @@ namespace DatingSite_TermProject.Controllers
 
            
             UserProfileModel userProfile = new UserProfileModel();
-             
+
+            string savedUsername = Request.Cookies["Username"].ToString() ;
             // get the data from the form / model UserProfileModel  
-            userProfile.PrivateId = 0; // get method in userprofilemodel --> get id by username ?cookie? response?
+            userProfile.PrivateId = userProfile.getPrivateId(savedUsername); // get method in userprofilemodel --> get id by username ?cookie? response?
             userProfile.Age = Int32.Parse(Request.Form["Age"].ToString());
             userProfile.Height = Request.Form["Height"].ToString();
             userProfile.Weight = Request.Form["Weight"].ToString();
@@ -60,6 +61,7 @@ namespace DatingSite_TermProject.Controllers
             // Serialize an Account object into a JSON string.
             var jsonPayload = JsonSerializer.Serialize(userProfile);
             try
+
             {
                 // Send the account object to the Web API that will be used to store a new account record in the database.
                 // Setup an HTTP POST Web Request and get the HTTP Web Response from the server.

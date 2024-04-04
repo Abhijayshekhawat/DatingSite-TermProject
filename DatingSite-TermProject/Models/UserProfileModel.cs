@@ -1,4 +1,8 @@
-﻿namespace DatingSite_TermProject.Models
+﻿using System.Data;
+using Utilities;
+using System.Data.SqlClient;
+
+namespace DatingSite_TermProject.Models
 {
     public class UserProfileModel
     {
@@ -241,7 +245,32 @@
             set { answer_three = value; }
         }
 
+        public int getPrivateId(string username)
+        {
+            int result = 0;
+            DBConnect objDB = new DBConnect();
+            SqlCommand objCommand = new SqlCommand();
+            objCommand.CommandType = CommandType.StoredProcedure;
+            objCommand.CommandText = "TP_GetUserID";
 
+            SqlParameter inputParameter1 = new SqlParameter("@Username", username);
+            objCommand.Parameters.Add(inputParameter1);
+
+
+            DataSet ds = objDB.GetDataSet(objCommand);
+
+            DataTable dt = ds.Tables[0];
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                result = Int32.Parse(dr["PrivateId"].ToString());
+                
+            }
+
+                return result;
+
+
+        }
 
 
     }

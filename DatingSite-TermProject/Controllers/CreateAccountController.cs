@@ -57,6 +57,9 @@ namespace DatingSite_TermProject.Controllers
                 response.Close();
                 if (data == "true")
                 {
+
+
+                    Response.Cookies.Append("Username", privateinfo.PrivateUsername);
                     ViewBag.ErrorMessage = "The customer was successfully saved to the database.";
                     return View("~/Views/Profile/Profile.cshtml");
 
