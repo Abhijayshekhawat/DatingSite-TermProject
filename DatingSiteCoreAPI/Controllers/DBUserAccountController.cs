@@ -62,9 +62,11 @@ namespace DatingSiteCoreAPI.Controllers
 
         [HttpPost()]
         [HttpPost("AddUserInfo")]
-
+       
         public bool AddUserInfo([FromBody] UserProfile acc, [FromBody] SecurityQuestion ques )
-        {
+        { 
+
+            // combine the two classes and combine the table into one
             bool result = true;
 
             UserProfile User = acc;
