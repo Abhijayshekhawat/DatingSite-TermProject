@@ -34,32 +34,80 @@ namespace DatingSiteCoreAPI
 
         public int AddUserInfo(int privateid, int age, string height, string weight, string profilePhotoURL, string city, string state, string description, string occupation, string interests, string favoritecusine, string favouritequote, string goals, string commitmentType, string favoriteMovieGenre, string favoriteBookGenre, string address, string phonenumber, string favoritemovie, string favoritebook, string favoriterestaurant, string dislikes)
         {
-            PrivateUserInfo privateinfo = new PrivateUserInfo();
             DBConnect objDB = new DBConnect();
-
             SqlCommand objCommand = new SqlCommand();
-
             objCommand.CommandType = CommandType.StoredProcedure;
-            objCommand.CommandText = "TP_CreateAccount";
+            objCommand.CommandText = "TP_AddUserInfo";
 
-            SqlParameter inputParameter2 = new SqlParameter("@FirstName", FirstName);
+            SqlParameter inputParameter1 = new SqlParameter("@PrivateId", privateid);
+            objCommand.Parameters.Add(inputParameter1);
+
+            SqlParameter inputParameter2 = new SqlParameter("@Age", age);
             objCommand.Parameters.Add(inputParameter2);
 
-            SqlParameter inputParameter3 = new SqlParameter("@LastName", LastName);
+            SqlParameter inputParameter3 = new SqlParameter("@Height", height);
             objCommand.Parameters.Add(inputParameter3);
 
-
-            SqlParameter inputParameter4 = new SqlParameter("@Email", Email);
+            SqlParameter inputParameter4 = new SqlParameter("@Weight", weight);
             objCommand.Parameters.Add(inputParameter4);
 
-            SqlParameter inputParameter5 = new SqlParameter("@PrivateUsername", PrivateUsername);
+            SqlParameter inputParameter5 = new SqlParameter("@ProfilePhotoURL", profilePhotoURL);
             objCommand.Parameters.Add(inputParameter5);
-            SqlParameter inputParameter6 = new SqlParameter("@Password", Password);
+
+            SqlParameter inputParameter6 = new SqlParameter("@City", city);
             objCommand.Parameters.Add(inputParameter6);
 
-            int AddUser = objDB.DoUpdateUsingCmdObj(objCommand);
+            SqlParameter inputParameter7 = new SqlParameter("@State", state);
+            objCommand.Parameters.Add(inputParameter7);
 
-            return AddUser;
+            SqlParameter inputParameter8 = new SqlParameter("@Description", description);
+            objCommand.Parameters.Add(inputParameter8);
+
+            SqlParameter inputParameter9 = new SqlParameter("@Occupation", occupation);
+            objCommand.Parameters.Add(inputParameter9);
+
+            SqlParameter inputParameter10 = new SqlParameter("@Interests", interests);
+            objCommand.Parameters.Add(inputParameter10);
+
+            SqlParameter inputParameter11 = new SqlParameter("@FavouriteCuisine", favoritecusine);
+            objCommand.Parameters.Add(inputParameter11);
+
+            SqlParameter inputParameter12 = new SqlParameter("@FavouriteQuote", favouritequote);
+            objCommand.Parameters.Add(inputParameter12);
+
+            SqlParameter inputParameter13 = new SqlParameter("@Goals", goals);
+            objCommand.Parameters.Add(inputParameter13);
+
+            SqlParameter inputParameter14 = new SqlParameter("@CommitmentType", commitmentType);
+            objCommand.Parameters.Add(inputParameter14);
+
+            SqlParameter inputParameter15 = new SqlParameter("@FavouriteMovieGenre", favoriteMovieGenre);
+            objCommand.Parameters.Add(inputParameter15);
+
+            SqlParameter inputParameter16 = new SqlParameter("@FavouriteBookGenre", favoriteBookGenre);
+            objCommand.Parameters.Add(inputParameter16);
+
+            SqlParameter inputParameter17 = new SqlParameter("@Address", address);
+            objCommand.Parameters.Add(inputParameter17);
+
+            SqlParameter inputParameter18 = new SqlParameter("@PhoneNumber", phonenumber);
+            objCommand.Parameters.Add(inputParameter18);
+
+            SqlParameter inputParameter19 = new SqlParameter("@FavouriteMovie", favoritemovie);
+            objCommand.Parameters.Add(inputParameter19);
+
+            SqlParameter inputParameter20 = new SqlParameter("@FavouriteBook", favoritebook);
+            objCommand.Parameters.Add(inputParameter20);
+
+            SqlParameter inputParameter21 = new SqlParameter("@FavouriteRestaurant", favoriterestaurant);
+            objCommand.Parameters.Add(inputParameter21);
+
+            SqlParameter inputParameter22 = new SqlParameter("@Dislikes", dislikes);
+            objCommand.Parameters.Add(inputParameter22);
+
+            int result = objDB.DoUpdateUsingCmdObj(objCommand);
+
+            return result;
 
 
 
