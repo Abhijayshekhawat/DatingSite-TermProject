@@ -33,7 +33,7 @@
 
         }
 
-        public UserProfile(int privateid, int age, string height, string weight, string profilePhotoURL, string city, string state, string description, string occupation, string interests, string favoritecusine, string favouritequote, string goals, string commitmentType,  string favoriteMovieGenre, string favoriteBookGenre, string address, string phonenumber, string favoritemovie, string favoritebook, string favoriterestaurant, string disikes)
+        public UserProfile(int privateid, int age, string height, string weight, string profilePhotoURL, string city, string state, string description, string occupation, string interests, string favoritecusine, string favouritequote, string goals, string commitmentType,  string favoriteMovieGenre, string favoriteBookGenre, string address, string phonenumber, string favoritemovie, string favoritebook, string favoriterestaurant, string dislikes)
         {
             this.privateid = privateid;
             this.age = age;
@@ -57,9 +57,6 @@
             this.favoritebook = favoritebook;
             this.favoriterestaurant = favoriterestaurant;
             this.dislikes = dislikes;
-
-
-
         }
 
         public int PrivateId
