@@ -1,4 +1,8 @@
-﻿namespace DatingSiteCoreAPI
+﻿using System.Data.SqlClient;
+using System.Data;
+using Utilities;
+
+namespace DatingSiteCoreAPI
 {
     public class UserProfile
     {
@@ -26,6 +30,46 @@
         private string dislikes;
 
     
+
+
+        public int AddUserInfo(int privateid, int age, string height, string weight, string profilePhotoURL, string city, string state, string description, string occupation, string interests, string favoritecusine, string favouritequote, string goals, string commitmentType, string favoriteMovieGenre, string favoriteBookGenre, string address, string phonenumber, string favoritemovie, string favoritebook, string favoriterestaurant, string dislikes)
+        {
+            PrivateUserInfo privateinfo = new PrivateUserInfo();
+            DBConnect objDB = new DBConnect();
+
+            SqlCommand objCommand = new SqlCommand();
+
+            objCommand.CommandType = CommandType.StoredProcedure;
+            objCommand.CommandText = "TP_CreateAccount";
+
+            SqlParameter inputParameter2 = new SqlParameter("@FirstName", FirstName);
+            objCommand.Parameters.Add(inputParameter2);
+
+            SqlParameter inputParameter3 = new SqlParameter("@LastName", LastName);
+            objCommand.Parameters.Add(inputParameter3);
+
+
+            SqlParameter inputParameter4 = new SqlParameter("@Email", Email);
+            objCommand.Parameters.Add(inputParameter4);
+
+            SqlParameter inputParameter5 = new SqlParameter("@PrivateUsername", PrivateUsername);
+            objCommand.Parameters.Add(inputParameter5);
+            SqlParameter inputParameter6 = new SqlParameter("@Password", Password);
+            objCommand.Parameters.Add(inputParameter6);
+
+            int AddUser = objDB.DoUpdateUsingCmdObj(objCommand);
+
+            return AddUser;
+
+
+
+
+
+        }
+
+
+
+
 
 
         public UserProfile()
