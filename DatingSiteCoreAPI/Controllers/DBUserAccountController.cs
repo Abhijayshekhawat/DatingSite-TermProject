@@ -58,24 +58,28 @@ namespace DatingSiteCoreAPI.Controllers
 
 
 
-           }
+        }
 
         [HttpPost()]
         [HttpPost("AddUserInfo")]
 
-        public bool AddUserInfo([FromBody] UserProfile acc)
+        public bool AddUserInfo([FromBody] UserProfile acc, [FromBody] SecurityQuestion ques )
         {
             bool result = true;
 
-            UserProfile UserProfile = acc;
+            UserProfile User = acc;
+            SecurityQuestion question = ques;   
 
-            //int Login = UserProfile.Login(user.PrivateUsername, user.Password);
 
-            //if (Login > 0)
-            //{
-            //    result = true;
-            //}
-            //else { result = false; }
+            int AddUserSuccess = User.AddUserInfo(acc.PrivateId, acc.Age, acc.Height, acc.Weight, acc.ProfilePhotoURL, acc.City, acc.State, acc.Description, acc.Occupation, acc.Interests, acc.FavoriteCuisine, acc.FavouriteQuote, acc.Goals, acc.CommitmentType, acc.FavoriteMovieGenre, acc.FavoriteBookGenre, acc.Address, acc.PhoneNumber, acc.FavoriteMovie, acc.FavoriteBook, acc.FavoriteRestaurant, acc.Dislikes);
+            int AddQuestionSuccess = question.AddSecurityQuestions(ques.PrivateId, ques.Question_One, ques.Question_Two, ques.Question_Three, ques.Answer_One, ques.Answer_Two, ques.Answer_Three);
+            if (AddUserSuccess > 0)
+            {
+                result = true;
+            }
+            else { result = false; }
+
+
             return result;
 
 
@@ -87,6 +91,6 @@ namespace DatingSiteCoreAPI.Controllers
         }
 
 
-        }
+    }
 
 }

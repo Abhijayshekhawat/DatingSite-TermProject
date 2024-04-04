@@ -24,8 +24,7 @@ namespace DatingSiteCoreAPI
         
         public int CreateAccount(string FirstName, string LastName, string Email, string PrivateUsername, string Password)
         {
-            // enter parameters! for this one 
-            PrivateUserInfo privateinfo = new PrivateUserInfo();
+          
             DBConnect objDB = new DBConnect();
 
             SqlCommand objCommand = new SqlCommand();
