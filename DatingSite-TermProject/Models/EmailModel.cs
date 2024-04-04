@@ -1,5 +1,8 @@
 ﻿using System.Net;
 using System.Net.Mail;
+using System.Text;
+
+using System.Threading.Tasks;
 
 namespace DatingSite_TermProject.Models
 {
@@ -101,6 +104,7 @@ namespace DatingSite_TermProject.Models
 
 
         }
+
 
 
 

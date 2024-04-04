@@ -76,8 +76,8 @@ namespace DatingSite_TermProject.Controllers
 
                     EmailModel objEmail = new EmailModel();
                     String strTO = "tuj64276@temple.edu";
-                    //String strFROM = "Verification-Matchup@gmail.com";
-                    String strFROM = "johnson@gmail.com";
+                    String strFROM = "Verification-Matchup@gmail.com";
+                   // String strFROM = "johnson@gmail.com";
                     String strSubject = "txtSubject.Text";
                     String strMessage = "Hi "+ FirstName + "! Here is your verification code: " + code;
                     try
