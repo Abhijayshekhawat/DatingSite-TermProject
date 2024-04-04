@@ -28,13 +28,19 @@ namespace DatingSiteCoreAPI
         private string favoritebook;
         private string favoriterestaurant;
         private string dislikes;
+        private string question_one;
+        private string question_two;
+        private string question_three;
+        private string answer_one;
+        private string answer_two;
+        private string answer_three;
 
 
-     
-    
 
 
-        public int AddUserInfo(int privateid, int age, string height, string weight, string profilePhotoURL, string city, string state, string description, string occupation, string interests, string favoritecusine, string favouritequote, string goals, string commitmentType, string favoriteMovieGenre, string favoriteBookGenre, string address, string phonenumber, string favoritemovie, string favoritebook, string favoriterestaurant, string dislikes)
+
+
+        public int AddUserInfo(int privateid, int age, string height, string weight, string profilePhotoURL, string city, string state, string description, string occupation, string interests, string favoritecusine, string favouritequote, string goals, string commitmentType, string favoriteMovieGenre, string favoriteBookGenre, string address, string phonenumber, string favoritemovie, string favoritebook, string favoriterestaurant, string dislikes, string question_one, string question_two, string question_three, string answer_one, string answer_two, string answer_three)
         {
             DBConnect objDB = new DBConnect();
             SqlCommand objCommand = new SqlCommand();
@@ -107,6 +113,27 @@ namespace DatingSiteCoreAPI
             SqlParameter inputParameter22 = new SqlParameter("@Dislikes", dislikes);
             objCommand.Parameters.Add(inputParameter22);
 
+            SqlParameter inputParameter23 = new SqlParameter("@Question_One", question_one);
+            objCommand.Parameters.Add(inputParameter23);
+
+            SqlParameter inputParameter24 = new SqlParameter("@Question_Two", question_two);
+            objCommand.Parameters.Add(inputParameter24);
+
+            SqlParameter inputParameter25 = new SqlParameter("@Question_Three", question_three);
+            objCommand.Parameters.Add(inputParameter25);
+
+            SqlParameter inputParameter26 = new SqlParameter("@Answer_One", answer_one);
+            objCommand.Parameters.Add(inputParameter26);
+            SqlParameter inputParameter27 = new SqlParameter("@Answer_Two", answer_two);
+            objCommand.Parameters.Add(inputParameter27);
+            SqlParameter inputParameter28 = new SqlParameter("@Answer_Three", answer_three);
+            objCommand.Parameters.Add(inputParameter28);
+
+
+
+
+
+
             int result = objDB.DoUpdateUsingCmdObj(objCommand);
 
             return result;
@@ -127,7 +154,7 @@ namespace DatingSiteCoreAPI
 
         }
 
-        public UserProfile(int privateid, int age, string height, string weight, string profilePhotoURL, string city, string state, string description, string occupation, string interests, string favoritecusine, string favouritequote, string goals, string commitmentType,  string favoriteMovieGenre, string favoriteBookGenre, string address, string phonenumber, string favoritemovie, string favoritebook, string favoriterestaurant, string dislikes)
+        public UserProfile(int privateid, int age, string height, string weight, string profilePhotoURL, string city, string state, string description, string occupation, string interests, string favoritecusine, string favouritequote, string goals, string commitmentType,  string favoriteMovieGenre, string favoriteBookGenre, string address, string phonenumber, string favoritemovie, string favoritebook, string favoriterestaurant, string dislikes, string question_one, string question_two, string question_three, string answer_one, string answer_two, string answer_three)
         {
             this.privateid = privateid;
             this.age = age;
@@ -151,8 +178,49 @@ namespace DatingSiteCoreAPI
             this.favoritebook = favoritebook;
             this.favoriterestaurant = favoriterestaurant;
             this.dislikes = dislikes;
+            this.answer_one = answer_one;
+            this.answer_two = answer_two;   
+            this.answer_three = answer_three;   
+            this.question_one = question_one;
+            this.question_two = question_two;
+            this.question_three = question_three;   
+
         }
 
+        public string Question_One
+        {
+            get { return question_one; }
+            set { question_one = value; }
+        }
+        public string Question_Two
+        {
+            get { return question_two; }
+            set { question_two = value; }
+
+        }
+
+        public string Question_Three
+        {
+            get { return question_three; }
+            set { question_three = value; }
+        }
+        public string Answer_One
+        {
+            get { return answer_one; }
+
+            set { answer_one = value; }
+        }
+
+        public string Answer_Two
+        {
+            get { return answer_two; }
+            set { answer_two = value; }
+        }
+        public string Answer_Three
+        {
+            get { return answer_three; }
+            set { answer_three = value; }
+        }
         public int PrivateId
         {
             get { return privateid; }

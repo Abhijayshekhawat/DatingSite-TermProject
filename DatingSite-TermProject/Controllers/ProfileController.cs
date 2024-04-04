@@ -18,7 +18,7 @@ namespace DatingSite_TermProject.Controllers
 
            
             UserProfileModel userProfile = new UserProfileModel();
-            SecurityQuestionModel securityQuestion = new SecurityQuestionModel();   
+             
             // get the data from the form / model UserProfileModel  
             userProfile.PrivateId = 0; // get method in userprofilemodel --> get id by username ?cookie? response?
             userProfile.Age = Int32.Parse(Request.Form["Age"].ToString());
@@ -44,24 +44,21 @@ namespace DatingSite_TermProject.Controllers
             userProfile.Dislikes = Request.Form["Dislikes"].ToString();
             // combine these into one since having two seperate table is hard to insert with
             // web api --> mvc core
-            securityQuestion.PrivateId = 0;
-            securityQuestion.Question_One = Request.Form["SecurityQuestion1"].ToString();
-            securityQuestion.Question_Two = Request.Form["SecurityQuestion2"].ToString();
-            securityQuestion.Question_Three = Request.Form["SecurityQuestion3"].ToString();
-            securityQuestion.Answer_One = Request.Form["SecurityAnswer1"].ToString();
-            securityQuestion.Answer_Two = Request.Form["SecurityAnswer2"].ToString();
-            securityQuestion.Answer_Three = Request.Form["SecurityAnswer3"].ToString();
 
-            var payload = new
-            {
-                UserProfile = userProfile,
-                SecurityQuestion = securityQuestion
-            };
+          
+            userProfile.Question_One = Request.Form["SecurityQuestion1"].ToString();
+            userProfile.Question_Two = Request.Form["SecurityQuestion2"].ToString();
+            userProfile.Question_Three = Request.Form["SecurityQuestion3"].ToString();
+            userProfile.Answer_One = Request.Form["SecurityAnswer1"].ToString();
+            userProfile.Answer_Two = Request.Form["SecurityAnswer2"].ToString();
+            userProfile.Answer_Three = Request.Form["SecurityAnswer3"].ToString();
+
+        
 
            
 
             // Serialize an Account object into a JSON string.
-            var jsonPayload = JsonSerializer.Serialize(payload);
+            var jsonPayload = JsonSerializer.Serialize(userProfile);
             try
             {
                 // Send the account object to the Web API that will be used to store a new account record in the database.
@@ -84,8 +81,8 @@ namespace DatingSite_TermProject.Controllers
                 response.Close();
                 if (data == "true")
                 {
-                    ViewBag.ErrorMessage = "The customer was successfully saved to the database.";
-                    return View("~/Views/Profile/Profile.cshtml");
+                    ViewBag.ErrorMessage = "UserInfo was successfully added";
+                    return View("~/Views/Home/Login.cshtml");
 
                 }
                 else
