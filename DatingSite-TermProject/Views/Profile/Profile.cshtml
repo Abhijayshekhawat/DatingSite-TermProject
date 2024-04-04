@@ -119,6 +119,10 @@
                     </div>
                 </div>
 
+                <label asp-for="FavouriteMovie">Favorite Movie:</label>
+                <input asp-for="FavouriteMovie" name="FavouriteMovie" placeholder="Enter your Favorite Movie" class="form-control" />
+                <span asp-validation-for="FavouriteMovie" class="text-danger"></span>
+
                 <div class="preference-section">
                     <label for="MovieGenres">Favorite Movie Genre:</label>
                     <select name="MovieGenres" id="MovieGenres" class="form-control">
@@ -129,6 +133,10 @@
                         <option value="Horror">Horror</option>
                     </select>
                 </div>
+
+                <label asp-for="FavouriteBook">Favorite Book:</label>
+                <input asp-for="FavouriteBook" name="FavouriteBook" placeholder="Enter your Favorite Book" class="form-control" />
+                <span asp-validation-for="FavouriteBook" class="text-danger"></span>
 
                 <div class="preference-section">
                     <label for="BookGenres">Favorite Book Genre:</label>
@@ -141,21 +149,33 @@
                     </select>
                 </div>
 
+                <label asp-for="Dislikes">What do you dislike:</label>
+                <input asp-for="Dislikes" name="Dislikes" placeholder="Enter a Dislike" class="form-control" />
+                <span asp-validation-for="Dislikes" class="text-danger"></span>
+
                 <div class="preference-section">
                     <label for="Commitment">Commitment Type:</label>
                     <select name="Commitment" id="Commitment" class="form-control">
                         <option value="Friends">Friends</option>
-                        <option value="Relationship">Relationship</option>
+                        <option value="Short-Term Relationship">Relationship</option>
+                        <option value="Long-Term Relationship">Marriage</option>
+                        <option value="Open Relationship">Marriage</option>
                         <option value="Marriage">Marriage</option>
                     </select>
                 </div>
-
                 <div>
                     <h3>Make Profile Visible?</h3>
                     <input type="radio" id="VisibilityYes" name="ProfileVisibility" value="Yes" checked />
                     <label for="VisibilityYes">Yes</label>
                     <input type="radio" id="VisibilityNo" name="ProfileVisibility" value="No" />
                     <label for="VisibilityNo">No</label>
+                </div>
+                <div>
+                    <h3>Delete Saved Password?</h3>
+                    <input type="radio" id="SavePassword" name="PasswordCookieOption" value="Yes"/>
+                    <label for="SavePassword">Yes</label>
+                    <input type="radio" id="DontSavePassword" name="PasswordCookieOption" value="No" checked />
+                    <label for="DontSavePassword">No</label>
                 </div>
             </div>
 

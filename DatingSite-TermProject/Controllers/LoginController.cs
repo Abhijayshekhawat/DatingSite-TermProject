@@ -55,14 +55,11 @@ namespace DatingSite_TermProject.Controllers
                 if (data == "true")
                 {
                     Random Verfication = new Random();
-                   
                     string code = "";
                     code = Verfication.Next(100000, 1000000).ToString();
-                    // 
-                    //email method
-                    // ** email name + code
-                   DataSet mydata = privateinfo.GetUserInfo(privateinfo.PrivateUsername);
-                   DataTable dt = mydata.Tables[0];
+
+                    DataSet mydata = privateinfo.GetUserInfo(privateinfo.PrivateUsername);
+                    DataTable dt = mydata.Tables[0];
                     foreach (DataRow dr in dt.Rows)
                     {
 
@@ -70,12 +67,8 @@ namespace DatingSite_TermProject.Controllers
                         FirstName = dr["FirstName"].ToString();
                        
                     }
-
-
-                    //get email from db
-
                     EmailModel objEmail = new EmailModel();
-                    String strTO = "tuj64276@temple.edu";
+                    String strTO = UserEmail;
                     String strFROM = "Verification-Matchup@gmail.com";
                    // String strFROM = "johnson@gmail.com";
                     String strSubject = "txtSubject.Text";
@@ -86,10 +79,11 @@ namespace DatingSite_TermProject.Controllers
                     }
                     catch (Exception ex)
                     {
-                        ViewBag.ErrorMessage = "The email wasn't sent because one of the required fields was missing.";
+                        Console.WriteLine($"Failed to send verification email: {ex.Message}");
+                        ViewBag.ErrorMessage = "The email wasn't sent because: " + ex.Message;
                     }
-                    ViewBag.ErrorMessage = "The customer was successfully loggedin.";
-                    return View("~/Views/Home/Verification.cshtml");
+                    //ViewBag.ErrorMessage = "The customer was successfully loggedin.";
+                    return View("~/Views/Home/Login.cshtml");
 
                 }
                 // **

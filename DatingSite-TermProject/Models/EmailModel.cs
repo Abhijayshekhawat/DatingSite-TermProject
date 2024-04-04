@@ -36,69 +36,44 @@ namespace DatingSite_TermProject.Models
         {
 
             try
-
             {
-
-                this.Recipient = recipient;
-
-                this.Sender = sender;
-
-                this.Subject = subject;
-
-                this.Message = body;
-
-
-
-                objMail.To.Add(this.toAddress);
-
-                objMail.From = this.fromAddress;
-
-                objMail.Subject = this.subject;
-
-                objMail.Body = this.messageBody;
-
-                objMail.IsBodyHtml = this.isHTMLBody;
-
-                objMail.Priority = this.priority;
-
-
-
-                if (cc != null && !cc.Equals(String.Empty))
-
+                // Initialize the MailMessage object
+                MailMessage objMail = new MailMessage()
                 {
+                    From = new MailAddress(sender),
+                    Subject = subject,
+                    Body = body,
+                    IsBodyHtml = this.isHTMLBody,
+                    Priority = this.priority
+                };
 
-                    this.CCAddress = cc;
+                objMail.To.Add(new MailAddress(recipient));
 
-                    objMail.CC.Add(this.ccAddress);
-
+                // Add CC and BCC if provided
+                if (!string.IsNullOrEmpty(cc))
+                {
+                    objMail.CC.Add(new MailAddress(cc));
+                }
+                if (!string.IsNullOrEmpty(bcc))
+                {
+                    objMail.Bcc.Add(new MailAddress(bcc));
                 }
 
-
-
-                if (bcc != null && !bcc.Equals(String.Empty))
-
-                {
-
-                    this.BCCAddress = bcc;
-
-                    objMail.Bcc.Add(this.bccAddress);
-
-                }
-
-
+                // Configure the SmtpClient like below to use Papercut
+                //using (SmtpClient smtpMailClient = new SmtpClient("localhost", 25))
+                //{
+                //    // No need for credentials or SSL with Papercut
+                //    smtpMailClient.EnableSsl = false;
+                //    smtpMailClient.UseDefaultCredentials = true;
+                //}
 
                 SmtpClient smtpMailClient = new SmtpClient(this.mailHost);
-
                 smtpMailClient.Send(objMail);
-
             }
-
             catch (Exception ex)
-
             {
-
-                throw ex;
-
+                Console.WriteLine($"Failed to send email: {ex.Message}");
+                throw; // Or handle this exception more gracefully
             }
 
 
