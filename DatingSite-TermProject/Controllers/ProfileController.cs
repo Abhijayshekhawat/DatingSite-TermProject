@@ -30,18 +30,22 @@ namespace DatingSite_TermProject.Controllers
             userProfile.State = Request.Form["State"].ToString();
             userProfile.Description = Request.Form["Description"].ToString();
             userProfile.Occupation = Request.Form["Occupation"].ToString();
+
             userProfile.Interests = Request.Form["Interests"].ToString();
-            userProfile.FavoriteCuisine = Request.Form["FavoriteCuisine"].ToString();
+
+            userProfile.FavoriteCuisine = Request.Form["Cuisines"].ToString();
+
             userProfile.FavouriteQuote = Request.Form["FavouriteQuote"].ToString();
             userProfile.Goals = Request.Form["Goals"].ToString();
-            userProfile.CommitmentType = Request.Form["CommitmentType"].ToString();
-            userProfile.FavoriteMovieGenre = Request.Form["FavoriteMovieGenre"].ToString();
-            userProfile.FavoriteBookGenre = Request.Form["FavoriteBookGenre"].ToString();
+            userProfile.CommitmentType = Request.Form["Commitment"].ToString();
+
+            userProfile.FavoriteMovieGenre = Request.Form["MovieGenres"].ToString();
+            userProfile.FavoriteBookGenre = Request.Form["BookGenres"].ToString();
             userProfile.Address = Request.Form["Address"].ToString();
             userProfile.PhoneNumber = Request.Form["PhoneNumber"].ToString();
-            userProfile.FavoriteMovie = Request.Form["FavoriteMovie"].ToString();
-            userProfile.FavoriteBook = Request.Form["FavoriteBook"].ToString();
-            userProfile.FavoriteRestaurant = Request.Form["FavoriteRestaurant"].ToString();
+            userProfile.FavoriteMovie = Request.Form["FavouriteMovie"].ToString();
+            userProfile.FavoriteBook = Request.Form["FavouriteBook"].ToString();
+            userProfile.FavoriteRestaurant = Request.Form["FavouriteRestaurant"].ToString();
             userProfile.Dislikes = Request.Form["Dislikes"].ToString();
             // combine these into one since having two seperate table is hard to insert with
             // web api --> mvc core
@@ -53,10 +57,6 @@ namespace DatingSite_TermProject.Controllers
             userProfile.Answer_One = Request.Form["SecurityAnswer1"].ToString();
             userProfile.Answer_Two = Request.Form["SecurityAnswer2"].ToString();
             userProfile.Answer_Three = Request.Form["SecurityAnswer3"].ToString();
-
-        
-
-           
 
             // Serialize an Account object into a JSON string.
             var jsonPayload = JsonSerializer.Serialize(userProfile);
@@ -76,7 +76,7 @@ namespace DatingSite_TermProject.Controllers
                 writer.Close();
                 // Read the data from the Web Response, which requires working with streams.
                 WebResponse response = request.GetResponse();
-                Stream theDataStream = response.GetResponseStream();
+                    Stream theDataStream = response.GetResponseStream();
                 StreamReader reader = new StreamReader(theDataStream);
                 String data = reader.ReadToEnd();
                 reader.Close();
@@ -84,7 +84,7 @@ namespace DatingSite_TermProject.Controllers
                 if (data == "true")
                 {
                     ViewBag.ErrorMessage = "UserInfo was successfully added";
-                    return View("~/Views/Home/Login.cshtml");
+                    return View("~/Views/Home/ProfileImages.cshtml");
 
                 }
                 else
@@ -94,22 +94,6 @@ namespace DatingSite_TermProject.Controllers
             {
                 ViewBag.ErrorMessage = "Error: " + ex.Message;
             }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             return View();
         }
     }

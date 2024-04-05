@@ -24,6 +24,11 @@
                 <div class="input-group">
                     <input type="text" name="UserName" class="form-control" placeholder="User Name" />
                     <input type="password" name="Password" class="form-control" placeholder="Password" />
+                    <input type="checkbox" name="SaveDetails" value="Yes" id="SaveDetails-Yes" />
+                    <label for="SaveDetails-Yes">Yes</label>
+                    <input type="checkbox" name="SaveDetails" value="No" id="SaveDetails-No" />
+                    <label for="SaveDetails-No">No</label>
+
                 </div>
                 <button type="submit" class="btn btn-primary">Login</button>
                 <label>@ViewBag.ErrorMessage</label> <!--lblLError-->

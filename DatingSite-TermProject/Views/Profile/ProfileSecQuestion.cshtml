@@ -1,0 +1,76 @@
+﻿@model DatingSite_TermProject.Models.SecurityQuestionModel
+
+@{
+    Layout = null; // Assuming you don't want to use a layout page
+}
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Build your Profile</title>
+    <link href="~/css/update.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-left">
+            <img src="~/css/logo.png" alt="Logo" class="logo" />
+            <nav>
+                <a href="#">Dashboard</a>
+                <a href="#">Matches</a>
+                <a href="#">Likes</a>
+                <a href="#">Dates</a>
+                <a href="#">Plan Date</a>
+                <a href="#" class="active">Edit Profile</a>
+            </nav>
+        </div>
+        <div class="navbar-right">
+            <label class="user-name"></label>
+            <button class="logout-button">Logout</button>
+        </div>
+    </div>
+    <div class="content-wrapper">
+        <header>
+            <h1>Build Your Profile 3/3 </h1>
+        </header>
+        <!-- Start of the form -->
+        <form asp-controller="Profile" asp-action="Profile" method="post">
+            <div class="form-section">
+                <h2>Public Information</h2>
+                <h4>This information can be view by potential users.</h4>
+
+                <!-- Security Question fields-->
+                <label asp-for="Question_One">Secuirty Question 1:</label>
+                <input asp-for="Question_One" name="Question_One" placeholder="Please enter a valid security question." class="form-control" required />
+                <span asp-validation-for="Question_One" class="text-danger"></span>
+
+                <label asp-for="Answer_One">Answer 1:</label>
+                <input asp-for="Answer_One" name="Answer_One" placeholder="Please enter a valid answer." class="form-control" required />
+                <span asp-validation-for="Answer_One" class="text-danger"></span>
+
+                <label asp-for="Question_Two">Secuirty Question 2:</label>
+                <input asp-for="Question_Two" name="Question_Two" placeholder="Please enter a valid security question." class="form-control" required />
+                <span asp-validation-for="Question_Two" class="text-danger"></span>
+
+                <label asp-for="Answer_Two">Answer 2:</label>
+                <input asp-for="Answer_Two" name="Answer_Two" placeholder="Please enter a valid answer." class="form-control" required />
+                <span asp-validation-for="Answer_Two" class="text-danger"></span>
+
+                <label asp-for="Question_Three">Secuirty Question 3:</label>
+                <input asp-for="Question_Three" name="Question_Three" placeholder="Please enter a valid security question." class="form-control" required />
+                <span asp-validation-for="Question_Three" class="text-danger"></span>
+
+                <label asp-for="Answer_Three">Answer 3:</label>
+                <input asp-for="Answer_Three" name="Answer_Three" placeholder="Please enter a valid answer." class="form-control" required />
+                <span asp-validation-for="Answer_Three" class="text-danger"></span>
+            </div>
+            <div class="button-container">
+                <button type="submit" class="btn btn-primary">Save Profile</button>
+            </div>
+        </form>
+    </div>
+    <footer>
+        <p>2024 MatchUp by Abhijay Shekhawat.</p>
+    </footer>
+</body>
+</html>
