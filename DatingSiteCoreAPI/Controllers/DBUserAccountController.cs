@@ -73,7 +73,7 @@ namespace DatingSiteCoreAPI.Controllers
               
 
 
-            int AddUserSuccess = User.AddUserInfo(acc.PrivateId, acc.Age, acc.Height, acc.Weight, acc.ProfilePhotoURL, acc.City, acc.State, acc.Description, acc.Occupation, acc.Interests, acc.FavoriteCuisine, acc.FavouriteQuote, acc.Goals, acc.CommitmentType, acc.FavoriteMovieGenre, acc.FavoriteBookGenre, acc.Address, acc.PhoneNumber, acc.FavoriteMovie, acc.FavoriteBook, acc.FavoriteRestaurant, acc.Dislikes, acc.Question_One, acc.Question_Two, acc.Question_Three, acc.Answer_One, acc.Answer_Two, acc.Answer_Three);
+            int AddUserSuccess = User.AddUserInfo(acc.PrivateId, acc.Age, acc.Height, acc.Weight, acc.ProfilePhotoURL, acc.City, acc.State, acc.Description, acc.Occupation, acc.Interests, acc.FavoriteCuisine, acc.FavouriteQuote, acc.Goals, acc.CommitmentType, acc.FavoriteMovieGenre, acc.FavoriteBookGenre, acc.Address, acc.PhoneNumber, acc.FavoriteMovie, acc.FavoriteBook, acc.FavoriteRestaurant, acc.Dislikes);
         
             if (AddUserSuccess > 0)
             {

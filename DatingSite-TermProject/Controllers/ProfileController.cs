@@ -51,12 +51,7 @@ namespace DatingSite_TermProject.Controllers
             // web api --> mvc core
 
           
-            userProfile.Question_One = Request.Form["SecurityQuestion1"].ToString();
-            userProfile.Question_Two = Request.Form["SecurityQuestion2"].ToString();
-            userProfile.Question_Three = Request.Form["SecurityQuestion3"].ToString();
-            userProfile.Answer_One = Request.Form["SecurityAnswer1"].ToString();
-            userProfile.Answer_Two = Request.Form["SecurityAnswer2"].ToString();
-            userProfile.Answer_Three = Request.Form["SecurityAnswer3"].ToString();
+         
 
             // Serialize an Account object into a JSON string.
             var jsonPayload = JsonSerializer.Serialize(userProfile);
@@ -83,7 +78,7 @@ namespace DatingSite_TermProject.Controllers
                 response.Close();
                 if (data == "true")
                 {
-                    ViewBag.ErrorMessage = "UserInfo was successfully added";
+                    ViewBag.ErrorMessage = "User's Information was successfully added";
                     return View("~/Views/Home/ProfileImages.cshtml");
 
                 }
