@@ -28,14 +28,10 @@ namespace DatingSiteCoreAPI
         private string favoritebook;
         private string favoriterestaurant;
         private string dislikes;
-       
+        private bool isVisible;
 
 
-
-
-
-
-        public int AddUserInfo(int privateid, int age, string height, string weight, string profilePhotoURL, string city, string state, string description, string occupation, string interests, string favoritecusine, string favouritequote, string goals, string commitmentType, string favoriteMovieGenre, string favoriteBookGenre, string address, string phonenumber, string favoritemovie, string favoritebook, string favoriterestaurant, string dislikes)
+        public int AddUserInfo(int privateid, int age, string height, string weight, string profilePhotoURL, string city, string state, string description, string occupation, string interests, string favoritecusine, string favouritequote, string goals, string commitmentType, string favoriteMovieGenre, string favoriteBookGenre, string address, string phonenumber, string favoritemovie, string favoritebook, string favoriterestaurant, string dislikes, bool isVisible)
         {
             DBConnect objDB = new DBConnect();
             SqlCommand objCommand = new SqlCommand();
@@ -108,7 +104,8 @@ namespace DatingSiteCoreAPI
             SqlParameter inputParameter22 = new SqlParameter("@Dislikes", dislikes);
             objCommand.Parameters.Add(inputParameter22);
 
-           
+            SqlParameter inputParameter23 = new SqlParameter("@IsVisible", isVisible);
+            objCommand.Parameters.Add(inputParameter23);
 
 
 
@@ -125,17 +122,12 @@ namespace DatingSiteCoreAPI
 
         }
 
-
-
-
-
-
         public UserProfile()
         {
 
         }
 
-        public UserProfile(int privateid, int age, string height, string weight, string profilePhotoURL, string city, string state, string description, string occupation, string interests, string favoritecusine, string favouritequote, string goals, string commitmentType,  string favoriteMovieGenre, string favoriteBookGenre, string address, string phonenumber, string favoritemovie, string favoritebook, string favoriterestaurant, string dislikes, string question_one, string question_two, string question_three, string answer_one, string answer_two, string answer_three)
+        public UserProfile(int privateid, int age, string height, string weight, string profilePhotoURL, string city, string state, string description, string occupation, string interests, string favoritecusine, string favouritequote, string goals, string commitmentType,  string favoriteMovieGenre, string favoriteBookGenre, string address, string phonenumber, string favoritemovie, string favoritebook, string favoriterestaurant, string dislikes, bool isVisible)
         {
             this.privateid = privateid;
             this.age = age;
@@ -159,7 +151,7 @@ namespace DatingSiteCoreAPI
             this.favoritebook = favoritebook;
             this.favoriterestaurant = favoriterestaurant;
             this.dislikes = dislikes;
-              
+            this.isVisible = isVisible;
 
         }
 
@@ -302,8 +294,10 @@ namespace DatingSiteCoreAPI
 
         }
 
-
-
-
+        public bool IsVisible
+        {
+            get { return isVisible; }
+            set { isVisible = value; }
+        }
     }
 }

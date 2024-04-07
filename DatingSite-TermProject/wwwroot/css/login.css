@@ -63,7 +63,7 @@ h1 {
     padding: 10px;
     font-size: 1em;
     border: 2px solid #ccc;
-    border-radius: 15px;
+    border-radius: 5px;
 }
 .form-container .form-control{
     width: 79%;
@@ -85,6 +85,14 @@ h1 {
 .btn-primary:hover {
     color: #F72E50;
     background-color: #2F5059;
+}
+.input-group label {
+    font-size: 0.9em;
+    color: #2F5059; /* Matching text color */
+}
+
+.input-group input[type="checkbox"] {
+    margin-right: 10px;
 }
 @media (max-width: 768px) {
     .container {

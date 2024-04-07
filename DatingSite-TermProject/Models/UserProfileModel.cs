@@ -28,13 +28,15 @@ namespace DatingSite_TermProject.Models
         private string favoritebook;
         private string favoriterestaurant;
         private string dislikes;
-   
+        private bool isVisible;
+
+
 
 
 
         public UserProfileModel() { }
 
-        public UserProfileModel(int privateid, int age, string height, string weight, string profilePhotoURL, string city, string state, string description, string occupation, string interests, string favoritecusine, string favouritequote, string goals, string commitmentType, string favoriteMovieGenre, string favoriteBookGenre, string address, string phonenumber, string favoritemovie, string favoritebook, string favoriterestaurant, string dislikes)
+        public UserProfileModel(int privateid, int age, string height, string weight, string profilePhotoURL, string city, string state, string description, string occupation, string interests, string favoritecusine, string favouritequote, string goals, string commitmentType, string favoriteMovieGenre, string favoriteBookGenre, string address, string phonenumber, string favoritemovie, string favoritebook, string favoriterestaurant, string dislikes, bool isVisible)
         {
             this.privateid = privateid;
             this.age = age;
@@ -58,7 +60,7 @@ namespace DatingSite_TermProject.Models
             this.favoritebook = favoritebook;
             this.favoriterestaurant = favoriterestaurant;
             this.dislikes = dislikes;
-           
+            this.isVisible = isVisible;
         }
 
         public int PrivateId
@@ -199,8 +201,12 @@ namespace DatingSite_TermProject.Models
 
         }
 
+        public bool IsVisible
+        {
+            get { return isVisible; }
+            set { isVisible = value; }
+        }
 
-       
 
         public int getPrivateId(string username)
         {

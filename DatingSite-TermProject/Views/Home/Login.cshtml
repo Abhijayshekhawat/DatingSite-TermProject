@@ -19,16 +19,18 @@
                 <h1>Login</h1>
                 <div class="login-link">
                     <label>New Here? </label>
-                    <button type="submit" class="login">Join us</button>
+                    <button type="button" class="login" onclick="window.location.href='/Home/CreateAccount';">Join us</button>
                 </div>
                 <div class="input-group">
                     <input type="text" name="UserName" class="form-control" placeholder="User Name" />
                     <input type="password" name="Password" class="form-control" placeholder="Password" />
-                    <input type="checkbox" name="SaveDetails" value="Yes" id="SaveDetails-Yes" />
-                    <label for="SaveDetails-Yes">Yes</label>
-                    <input type="checkbox" name="SaveDetails" value="No" id="SaveDetails-No" />
-                    <label for="SaveDetails-No">No</label>
-
+                    <div>
+                        <label>Would you like to save your password?</label>
+                        <input type="checkbox" name="SaveDetails" value="Yes" id="SaveDetails-Yes" checked/>
+                        <label for="SaveDetails-Yes">Yes</label>
+                        <input type="checkbox" name="SaveDetails" value="No" id="SaveDetails-No" />
+                        <label for="SaveDetails-No">No</label>
+                    </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Login</button>
                 <label>@ViewBag.ErrorMessage</label> <!--lblLError-->

@@ -4,7 +4,6 @@
     {
         public class UserProfile
         {
-            private int profileID;
             private int privateID;
             private int age;
             private string height;
@@ -29,18 +28,18 @@
             private string favouriteRestaurant;
             private string dislikes;
 
+
             public UserProfile()
             {
             }
 
-            public UserProfile(int profileID, int privateID, int age, string height, string weight, string profilePhotoURL,
+            public UserProfile(int privateID, int age, string height, string weight, string profilePhotoURL,
                        string city, string state, string description, string occupation, string interests,
                        string favouriteCuisine, string favouriteQuote, string goals, string commitmentType,
                        bool isVisible, string favouriteMovieGenre, string favouriteBookGenre, string address,
                        string phoneNumber, string favouriteMovie, string favouriteBook, string favouriteRestaurant,
                        string dislikes)
             {
-                this.profileID = profileID;
                 this.privateID = privateID;
                 this.age = age;
                 this.height = height;
@@ -66,11 +65,6 @@
                 this.dislikes = dislikes;
             }
 
-            public int ProfileID
-            {
-                get { return profileID; }
-                set { profileID = value; }
-            }
             public int PrivateID
             {
                 get { return privateID; }

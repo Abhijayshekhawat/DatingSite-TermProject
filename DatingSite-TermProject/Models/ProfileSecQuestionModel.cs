@@ -1,6 +1,6 @@
 ﻿namespace DatingSite_TermProject.Models
 {
-    public class SecurityQuestionModel
+    public class ProfileSecQuestionModel
     {
         private int privateid;
         private string question_one;
@@ -10,10 +10,10 @@
         private string answer_two;
         private string answer_three;
 
-        public SecurityQuestionModel() { }
+        public ProfileSecQuestionModel() { }
 
 
-        public SecurityQuestionModel(int privateid, string question_one, string question_two, string question_three, string answer_one, string answer_two, string answer_three)
+        public ProfileSecQuestionModel(int privateid, string question_one, string question_two, string question_three, string answer_one, string answer_two, string answer_three)
         {
             this.privateid = privateid;
             this.question_one = question_one;

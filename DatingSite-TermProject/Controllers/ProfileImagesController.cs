@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Http; // need for cookies
 
 namespace DatingSite_TermProject.Controllers
 {
-    public class ProfileImagesControllercs : Controller
+    public class ProfileImagesController : Controller
     {
         string CreateAccountAPI_Url = "http://localhost:5046/api/CreateAccount";
         // string CreateAccountAPI_Url = "" ;     // have your URL then we comment and uncomment off whenever who uses it.
@@ -19,28 +19,28 @@ namespace DatingSite_TermProject.Controllers
         [HttpPost]
         public IActionResult ProfileImages()
         {
-            ProfileImageModel imageProfile = new ProfileImageModel();
+            ProfileImagesModel imageProfile = new ProfileImagesModel();
             UserProfileModel userProfile = new UserProfileModel();
 
             string savedUsername = Request.Cookies["Username"].ToString();
             // get the data from the form / model UserProfileModel  
             imageProfile.PrivateId = userProfile.getPrivateId(savedUsername); // get method in userprofilemodel --> get id by username ?cookie? response?
 
-            imageProfile.AddImage1 = Request.Form["AddImage1"].ToString();
-            imageProfile.AddImage2 = Request.Form["AddImage2"].ToString();
-            imageProfile.AddImage3 = Request.Form["AddImage3"].ToString();
-            imageProfile.AddImage4 = Request.Form["AddImage4"].ToString();
-            imageProfile.AddImage5 = Request.Form["AddImage5"].ToString();
+            imageProfile.Image1 = Request.Form["Image1"].ToString();
+            imageProfile.Image2 = Request.Form["Image2"].ToString();
+            imageProfile.Image3 = Request.Form["Image3"].ToString();
+            imageProfile.Image4 = Request.Form["Image4"].ToString();
+            imageProfile.Image5 = Request.Form["Image5"].ToString();
             
 
             // Serialize an Account object into a JSON string.
-            var jsonPayload = JsonSerializer.Serialize(userProfile);
+            var jsonPayload = JsonSerializer.Serialize(imageProfile);
             try
 
             {
                 // Send the account object to the Web API that will be used to store a new account record in the database.
                 // Setup an HTTP POST Web Request and get the HTTP Web Response from the server.
-                WebRequest request = WebRequest.Create(CreateAccountAPI_Url + "/AddUserInfo");
+                WebRequest request = WebRequest.Create(CreateAccountAPI_Url + "/AddUserImages");
                 request.Method = "POST";
                 request.ContentLength = jsonPayload.Length;
                 request.ContentType = "application/json";
@@ -59,7 +59,7 @@ namespace DatingSite_TermProject.Controllers
                 if (data == "true")
                 {
                     ViewBag.ErrorMessage = "UserInfo was successfully added";
-                    return View("~/Views/Home/ProfileSecQuestion.cshtml");
+                    return View("~/Views/Profile/ProfileSecQuestion.cshtml");
 
                 }
                 else
@@ -69,7 +69,7 @@ namespace DatingSite_TermProject.Controllers
             {
                 ViewBag.ErrorMessage = "Error: " + ex.Message;
             }
-            return View();
+            return View("~/Views/Profile/ProfileImages.cshtml");
         }
     }
 }

@@ -89,22 +89,22 @@ namespace DatingSiteCoreAPI
             SqlParameter inputParameter2 = new SqlParameter("@PrivateId", privateid);
             objCommand.Parameters.Add(inputParameter2);
 
-            SqlParameter inputParameter3 = new SqlParameter("@Question_One", question1);
+            SqlParameter inputParameter3 = new SqlParameter("@QuestionOne", question1);
             objCommand.Parameters.Add(inputParameter3);
 
-
-            SqlParameter inputParameter4 = new SqlParameter("@Question_Two", question2);
+            SqlParameter inputParameter4 = new SqlParameter("@QuestionTwo", question2);
             objCommand.Parameters.Add(inputParameter4);
 
-            SqlParameter inputParameter5 = new SqlParameter("@Question_Three", question3);
+            SqlParameter inputParameter5 = new SqlParameter("@QuestionThree", question3);
             objCommand.Parameters.Add(inputParameter5);
-            SqlParameter inputParameter6 = new SqlParameter("@Answer_One", answer1);
+
+            SqlParameter inputParameter6 = new SqlParameter("@AnswerOne", answer1);
             objCommand.Parameters.Add(inputParameter6);
 
-            SqlParameter inputParameter7 = new SqlParameter("@Answer_Two", answer2);
+            SqlParameter inputParameter7 = new SqlParameter("@AnswerTwo", answer2);
             objCommand.Parameters.Add(inputParameter7);
 
-            SqlParameter inputParameter8 = new SqlParameter("@Answer_Three", answer3);
+            SqlParameter inputParameter8 = new SqlParameter("@AnswerThree", answer3);
             objCommand.Parameters.Add(inputParameter8);
 
             int AddSecurityQuestion = objDB.DoUpdateUsingCmdObj(objCommand);

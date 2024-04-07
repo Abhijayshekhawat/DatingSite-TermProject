@@ -47,11 +47,14 @@ namespace DatingSite_TermProject.Controllers
             userProfile.FavoriteBook = Request.Form["FavouriteBook"].ToString();
             userProfile.FavoriteRestaurant = Request.Form["FavouriteRestaurant"].ToString();
             userProfile.Dislikes = Request.Form["Dislikes"].ToString();
+            userProfile.IsVisible = Request.Form["ProfileVisibility"].ToString() == "Yes";
+
+
             // combine these into one since having two seperate table is hard to insert with
             // web api --> mvc core
 
-          
-         
+
+
 
             // Serialize an Account object into a JSON string.
             var jsonPayload = JsonSerializer.Serialize(userProfile);
@@ -79,7 +82,7 @@ namespace DatingSite_TermProject.Controllers
                 if (data == "true")
                 {
                     ViewBag.ErrorMessage = "User's Information was successfully added";
-                    return View("~/Views/Home/ProfileImages.cshtml");
+                    return View("~/Views/Profile/ProfileImages.cshtml");
 
                 }
                 else

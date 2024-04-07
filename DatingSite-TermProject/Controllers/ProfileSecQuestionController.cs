@@ -19,7 +19,7 @@ namespace DatingSite_TermProject.Controllers
         [HttpPost]
         public IActionResult ProfileSecQuestion()
         {
-            SecurityQuestionModel secQuestion = new SecurityQuestionModel();
+            ProfileSecQuestionModel secQuestion = new ProfileSecQuestionModel();
             UserProfileModel userProfile = new UserProfileModel();
 
             string savedUsername = Request.Cookies["Username"].ToString();
@@ -35,13 +35,13 @@ namespace DatingSite_TermProject.Controllers
 
 
             // Serialize an Account object into a JSON string.
-            var jsonPayload = JsonSerializer.Serialize(userProfile);
+            var jsonPayload = JsonSerializer.Serialize(secQuestion);
             try
 
             {
                 // Send the account object to the Web API that will be used to store a new account record in the database.
                 // Setup an HTTP POST Web Request and get the HTTP Web Response from the server.
-                WebRequest request = WebRequest.Create(CreateAccountAPI_Url + "/AddUserInfo");
+                WebRequest request = WebRequest.Create(CreateAccountAPI_Url + "/AddUserSecurityQuestions");
                 request.Method = "POST";
                 request.ContentLength = jsonPayload.Length;
                 request.ContentType = "application/json";
@@ -60,7 +60,7 @@ namespace DatingSite_TermProject.Controllers
                 if (data == "true")
                 {
                     ViewBag.ErrorMessage = "UserInfo was successfully added";
-                    return View("~/Views/Home/Dashboard.cshtml");
+                    return View("~/Views/Main/Dashboard.cshtml");
 
                 }
                 else
@@ -70,7 +70,7 @@ namespace DatingSite_TermProject.Controllers
             {
                 ViewBag.ErrorMessage = "Error: " + ex.Message;
             }
-            return View();
+            return View("~/Views/Profile/ProfileSecQuestion.cshtml");
         }
     }
 }

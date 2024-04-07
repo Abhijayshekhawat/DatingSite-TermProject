@@ -3,12 +3,12 @@
 }
 
 <!DOCTYPE html>
-
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Dashboard-MatchUp</title>
-    <link href="~/css/update.css" rel="stylesheet" type="text/css" />
-    <link href="~/css/main.css" rel="stylesheet" type="text/css" />
+    <title>Plan Date - MatchUp</title>
+    <link href="~/css/update.css" rel="stylesheet" />
+    <link href="~/css/main.css" rel="stylesheet" />
+    <link href="~/css/datePlan.css" rel="stylesheet" />
 </head>
 <body>
     <div class="navbar">
@@ -25,7 +25,7 @@
         </div>
         <div class="navbar-right">
             <span class="user-name">Welcome First Name</span> <!-- Example of displaying user name -->
-            <img src="~/css/Logo.png"  alt="User Image" class="user-img" />
+            <img src="~/css/Logo.png" alt="User Image" class="user-img" />
             <form>
                 <button type="submit" class="logout-button">Logout</button>
             </form>
@@ -33,29 +33,28 @@
     </div>
     <div class="content-wrapper">
         <header>
-            <h1>Dashboard</h1>
-            <h3>
-                <!-- Display some status from the model -->
-            </h3>
+            <h1>Plan Your Dates</h1>
+            <h3>@ViewBag.StatusMessage</h3> <!-- Status message -->
         </header>
         <div class="dashboard-layout">
-            <div class="filters-wrapper">
-                <div class="filters-section">
-                    <h2>Filters</h2>
-                    <!-- Filters form -->
-                    <form>
-                        <!-- Generate filters here -->
-                        <button type="submit" class="btnFilter">Apply Filters</button>
-                        <button type="reset" class="btnFilter">Reset Filters</button>
-                    </form>
-                </div>
-            </div>
             <div class="cards-container">
+                <h2 class="likes-title">Approved Dates - not yet planned</h2>
                 <div class="container">
                     <div class="card">
                         <img src="~/css/logo.png" alt="Profile Image">
                         <div class="card-body">
-                            <h5 class="card-title">FirstName</h5> 
+                            <h5 class="card-title">FirstName</h5>
+                            <p class="card-text">Description</p>
+                            <p class="card-text">City, State</p>
+                        </div>
+                    </div>
+                </div>
+                <h2 class="likes-title">Planned Dates</h2>
+                <div class="container">
+                    <div class="card">
+                        <img src="~/css/logo.png" alt="Profile Image">
+                        <div class="card-body">
+                            <h5 class="card-title">FirstName</h5>
                             <p class="card-text">Description</p>
                             <p class="card-text">City, State</p>
                         </div>
@@ -67,15 +66,5 @@
     <footer>
         <p>2024 MatchUp by Abhijay & Johnson</p>
     </footer>
-
-    <script type="text/javascript">
-        function closeProfileDetail() {
-            var profileDetail = document.getElementById('profileDetail');
-            if (profileDetail) {
-                profileDetail.style.display = "none";
-            }
-            return false;
-        }
-    </script>
 </body>
 </html>

@@ -71,9 +71,7 @@ namespace DatingSiteCoreAPI.Controllers
 
             UserProfile User = acc;
               
-
-
-            int AddUserSuccess = User.AddUserInfo(acc.PrivateId, acc.Age, acc.Height, acc.Weight, acc.ProfilePhotoURL, acc.City, acc.State, acc.Description, acc.Occupation, acc.Interests, acc.FavoriteCuisine, acc.FavouriteQuote, acc.Goals, acc.CommitmentType, acc.FavoriteMovieGenre, acc.FavoriteBookGenre, acc.Address, acc.PhoneNumber, acc.FavoriteMovie, acc.FavoriteBook, acc.FavoriteRestaurant, acc.Dislikes);
+            int AddUserSuccess = User.AddUserInfo(acc.PrivateId, acc.Age, acc.Height, acc.Weight, acc.ProfilePhotoURL, acc.City, acc.State, acc.Description, acc.Occupation, acc.Interests, acc.FavoriteCuisine, acc.FavouriteQuote, acc.Goals, acc.CommitmentType, acc.FavoriteMovieGenre, acc.FavoriteBookGenre, acc.Address, acc.PhoneNumber, acc.FavoriteMovie, acc.FavoriteBook, acc.FavoriteRestaurant, acc.Dislikes, acc.IsVisible);
         
             if (AddUserSuccess > 0)
             {
@@ -81,14 +79,51 @@ namespace DatingSiteCoreAPI.Controllers
             }
             else { result = false; }
 
+            return result;
+
+        }
+
+        [HttpPost()]
+        [HttpPost("AddUserImages")]
+        public bool AddUserImages([FromBody] ImageGallery img)
+        {
+
+            // combine the two classes and combine the table into one
+            bool result = true;
+
+            ImageGallery Userimgs = img;
+
+            int AddUserImageSuccess = Userimgs.AddImages(img.PrivateId ,img.Image1, img.Image2, img.Image3, img.Image4, img.Image5);
+
+            if (AddUserImageSuccess > 0)
+            {
+                result = true;
+            }
+            else { result = false; }
 
             return result;
 
+        }
 
+        [HttpPost()]
+        [HttpPost("AddUserSecurityQuestions")]
+        public bool AddUserSecurityQuestions([FromBody] SecurityQuestion secincoming)
+        {
 
+            // combine the two classes and combine the table into one
+            bool result = true;
 
+            SecurityQuestion secq = secincoming;
 
+            int AddUserSecuritySuccess = secq.AddSecurityQuestions(secincoming.PrivateId, secincoming.Question_One, secincoming.Question_Two, secincoming.Question_Three, secincoming.Answer_One, secincoming.Answer_Two, secincoming.Answer_Three);
 
+            if (AddUserSecuritySuccess > 0)
+            {
+                result = true;
+            }
+            else { result = false; }
+
+            return result;
 
         }
 

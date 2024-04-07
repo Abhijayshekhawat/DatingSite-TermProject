@@ -1,4 +1,4 @@
-﻿@model DatingSite_TermProject.Models.ProfileImageModel
+﻿@model DatingSite_TermProject.Models.ProfileImagesModel
 
 @{
     Layout = null; // Assuming you don't want to use a layout page
@@ -34,35 +34,36 @@
             <h1>Build Your Profile 2/3 </h1>
         </header>
         <!-- Start of the form -->
-        <form asp-controller="Profile" asp-action="Profile" method="post">
+        <form asp-controller="ProfileImages" asp-action="ProfileImages" method="post">
             <div class="form-section">
                 <h2>Additional Images</h2>
                 <h4>Add additional images to your profile.</h4>
 
                 <!-- Images fields-->
-                <label asp-for="AddImage1">Additional Photo 1 URL:</label>
-                <input asp-for="AddImage1" name="AddImage1" placeholder="Please enter a valid image URL." class="form-control" />
-                <span asp-validation-for="AddImage1" class="text-danger"></span>
+                <label asp-for="Image1">Additional Photo 1 URL:</label>
+                <input asp-for="Image1" name="Image1" placeholder="Please enter a valid image URL." class="form-control" />
+                <span asp-validation-for="Image1" class="text-danger"></span>
 
-                <label asp-for="AddImage2">Additional Photo 2 URL:</label>
-                <input asp-for="AddImage2" name="AddImage2 placeholder="Please enter a valid image URL." class="form-control" />
-                <span asp-validation-for="AddImage2" class="text-danger"></span>
+                <label asp-for="Image2">Additional Photo 2 URL:</label>
+                <input asp-for="Image2" name="Image2" placeholder="Please enter a valid image URL." class="form-control" />
+                <span asp-validation-for="Image2" class="text-danger"></span>
 
-                <label asp-for="AddImage3">Additional Photo 3 URL:</label>
-                <input asp-for="AddImage3" name="AddImage3" placeholder="Please enter a valid image URL." class="form-control" />
-                <span asp-validation-for="AddImage3" class="text-danger"></span>
+                <label asp-for="Image3">Additional Photo 3 URL:</label>
+                <input asp-for="Image3" name="Image3" placeholder="Please enter a valid image URL." class="form-control" />
+                <span asp-validation-for="Image3" class="text-danger"></span>
 
-                <label asp-for="AddImage4">Additional Photo 4 URL:</label>
-                <input asp-for="AddImage4" name="AddImage4" placeholder="Please enter a valid image URL." class="form-control" />
-                <span asp-validation-for="AddImage4" class="text-danger"></span>
+                <label asp-for="Image4">Additional Photo 4 URL:</label>
+                <input asp-for="Image4" name="Image4" placeholder="Please enter a valid image URL." class="form-control" />
+                <span asp-validation-for="Image4" class="text-danger"></span>
 
-                <label asp-for="AddImage5">Additional Photo 5 URL:</label>
-                <input asp-for="AddImage5" name="AddImage5" placeholder="Please enter a valid image URL." class="form-control" />
-                <span asp-validation-for="AddImage5" class="text-danger"></span>
+                <label asp-for="Image5">Additional Photo 5 URL:</label>
+                <input asp-for="Image5" name="Image5" placeholder="Please enter a valid image URL." class="form-control" />
+                <span asp-validation-for="Image5" class="text-danger"></span>
 
             </div>
             <div class="button-container">
                 <button type="submit" class="btn btn-primary">Save Profile</button>
+                <label name="lblPIError">@ViewBag.ErrorMessage</label>
             </div>
         </form>
     </div>

@@ -183,23 +183,9 @@
                     <label for="DontSavePassword">No</label>
                 </div>
             </div>
-
-            <div class="form-section">
-                <h2>Security Questions</h2>
-                <h4>This information will be used in case you forget your password.</h4>
-
-                <!-- Security questions and answers -->
-                <input type="text" name="SecurityQuestion1" placeholder="Security Question 1" class="form-control" required />
-                <input type="text" name="SecurityAnswer1" placeholder="Answer 1" class="form-control" required />
-
-                <input type="text" name="SecurityQuestion2" placeholder="Security Question 2" class="form-control" required />
-                <input type="text" name="SecurityAnswer2" placeholder="Answer 2" class="form-control" required />
-
-                <input type="text" name="SecurityQuestion3" placeholder="Security Question 3" class="form-control" required />
-                <input type="text" name="SecurityAnswer3" placeholder="Answer 3" class="form-control" required />
-            </div>
             <div class="button-container">
                 <button type="submit" class="btn btn-primary">Save Profile</button>
+                <label name="lblPError">@ViewBag.ErrorMessage</label>
             </div>
         </form>
     </div>
