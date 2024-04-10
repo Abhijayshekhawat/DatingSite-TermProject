@@ -52,12 +52,15 @@ namespace DatingSite_TermProject.Controllers
                 response.Close();
                 if (data == "true")
                 {
+                    //Create a random number for the verification code
                     Random Verfication = new Random();
                     string code = "";
                     code = Verfication.Next(100000, 1000000).ToString();
 
                     DataSet mydata = privateinfo.GetUserInfo(privateinfo.PrivateUsername);
                     DataTable dt = mydata.Tables[0];
+
+                    //Get the email and first name of the user and send the email
                     foreach (DataRow dr in dt.Rows)
                     {
 
@@ -69,19 +72,21 @@ namespace DatingSite_TermProject.Controllers
                     String strTO = UserEmail;
                     String strFROM = "Verification-Matchup@gmail.com";
                    // String strFROM = "johnson@gmail.com";
-                    String strSubject = "txtSubject.Text";
+                    String strSubject = "Verification Code for MatchUp";
                     String strMessage = "Hi "+ FirstName + "! Here is your verification code: " + code;
-                    try
-                    {
-                        objEmail.SendMail(strTO, strFROM, strSubject, strMessage);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"Failed to send verification email: {ex.Message}");
-                        ViewBag.ErrorMessage = "The email wasn't sent because: " + ex.Message;
-                    }
+                    //**** Uncomment everything before return view  when you want to send the email 
+
+                    //try
+                    //{
+                    //    objEmail.SendMail(strTO, strFROM, strSubject, strMessage);
+                    //}
+                    //catch (Exception ex)
+                    //{
+                    //    Console.WriteLine($"Failed to send verification email: {ex.Message}");
+                    //    ViewBag.ErrorMessage = "The email wasn't sent because: " + ex.Message;
+                    //}
                     //ViewBag.ErrorMessage = "The customer was successfully loggedin.";
-                    return View("~/Views/Home/Login.cshtml");
+                    return View("~/Views/Home/Verification.cshtml");
 
                 }
                 // **
