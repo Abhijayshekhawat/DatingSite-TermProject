@@ -206,11 +206,16 @@ namespace DatingSiteCoreAPI.Controllers.Tests
             profile.FavoriteRestaurant = "Sushi Palace"; profile.Dislikes = "Cold weather";
             profile.IsVisible = true;
 
+
             // it is a bool method so we will check if method return true. if it does. then it works
             bool ExpectedValue = true;
-           bool ActualValue = controller.AddUserInfo(profile);   
+            bool ActualValue = controller.AddUserInfo(profile);   
 
             Assert.AreEqual(ExpectedValue, ActualValue);    
+
+
+
+
            
 
 
