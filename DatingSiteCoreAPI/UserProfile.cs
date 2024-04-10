@@ -30,8 +30,33 @@ namespace DatingSiteCoreAPI
         private string dislikes;
         private bool isVisible;
 
+        public int getPrivateId(string username)
+        {
+            int result = 0;
+            DBConnect objDB = new DBConnect();
+            SqlCommand objCommand = new SqlCommand();
+            objCommand.CommandType = CommandType.StoredProcedure;
+            objCommand.CommandText = "TP_GetUserID";
 
-        public int AddUserInfo(int privateid, int age, string height, string weight, string profilePhotoURL, string city, string state, string description, string occupation, string interests, string favoritecusine, string favouritequote, string goals, string commitmentType, string favoriteMovieGenre, string favoriteBookGenre, string address, string phonenumber, string favoritemovie, string favoritebook, string favoriterestaurant, string dislikes, bool isVisible)
+            SqlParameter inputParameter1 = new SqlParameter("@Username", username);
+            objCommand.Parameters.Add(inputParameter1);
+
+
+            DataSet ds = objDB.GetDataSet(objCommand);
+
+            DataTable dt = ds.Tables[0];
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                result = Int32.Parse(dr["PrivateId"].ToString());
+
+            }
+
+            return result;
+
+        }
+
+            public int AddUserInfo(int privateid, int age, string height, string weight, string profilePhotoURL, string city, string state, string description, string occupation, string interests, string favoritecusine, string favouritequote, string goals, string commitmentType, string favoriteMovieGenre, string favoriteBookGenre, string address, string phonenumber, string favoritemovie, string favoritebook, string favoriterestaurant, string dislikes, bool isVisible)
         {
             DBConnect objDB = new DBConnect();
             SqlCommand objCommand = new SqlCommand();
