@@ -191,7 +191,8 @@ namespace DatingSiteCoreAPI.Controllers.Tests
             string username1 = "wonderworld";
             
             UserProfile profile = new UserProfile();
-            
+            UserProfile profile2= new UserProfile();
+            UserProfile profile3 = new UserProfile();
             DBUserAccountController controller = new DBUserAccountController();
             profile.PrivateId = profile.getPrivateId(username1); profile.Age = 25; profile.Height = "6'2";
             profile.Weight = "180 lbs"; profile.ProfilePhotoURL = "aaa";
@@ -206,18 +207,185 @@ namespace DatingSiteCoreAPI.Controllers.Tests
             profile.FavoriteRestaurant = "Sushi Palace"; profile.Dislikes = "Cold weather";
             profile.IsVisible = true;
 
+            //profile 2
+            string username2 = "SungJinwoo";
+            profile2.PrivateId = profile2.getPrivateId(username2); profile2.Age = 30; profile2.Height = "5'10"; profile2.Weight = "160 lbs";
+            profile2.ProfilePhotoURL = "bbb"; profile2.City = "Los Angeles"; profile2.State = "CA"; profile2.Description = "I work in marketing."; profile2.Occupation = "Marketing Manager";
+            profile2.Interests = "Cooking, painting, traveling"; profile2.FavoriteCuisine = "Mexican";  profile2.FavouriteQuote = "The only way to do great work is to love what you do.";
+            profile2.Goals = "Start my own business";     profile2.CommitmentType = "Open Relationship";   profile2.FavoriteMovieGenre = "Comedy"; profile2.FavoriteBookGenre = "Mystery";
+            profile2.Address = "456 Elm St"; profile2.PhoneNumber = "555-987-6543";  profile2.FavoriteMovie = "The Hangover";     profile2.FavoriteBook = "Gone Girl";
+            profile2.FavoriteRestaurant = "Taco Haven";    profile2.Dislikes = "Traffic jams"; profile2.IsVisible = true;
+
+            //profile3
+
+            string username3 = "SungJinwoo";
+            profile3.PrivateId = profile3.getPrivateId(username3); profile3.Age = 50; profile3.Height = "6'10"; profile3.Weight = "130 lbs";
+            profile3.ProfilePhotoURL = "bbb"; profile3.City = "Los Angeles"; profile3.State = "PA"; profile3.Description = "I work in marketing."; profile3.Occupation = "Marketing Manager";
+            profile3.Interests = "Cooking, painting, traveling"; profile3.FavoriteCuisine = "Chinese"; profile3.FavouriteQuote = "The only way to do great work is to love what you do.";
+            profile3.Goals = "Start my own business"; profile3.CommitmentType = "Close Relationship"; profile3.FavoriteMovieGenre = "Comedy"; profile3.FavoriteBookGenre = "Mystery";
+            profile3.Address = "456 Elm St"; profile3.PhoneNumber = "555-987-6543"; profile3.FavoriteMovie = "The Hangover"; profile3.FavoriteBook = "How Not to Age";
+            profile3.FavoriteRestaurant = "Taco Haven"; profile3.Dislikes = "Traffic jams"; profile3.IsVisible = true;
+
             // it is a bool method so we will check if method return true. if it does. then it works
             bool ExpectedValue = true;
-           bool ActualValue = controller.AddUserInfo(profile);   
+            bool ActualValue = controller.AddUserInfo(profile);   
 
-            Assert.AreEqual(ExpectedValue, ActualValue);    
-           
+            Assert.AreEqual(ExpectedValue, ActualValue);
+
+
+            DBConnect objDB = new DBConnect();
+            SqlCommand objCommand = new SqlCommand();
+            string goals = "";
+            string favoritebook = "";
+            string phonenumber = "";
+
+
+            objCommand.CommandType = CommandType.StoredProcedure;
+            objCommand.CommandText = "TP_GetUserInfo_Test";
+
+            SqlParameter inputParameter1 = new SqlParameter("@PrivateId", profile.PrivateId);
+            objCommand.Parameters.Add(inputParameter1);
+
+
+
+            DataSet ds = objDB.GetDataSet(objCommand);
+
+            DataTable dt = ds.Tables[0];
+
+            foreach (DataRow dr in dt.Rows)
+            {
+
+                goals = dr["Goals"].ToString();
+                favoritebook = dr["FavouriteBook"].ToString();
+                phonenumber = dr["PhoneNumber"].ToString();
+
+            }
+            // check to see if the data is inserted
+            string ExpectedValue2 = profile.Goals;
+            string ActualValue2 = goals;
+            Assert.AreEqual(ExpectedValue2,ActualValue2);
+
+            string ExpectedValue3 = profile.FavoriteBook;
+            string ActualValue3 = favoritebook;
+            Assert.AreEqual(ExpectedValue3,ActualValue3);
+
+            string ExpectedValue4 = profile.PhoneNumber;
+
+            string ActualValue4 = phonenumber;
+
+
+            Assert.AreEqual(ExpectedValue4,ActualValue4);
+
+            // add information the other user to see if it works for others than just one
+
+            bool ExpectedValue5 = true;
+            bool ActualValue5 = controller.AddUserInfo(profile2);
+
+            Assert.AreEqual(ExpectedValue5, ActualValue5);
+
+            // check data for profile 2 
+
+            DBConnect objDB2 = new DBConnect();
+            SqlCommand objCommand2 = new SqlCommand();
+            string interests = "";
+            string  favbook = "";
+            string dislikes = "";
+
+
+            objCommand2.CommandType = CommandType.StoredProcedure;
+            objCommand2.CommandText = "TP_GetUserInfo_Test";
+
+            SqlParameter inputParameter2 = new SqlParameter("@PrivateId", profile2.PrivateId);
+            objCommand2.Parameters.Add(inputParameter2);
+
+
+
+            DataSet ds2 = objDB.GetDataSet(objCommand2);
+
+            DataTable dt2 = ds2.Tables[0];
+
+            foreach (DataRow dr in dt2.Rows)
+            {
+
+                interests = dr["Interests"].ToString();
+                favbook = dr["FavouriteBook"].ToString();
+                dislikes = dr["Dislikes"].ToString();
+
+            }
+
+            string ExpectedValue6 = profile2.Interests;
+            string ActualValue6 = interests;
+            Assert.AreEqual(ExpectedValue6, ActualValue6);
+
+            string ExpectedValue7 = profile2.FavoriteBook;
+            string ActualValue7 = favbook;
+            Assert.AreEqual(ExpectedValue7, ActualValue7);
+
+            string ExpectedValue8 = profile2.Dislikes;
+            string ActualValue8 = dislikes;
+            Assert.AreEqual(ExpectedValue8, ActualValue8);
+
+
+            // check to see if i can add the third user even if they have the same id
+            // should be a no since the private id is a foreign key that's linked to a primary key in another table.
+            // and PKs are unique so we shouldn't able to add add a new profile that has the same private id
+
+            bool ExpectedValue9 = false;
+            bool ActualValue9 = controller.AddUserInfo(profile3);
+
+
+
+
+        }
+
+
+        [TestMethod()]
+        public void LoginTest()
+        {
+            // here i take the information of account 1 and account 2 
+            // these two accounts are the profiles i added from above
+            acc.FirstName = "John"; acc.LastName = "doe"; acc.Email = "1"; acc.PrivateUsername = "wonderworld"; acc.Password = "password";
+
+            acc2.FirstName = "Jay"; acc2.LastName = "Bo"; acc2.Email = "2"; acc2.PrivateUsername = "SungJinwoo"; acc2.Password = "password2";
+
+            acc3.FirstName = "Cat"; acc3.LastName = "Hat"; acc3.Email = "3"; acc3.PrivateUsername = "SungJinwoo"; acc3.Password = "password3";
+            DBUserAccountController PrivateController = new DBUserAccountController();
+            // should return true since the account 1 i added to the database
+            // 
+
+            bool ExpectedValue1 = true;
+            bool ActualValue1 = PrivateController.Login(acc);
+
+            Assert.AreEqual(ExpectedValue1, ActualValue1);
+
+            // check to see account 2 can also log in
+
+            bool ExpectedValue2 = true;
+            bool ActualValue2 = PrivateController.Login(acc2);
+            Assert.AreEqual(ExpectedValue2 , ActualValue2);
+
+
+            //  account 3 was not able to create its account because it did not have a unique username.
+            // account 2 already have the username
+
+            bool ExpectedValue3 = false;
+            bool ActualValue3 =  PrivateController.Login(acc3); 
+
+
+
+
 
 
 
             
-        
-        
-        }    
+
+
+
+
+
+
+        }
+
+
     }
 }
