@@ -4,8 +4,6 @@ using DatingSiteCoreAPI;
 using System.Text.Json;  // needed for JSON serializers
 using System.IO;    // needed for Stream and Stream Reader
 using System.Net;
-using Newtonsoft.Json.Linq;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using System.Data;
 using Microsoft.AspNetCore.Identity;
 
