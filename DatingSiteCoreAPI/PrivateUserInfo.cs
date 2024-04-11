@@ -79,6 +79,45 @@ namespace DatingSiteCoreAPI
             return SuccessfulLogin;
         }
 
+        public int Forgot(string resetEmail)
+        {
+            DBConnect objDB = new DBConnect();
+
+            SqlCommand objCommand = new SqlCommand();
+
+            objCommand.CommandType = CommandType.StoredProcedure;
+
+            objCommand.CommandText = "TP_FetchUserFromEmail";
+            /*SQL SP:
+             CREATE PROCEDURE GetUserByEmail
+                @Email NVARCHAR(100)
+            AS
+            BEGIN
+
+                SELECT 
+                    UserName,
+                    FirstName,
+                    LastName,
+                    Email,
+                    Password
+                FROM 
+                    Users
+                WHERE 
+                    Email = @Email;
+            END;
+
+             
+            */
+
+            SqlParameter inputParameter = new SqlParameter("@Email", resetEmail);
+            objCommand.Parameters.Add(inputParameter);
+
+            DataSet ds = objDB.GetDataSet(objCommand);
+
+            int SuccessfulLogin = ds.Tables[0].Rows.Count;
+
+            return SuccessfulLogin;
+        }
 
         public PrivateUserInfo(int privateid, string firstname, string lastname, string email, string privateusername, string password)
         {

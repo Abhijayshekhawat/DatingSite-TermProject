@@ -61,6 +61,27 @@ namespace DatingSiteCoreAPI.Controllers
         }
 
         [HttpPost()]
+        [HttpPost("ForgotPassword")]
+
+        public bool ForgotPassword([FromBody] PrivateUserInfo user)
+        {
+            bool result;
+            PrivateUserInfo privateinfo = user;
+
+            int Reset = privateinfo.Forgot(user.Email);
+
+            if (Reset > 0)
+            {
+                result = true;
+            }
+            else { result = false; }
+            return result;
+
+
+
+        }
+
+        [HttpPost()]
         [HttpPost("AddUserInfo")]
        
         public bool AddUserInfo([FromBody] UserProfile acc )

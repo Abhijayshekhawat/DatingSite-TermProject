@@ -34,24 +34,67 @@ namespace DatingSite_TermProject.Models
 
         }
 
-        public DataSet GetUserInfo(string username)
+        public DataSet GetUserInfo(string username, string email)
         {
-            PrivateUserInfo privateinfo = new PrivateUserInfo();
-            DBConnect objDB = new DBConnect();
+            //uses email to fetch
+            if(username==""){
+                PrivateUserInfo privateinfo = new PrivateUserInfo();
+                DBConnect objDB = new DBConnect();
 
-            SqlCommand objCommand = new SqlCommand();
+                SqlCommand objCommand = new SqlCommand();
 
-            objCommand.CommandType = CommandType.StoredProcedure;
-            objCommand.CommandText = "TP_GetUserInfo";
+                objCommand.CommandType = CommandType.StoredProcedure;
+                objCommand.CommandText = "TP_GetUserInfoByEmail";
 
-            SqlParameter inputParameter2 = new SqlParameter("@Username", username);
-            objCommand.Parameters.Add(inputParameter2);
+                SqlParameter inputParameter2 = new SqlParameter("@Email", email);
+                objCommand.Parameters.Add(inputParameter2);
+                /*SQL SP:
+                     CREATE PROCEDURE GetUserByEmail
+                        @Email NVARCHAR(100)
+                    AS
+                    BEGIN
 
+                        SELECT 
+                            UserName,
+                            FirstName,
+                            LastName,
+                            Email,
+                            Password
+                        FROM 
+                            Users
+                        WHERE 
+                            Email = @Email;
+                    END;
+
+             
+                */
+
+
+                DataSet ds = objDB.GetDataSet(objCommand);
+
+                return ds;
+            }
+            //uses username to fetch
+            else
+            {
+                PrivateUserInfo privateinfo = new PrivateUserInfo();
+                DBConnect objDB = new DBConnect();
+
+                SqlCommand objCommand = new SqlCommand();
+
+                objCommand.CommandType = CommandType.StoredProcedure;
+                objCommand.CommandText = "TP_GetUserInfo";
+
+                SqlParameter inputParameter2 = new SqlParameter("@Username", username);
+                objCommand.Parameters.Add(inputParameter2);
+
+
+
+                DataSet ds = objDB.GetDataSet(objCommand);
+
+                return ds;
+            }
             
-
-            DataSet ds = objDB.GetDataSet(objCommand);
-
-            return ds;
         }
 
 
