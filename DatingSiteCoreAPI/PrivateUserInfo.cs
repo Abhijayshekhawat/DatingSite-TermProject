@@ -87,27 +87,7 @@ namespace DatingSiteCoreAPI
 
             objCommand.CommandType = CommandType.StoredProcedure;
 
-            objCommand.CommandText = "TP_FetchUserFromEmail";
-            /*SQL SP:
-             CREATE PROCEDURE GetUserByEmail
-                @Email NVARCHAR(100)
-            AS
-            BEGIN
-
-                SELECT 
-                    UserName,
-                    FirstName,
-                    LastName,
-                    Email,
-                    Password
-                FROM 
-                    Users
-                WHERE 
-                    Email = @Email;
-            END;
-
-             
-            */
+            objCommand.CommandText = "TP_GetUserFromEmail";
 
             SqlParameter inputParameter = new SqlParameter("@Email", resetEmail);
             objCommand.Parameters.Add(inputParameter);

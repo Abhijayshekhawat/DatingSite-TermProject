@@ -44,32 +44,11 @@ namespace DatingSite_TermProject.Models
                 SqlCommand objCommand = new SqlCommand();
 
                 objCommand.CommandType = CommandType.StoredProcedure;
-                objCommand.CommandText = "TP_GetUserInfoByEmail";
+                objCommand.CommandText = "TP_GetUserFromEmail";
 
                 SqlParameter inputParameter2 = new SqlParameter("@Email", email);
                 objCommand.Parameters.Add(inputParameter2);
-                /*SQL SP:
-                     CREATE PROCEDURE GetUserByEmail
-                        @Email NVARCHAR(100)
-                    AS
-                    BEGIN
-
-                        SELECT 
-                            UserName,
-                            FirstName,
-                            LastName,
-                            Email,
-                            Password
-                        FROM 
-                            Users
-                        WHERE 
-                            Email = @Email;
-                    END;
-
-             
-                */
-
-
+               
                 DataSet ds = objDB.GetDataSet(objCommand);
 
                 return ds;
