@@ -368,12 +368,12 @@ namespace DatingSiteCoreAPI.Controllers.Tests
 
             //  account 3 was not able to create its account because it did not have a unique username.
             // account 2 already have the username
-
+            // so it should be false
             bool ExpectedValue3 = false;
             bool ActualValue3 = PrivateController.Login(acc3);
 
 
-
+            Assert.AreEqual(ExpectedValue3, ActualValue3);
 
 
 
