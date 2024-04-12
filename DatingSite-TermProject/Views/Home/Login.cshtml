@@ -22,8 +22,14 @@
                     <button type="button" class="login" onclick="window.location.href='/Home/CreateAccount';">Join us</button>
                 </div>
                 <div class="input-group">
-                    <input type="text" name="UserName" class="form-control" placeholder="User Name" />
-                    <input type="password" name="Password" class="form-control" placeholder="Password" />
+                    <div class="input__wrapper">
+                        <input type="text" name="UserName" class="form-control input__field" placeholder=""/>
+                        <label class="input__label">User Name</label>
+                    </div>
+                    <div class="input__wrapper">
+                        <input type="password" name="Password" class="form-control input__field" placeholder=""/>
+                        <label class="input__label">Password</label>
+                    </div>
                     <div>
                         <label>Would you like to save your password?</label>
                         <input type="checkbox" name="SaveDetails" value="Yes" id="SaveDetails-Yes" checked/>

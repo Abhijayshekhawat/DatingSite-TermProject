@@ -58,6 +58,63 @@ h1 {
 .input-group .form-control {
     width: 37%;
 }
+/* Root Variables */
+:root {
+    --primary: #F72E50; /* Primary interaction color */
+    --secondary: #2F5059; /* Text color */
+    --box-background: #fff; /* Background color of input boxes */
+}
+
+/* Input Wrapper Style */
+.input__wrapper {
+    position: relative;
+    padding: 1rem 0;
+    width: 100%; /* Ensures the input field fills its container */
+}
+
+/* Input Field Style */
+.input__field {
+    font-size: 1em;
+    color: var(--secondary);
+    padding: 10px;
+    background: transparent;
+    border: 2px solid #ccc; /* Existing border style */
+    border-radius: 5px;
+    width: 100%; /* Full width */
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Placeholder shown condition for Label */
+.input__field:placeholder-shown + .input__label {
+    cursor: text;
+    top: 40%; /* Centers label vertically when placeholder is shown */
+    left: 10px;
+    font-size: 1em;
+}
+
+/* Label Style */
+.input__label {
+    position: absolute;
+    top: 0; /* Set initial position of the label */
+    left: 10px;
+    color: var(--secondary);
+    background-color: var(--box-background);
+    transition: top 0.3s, font-size 0.3s, color 0.3s;
+    padding: 0 5px;
+    transform-origin: left center;
+}
+
+/* Input Field Focus Styles */
+.input__field:focus {
+    border-color: var(--primary);
+    outline: none; /* Removes default focus outline */
+}
+
+.input__field:focus + .input__label {
+    top: 0; /* Pulls the label to the top when focused */
+    font-size: 0.75em; /* Reduces label size when focused */
+    color: var(--primary); /* Changes label color to primary */
+}
 .form-control {
     margin: 10px auto;
     padding: 10px;
