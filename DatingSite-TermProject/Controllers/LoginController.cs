@@ -5,8 +5,10 @@ using System.Text.Json;  // needed for JSON serializers
 using System.IO;    // needed for Stream and Stream Reader
 using System.Net;
 using System.Data;
+using System.Data.SqlClient;
 using Microsoft.AspNetCore.Identity;
 using static DatingSite_TermProject.Models.ProfileModel;
+using Utilities;
 
 
 namespace DatingSite_TermProject.Controllers
@@ -82,7 +84,7 @@ namespace DatingSite_TermProject.Controllers
                     String strFROM = "Verification-Matchup@gmail.com";
                     String strSubject = "Verification Code for MatchUp";
                     String strMessage = "Hi "+ FirstName + "! Here is your verification code: " + code;
-
+                    Response.Cookies.Append("Username", privateinfo.PrivateUsername);
                     //**** Uncomment everything before return view  when you want to send the email 
 
                     try
