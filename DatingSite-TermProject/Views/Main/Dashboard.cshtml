@@ -1,6 +1,12 @@
-﻿@{
+﻿@using DatingSite_TermProject.Models
+@model List<CardsModel>
+
+
+
+@{
     Layout = null; // Assuming you don't want to use a layout page
 }
+
 
 <!DOCTYPE html>
 
@@ -25,7 +31,7 @@
         </div>
         <div class="navbar-right">
             <span class="user-name">Welcome First Name</span> <!-- Example of displaying user name -->
-            <img src="~/css/Logo.png"  alt="User Image" class="user-img" />
+            <img src="~/css/Logo.png" alt="User Image" class="user-img" />
             <form>
                 <button type="submit" class="logout-button">Logout</button>
             </form>
@@ -51,16 +57,19 @@
                 </div>
             </div>
             <div class="cards-container">
-                <div class="container">
-                    <div class="card">
-                        <img src="~/css/logo.png" alt="Profile Image">
-                        <div class="card-body">
-                            <h5 class="card-title">FirstName</h5> 
-                            <p class="card-text">Description</p>
-                            <p class="card-text">City, State</p>
+                @foreach (CardsModel cards in Model)
+                {
+                    <div class="container">
+                        <div class="card">
+                            <img src= @cards.ProfilePhotoURL alt="Profile Image">
+                            <div class="card-body">
+                                <h5 class="card-title">@cards.FirstName, @cards.LastName</h5>
+                                <p class="card-text">@cards.Description</p>
+                                <p class="card-text">@cards.City,@cards.State</p>
+                            </div>
                         </div>
                     </div>
-                </div>
+                }
             </div>
         </div>
     </div>
