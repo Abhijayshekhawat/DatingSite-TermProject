@@ -1,6 +1,7 @@
 using DatingSite_TermProject.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Text.Json;
 
 namespace DatingSite_TermProject.Controllers
 {
@@ -15,6 +16,13 @@ namespace DatingSite_TermProject.Controllers
 
         public IActionResult Index()
         {
+            if (Request.Cookies.TryGetValue("fastLogin", out string encryptedCookie))
+            {
+                string decryptedCookie = EncryptionHelper.Decrypt(encryptedCookie);
+                PrivateUserInfoModel userDetails = JsonSerializer.Deserialize<PrivateUserInfoModel>(decryptedCookie);
+                ViewBag.Username = userDetails.PrivateUsername;
+                ViewBag.Pwd = userDetails.Password;
+            }
             return View("Login");
         }
         public IActionResult Login()

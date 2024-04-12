@@ -8,40 +8,73 @@ namespace DatingSite_TermProject.Controllers
     public class ResetPasswordController : Controller
     {
         string CreateAccountAPI_Url = "http://localhost:5046/api/CreateAccount";
-
+        [HttpGet]
         public IActionResult ResetPassword()
         {
-            if (Request.Cookies.TryGetValue("userDetails", out string encryptedCookie))
-            {
-                string decryptedCookie = EncryptionHelper.Decrypt(encryptedCookie);
-                // Deserialize the decryptedCookie to get back the user details
-                PrivateUserInfoModel userDetails = JsonSerializer.Deserialize<PrivateUserInfoModel>(decryptedCookie);
-                userDetails.Password = Request.Form["Password"].ToString();
-                bool result = SaveAccount(userDetails);
-                if (result)
-                {
-                    ViewBag.ErrorMessage = "The details were successfully saved to the database.";
+            ViewBag.Token = HttpContext.Request.Query["token"].ToString();
+            return View("~/Views/Home/ResetPassword.cshtml");
+        }
 
+        [HttpPost]
+        public IActionResult ResetPassword(PrivateUserInfoModel model)
+        {
+            if (string.IsNullOrEmpty(model.Password))
+            {
+                ViewBag.ErrorMessage = "Please enter your email.";
+                return View("~/Views/Home/ForgotPassword.cshtml");
+            }
+            if (Request.Cookies.TryGetValue("Token", out string encryptedToken))
+            {
+                string decryptedToken = EncryptionHelper.Decrypt(encryptedToken);
+                string tokenFromLink = Request.Form["token"];
+                string decryptedTokenFromLink = EncryptionHelper.Decrypt(tokenFromLink);
+
+                if (!string.IsNullOrEmpty(decryptedTokenFromLink))
+                {
+                    tokenFromLink = WebUtility.UrlDecode(decryptedTokenFromLink);
+                }
+
+                if (decryptedToken== decryptedTokenFromLink)
+                {
+                    if (Request.Cookies.TryGetValue("userDetails", out string encryptedCookie))
+                    {
+                        string decryptedCookie = EncryptionHelper.Decrypt(encryptedCookie);
+                        // Deserialize the decryptedCookie to get back the user details
+                        PrivateUserInfoModel userDetails = JsonSerializer.Deserialize<PrivateUserInfoModel>(decryptedCookie);
+                        userDetails.Password = Request.Form["Password"].ToString();
+                        bool result = SaveAccount(userDetails);
+                        if (result)
+                        {
+                            ViewBag.ErrorMessage = "The details were successfully saved to the database.";
+                            return View("~/Views/Home/Login.cshtml");
+
+                        }
+                        else
+                        {
+                            ViewBag.ErrorMessage = "A problem occurred while resetting your password. The data wasn't recorded.";
+                            return View("~/Views/Home/Login.cshtml");
+
+                        }
+                    }
+                    else
+                    {
+                        ViewBag.ErrorMessage = "A problem occurred Please go through the reset process again.";
+                        return View("~/Views/Home/Login.cshtml");
+                    }
                 }
                 else
                 {
-                    ViewBag.ErrorMessage = "A problem occurred while resetting your password. The data wasn't recorded.";
-
+                    ViewBag.ErrorMessage = "A problem occurred Please go through the reset process again.";
+                    return View("~/Views/Home/Login.cshtml");
                 }
-                return View("~/Views/Home/ResetPassword.cshtml");
-
-                // Now you have access to the user details
-                // Do whatever you need with them
             }
             else
             {
                 ViewBag.ErrorMessage = "A problem occurred Please go through the reset process again.";
                 return View("~/Views/Home/Login.cshtml");
-                // Cookie not found or decryption failed
-                // Handle the case accordingly
             }
-
         }
+
         private bool SaveAccount(PrivateUserInfoModel user)
         {
 
@@ -51,7 +84,7 @@ namespace DatingSite_TermProject.Controllers
             {
                 // Send the account object to the Web API that will be used to store a new account record in the database.
                 // Setup an HTTP POST Web Request and get the HTTP Web Response from the server.
-                WebRequest request = WebRequest.Create(CreateAccountAPI_Url + "/AddPrivateInfo");
+                WebRequest request = WebRequest.Create(CreateAccountAPI_Url + "/ResetPassword");
                 request.Method = "POST";
                 request.ContentLength = jsonPayload.Length;
                 request.ContentType = "application/json";

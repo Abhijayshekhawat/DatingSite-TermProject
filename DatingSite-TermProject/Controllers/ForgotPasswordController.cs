@@ -9,12 +9,23 @@ namespace DatingSite_TermProject.Controllers
     public class ForgotPasswordController : Controller
     {
         string CreateAccountAPI_Url = "http://localhost:5046/api/CreateAccount";
+        [HttpGet]
         public IActionResult ForgotPassword()
         {
+            return View("~/Views/Home/ForgotPassword.cshtml");
+        }
+        [HttpPost]
+        public IActionResult ForgotPassword(PrivateUserInfoModel model)
+        {
+            if (string.IsNullOrEmpty(model.Email))
+            {
+                ViewBag.ErrorMessage = "Please enter your email.";
+                return View("~/Views/Home/ForgotPassword.cshtml");
+            }
             PrivateUserInfoModel privateinfo = new PrivateUserInfoModel();
             privateinfo.FirstName = "NoValue";
             privateinfo.LastName = "NoValue";
-            privateinfo.Email = privateinfo.PrivateUsername = Request.Form["resetEmail"].ToString();
+            privateinfo.Email = privateinfo.PrivateUsername = Request.Form["Email"].ToString();
             privateinfo.PrivateUsername = "NoValue";
             privateinfo.Password = "NoValue";
             //email
@@ -30,7 +41,7 @@ namespace DatingSite_TermProject.Controllers
             {
                 // Send the account object to the Web API that will be used to store a new account record in the database.
                 // Setup an HTTP POST Web Request and get the HTTP Web Response from the server.
-                WebRequest request = WebRequest.Create(CreateAccountAPI_Url + "/ResetPassword");
+                WebRequest request = WebRequest.Create(CreateAccountAPI_Url + "/ForgotPassword");
                 request.Method = "POST";
                 request.ContentLength = jsonPayload.Length;
                 request.ContentType = "application/json";
@@ -48,11 +59,16 @@ namespace DatingSite_TermProject.Controllers
                 response.Close();
                 if (data == "true")
                 {
-
-                    //Create a random number for the verification code
                     Random Verfication = new Random();
-                    string link = "";
-                    link = Verfication.Next(100000, 1000000).ToString();
+                    string code = "";
+                    code = Verfication.Next(100000, 1000000).ToString();
+                    string cookieToken = code;
+                    string secretToken = EncryptionHelper.Encrypt(cookieToken);
+                    CookieOptions tokenOptions = new CookieOptions();
+                    tokenOptions.Expires = DateTime.Now.AddMinutes(2);
+                    HttpContext.Response.Cookies.Append("Token", secretToken, tokenOptions);
+                    string link = Url.Action("ResetPassword", "ResetPassword", new { token = secretToken }, protocol: HttpContext.Request.Scheme);
+
 
                     DataSet mydata = privateinfo.GetUserInfo("",privateinfo.Email);
                     DataTable dt = mydata.Tables[0];
@@ -75,25 +91,25 @@ namespace DatingSite_TermProject.Controllers
                     options.Expires = DateTime.Now.AddSeconds(100);
                     string SecretCookie = EncryptionHelper.Encrypt(cookieObject);
                     HttpContext.Response.Cookies.Append("userDetails", SecretCookie, options);
+
                     EmailModel objEmail = new EmailModel();
-                    String strTO = UserEmail;
+                    String strTO = resetUser.Email;
                     String strFROM = "PasswordReset-Matchup@gmail.com";
-                    // String strFROM = "johnson@gmail.com";
                     String strSubject = "Reset password link for MatchUp";
                     String strMessage = "Hi " + FirstName + "! Here is the link to reset your password: " + link;
                     //**** Uncomment everything before return view  when you want to send the email 
 
-                    //try
-                    //{
-                    //    objEmail.SendMail(strTO, strFROM, strSubject, strMessage);
-                    //}
-                    //catch (Exception ex)
-                    //{
-                    //    Console.WriteLine($"Failed to send verification email: {ex.Message}");
-                    //    ViewBag.ErrorMessage = "The email wasn't sent because: " + ex.Message;
-                    //}
-                    //ViewBag.ErrorMessage = "The customer was successfully loggedin.";
-                    return View("~/Views/Home/ResetPassword.cshtml");
+                    try
+                    {
+                        objEmail.SendMail(strTO, strFROM, strSubject, strMessage);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Failed to send verification email: {ex.Message}");
+                        ViewBag.ErrorMessage = "The email wasn't sent because: " + ex.Message;
+                    }
+                    ViewBag.ErrorMessage = "Check your email for the reset link!";
+                    return View("~/Views/Home/Login.cshtml");
 
                 }
                 // **

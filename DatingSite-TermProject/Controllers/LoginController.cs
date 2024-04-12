@@ -6,6 +6,7 @@ using System.IO;    // needed for Stream and Stream Reader
 using System.Net;
 using System.Data;
 using Microsoft.AspNetCore.Identity;
+using static DatingSite_TermProject.Models.ProfileModel;
 
 
 namespace DatingSite_TermProject.Controllers
@@ -17,6 +18,13 @@ namespace DatingSite_TermProject.Controllers
 
         public IActionResult Login()
         {
+            if (Request.Cookies.TryGetValue("fastLogin", out string encryptedCookie))
+            {
+                string decryptedCookie = EncryptionHelper.Decrypt(encryptedCookie);
+                PrivateUserInfoModel userDetails = JsonSerializer.Deserialize<PrivateUserInfoModel>(decryptedCookie);
+                ViewBag.Username = userDetails.PrivateUsername;
+                ViewBag.Pwd = userDetails.Password;
+            }
             PrivateUserInfoModel privateinfo = new PrivateUserInfoModel();
             privateinfo.FirstName = "NoValue";
             privateinfo.LastName = "NoValue";
@@ -52,6 +60,7 @@ namespace DatingSite_TermProject.Controllers
                 response.Close();
                 if (data == "true")
                 {
+                    SaveLogin();
                     //Create a random number for the verification code
                     Random Verfication = new Random();
                     string code = "";
@@ -71,21 +80,26 @@ namespace DatingSite_TermProject.Controllers
                     EmailModel objEmail = new EmailModel();
                     String strTO = UserEmail;
                     String strFROM = "Verification-Matchup@gmail.com";
-                   // String strFROM = "johnson@gmail.com";
                     String strSubject = "Verification Code for MatchUp";
                     String strMessage = "Hi "+ FirstName + "! Here is your verification code: " + code;
+
                     //**** Uncomment everything before return view  when you want to send the email 
 
-                    //try
-                    //{
-                    //    objEmail.SendMail(strTO, strFROM, strSubject, strMessage);
-                    //}
-                    //catch (Exception ex)
-                    //{
-                    //    Console.WriteLine($"Failed to send verification email: {ex.Message}");
-                    //    ViewBag.ErrorMessage = "The email wasn't sent because: " + ex.Message;
-                    //}
-                    //ViewBag.ErrorMessage = "The customer was successfully loggedin.";
+                    try
+                    {
+                        objEmail.SendMail(strTO, strFROM, strSubject, strMessage);
+                        string cookieObject = code;
+                        CookieOptions options = new CookieOptions();
+                        options.Expires = DateTime.Now.AddSeconds(30);
+                        string SecretCookie = EncryptionHelper.Encrypt(cookieObject);
+                        HttpContext.Response.Cookies.Append("VerCode", SecretCookie, options);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Failed to send verification email: {ex.Message}");
+                        ViewBag.ErrorMessage = "The email wasn't sent because: " + ex.Message;
+                    }
+                    ViewBag.ErrorMessage = "The customer was successfully loggedin.";
                     return View("~/Views/Home/Verification.cshtml");
 
                 }
@@ -105,5 +119,41 @@ namespace DatingSite_TermProject.Controllers
             return View("~/Views/Home/Login.cshtml");
 
         }
+        private void SaveLogin()
+        {
+            if (Request.Form["SaveDetails"].ToString() == "Yes")
+            {
+                PrivateUserInfoModel privateinfo = new PrivateUserInfoModel();
+                privateinfo.FirstName = "NoValue";
+                privateinfo.LastName = "NoValue";
+                privateinfo.Email = "NoValue";
+                privateinfo.PrivateUsername = Request.Form["Username"].ToString();
+                privateinfo.Password = Request.Form["Password"].ToString();
+                string cookieObject = JsonSerializer.Serialize(privateinfo);
+                CookieOptions options = new CookieOptions();
+                options.Expires = DateTime.Now.AddYears(1);
+                string SecretCookie = EncryptionHelper.Encrypt(cookieObject);
+                HttpContext.Response.Cookies.Append("fastLogin", SecretCookie, options);
+            }
+            else if (Request.Form["SaveDetails"].ToString() == "No")
+            {
+                PrivateUserInfoModel privateinfo = new PrivateUserInfoModel();
+                privateinfo.FirstName = "NoValue";
+                privateinfo.LastName = "NoValue";
+                privateinfo.Email = "NoValue";
+                privateinfo.PrivateUsername = Request.Form["Username"].ToString();
+                privateinfo.Password = Request.Form["Password"].ToString();
+                string cookieObject = JsonSerializer.Serialize(privateinfo);
+                CookieOptions options = new CookieOptions();
+                options.Expires = DateTime.Now;
+                string SecretCookie = EncryptionHelper.Encrypt(cookieObject);
+                HttpContext.Response.Cookies.Append("fastLogin", SecretCookie, options);
+            }
+            else
+            {
+
+            }
+        }
+        
     }
 }

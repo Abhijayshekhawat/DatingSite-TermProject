@@ -26,7 +26,7 @@
         <div class="navbar-right">
             <span class="user-name">Welcome First Name</span> <!-- Example of displaying user name -->
             <img src="~/css/Logo.png"  alt="User Image" class="user-img" />
-            <form>
+            <form asp-controller ="Account" asp-action="Logout" method="post">
                 <button type="submit" class="logout-button">Logout</button>
             </form>
         </div>

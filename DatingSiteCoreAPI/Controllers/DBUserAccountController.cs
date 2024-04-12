@@ -68,7 +68,26 @@ namespace DatingSiteCoreAPI.Controllers
             bool result;
             PrivateUserInfo privateinfo = user;
 
-            int Reset = privateinfo.Forgot(user.Email);
+            int Forgot = privateinfo.Forgot(user.Email);
+
+            if (Forgot > 0)
+            {
+                result = true;
+            }
+            else { result = false; }
+            return result;
+
+
+
+        }
+        [HttpPost()]
+        [HttpPost("ResetPassword")]
+        public bool ResetPassword([FromBody] PrivateUserInfo user)
+        {
+            bool result;
+            PrivateUserInfo privateinfo = user;
+
+            int Reset = privateinfo.Reset(user.Email, user.Password);
 
             if (Reset > 0)
             {

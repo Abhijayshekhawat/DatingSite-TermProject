@@ -98,6 +98,23 @@ namespace DatingSiteCoreAPI
 
             return SuccessfulLogin;
         }
+        public int Reset(string resetEmail, string newPwd)
+        {
+            DBConnect objDB = new DBConnect();
+
+            SqlCommand objCommand = new SqlCommand();
+
+            objCommand.CommandType = CommandType.StoredProcedure;
+
+            objCommand.CommandText = "TP_UpdateUserPassword";
+
+            SqlParameter inputParameter = new SqlParameter("@Email", resetEmail);
+            objCommand.Parameters.Add(inputParameter);
+            SqlParameter inputParameter2 = new SqlParameter("@NewPassword", newPwd);
+            objCommand.Parameters.Add(inputParameter2);
+            int SuccessfulLogin = objDB.DoUpdate(objCommand);
+            return SuccessfulLogin;
+        }
 
         public PrivateUserInfo(int privateid, string firstname, string lastname, string email, string privateusername, string password)
         {

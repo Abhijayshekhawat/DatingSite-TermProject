@@ -1,4 +1,5 @@
-﻿@{
+﻿@model DatingSite_TermProject.Models.LoginModel
+@{
     Layout = null; // Assuming you don't want to use a layout page
 }
 
@@ -23,19 +24,23 @@
                 </div>
                 <div class="input-group">
                     <div class="input__wrapper">
-                        <input type="text" name="UserName" class="form-control input__field" placeholder=""/>
-                        <label class="input__label">User Name</label>
+                        <input type="text" asp-for="Username" class="form-control input__field" placeholder="" value="@ViewBag.Username" />
+                        <label class="input__label">UserName</label>
+
                     </div>
                     <div class="input__wrapper">
-                        <input type="password" name="Password" class="form-control input__field" placeholder=""/>
+                        <input type="password" asp-for="Password" class="form-control input__field" placeholder="" value="@ViewBag.Pwd"/>
                         <label class="input__label">Password</label>
                     </div>
                     <div>
                         <label>Would you like to save your password?</label>
-                        <input type="checkbox" name="SaveDetails" value="Yes" id="SaveDetails-Yes" checked/>
+                        <input type="radio" id="SaveDetails-Yes" name="SaveDetails" value="Yes" checked />
                         <label for="SaveDetails-Yes">Yes</label>
-                        <input type="checkbox" name="SaveDetails" value="No" id="SaveDetails-No" />
+                        <input type="radio" id="SaveDetails-No" name="SaveDetails" value="No" />
                         <label for="SaveDetails-No">No</label>
+                    </div>
+                    <div>
+                        <a href="@Url.Action("ForgotPassword", "ForgotPassword")" class="login">Forgot your password?</a>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Login</button>
