@@ -18,8 +18,9 @@ namespace DatingSite_TermProject.Controllers
                 if (decryptedCode == userEnteredCode)
                 {
                     ViewBag.ErrorMessage = "The codes are the same.";
-                    return View("~/Views/Main/Dashboard.cshtml");
-
+                    List<CardsModel> Cardslist = populateProfiles();
+                    ViewBag.ProfileImage = GetUserImage();
+                    return View("~/Views/Main/Dashboard.cshtml", Cardslist);
                 }
                 else
                 {
@@ -32,9 +33,9 @@ namespace DatingSite_TermProject.Controllers
                 ViewBag.ErrorMessage = "A problem occurred Please go through the login process again.";
                 return View("~/Views/Home/Verification.cshtml");
             }
-
-
-
+        }
+        private List<CardsModel> populateProfiles()
+        {
             string savedUsername2 = Request.Cookies["Username"].ToString();
             UserProfileModel userProfile = new UserProfileModel();
 
@@ -68,15 +69,32 @@ namespace DatingSite_TermProject.Controllers
 
                 Cardslist.Add(cards);
             }
+            return Cardslist;
 
-            return View("~/Views/Main/Dashboard.cshtml", Cardslist);
+        }
+        private String GetUserImage()
+        {
+            string savedUsername2 = Request.Cookies["Username"].ToString();
+            DBConnect objDB = new DBConnect();
+            SqlCommand objCommand = new SqlCommand();
+            objCommand.CommandType = CommandType.StoredProcedure;
+            objCommand.CommandText = "TP_GetProfileFromUsername";
+
+            SqlParameter inputParameter1 = new SqlParameter("@Username", savedUsername2);
+            objCommand.Parameters.Add(inputParameter1);
 
 
+            DataSet ds = objDB.GetDataSet(objCommand);
 
-
-
-
-           
+            DataTable dt = ds.Tables[0];
+            string picture="";
+            foreach (DataRow dr in dt.Rows)
+            {
+                picture = dr["ProfilePhotoURL"].ToString();
+                ViewBag.FirstName = dr["FirstName"].ToString();
+            }
+            return picture;
+            
         }
     }
 }

@@ -15,6 +15,7 @@ namespace DatingSite_TermProject.Controllers
     {
         public IActionResult Dashboard()
         {
+            
             return View();
 
         }

@@ -85,6 +85,7 @@ namespace DatingSite_TermProject.Controllers
                     String strSubject = "Verification Code for MatchUp";
                     String strMessage = "Hi "+ FirstName + "! Here is your verification code: " + code;
                     Response.Cookies.Append("Username", privateinfo.PrivateUsername);
+                    ViewBag.FirstName = FirstName;
                     //**** Uncomment everything before return view  when you want to send the email 
 
                     try

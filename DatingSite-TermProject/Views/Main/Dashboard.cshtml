@@ -29,8 +29,8 @@
             </nav>
         </div>
         <div class="navbar-right">
-            <span class="user-name">Welcome First Name</span> <!-- Example of displaying user name -->
-            <img src="~/css/Logo.png"  alt="User Image" class="user-img" />
+            <span class="user-name">Welcome @ViewBag.FirstName</span> <!-- Example of displaying user name -->
+            <img src="@ViewBag.ProfileImage" alt="User Image" class="user-img" />
             <form asp-controller ="Account" asp-action="Logout" method="post">
                 <button type="submit" class="logout-button">Logout</button>
             </form>
@@ -56,21 +56,22 @@
                 </div>
             </div>
             <div class="cards-container">
-                @foreach (CardsModel cards in Model)
-                {
-                    <div class="container">
+                <div class="container">
+                    @foreach (CardsModel cards in Model)
+                    {
                         <div class="card">
                             <img src= @cards.ProfilePhotoURL alt="Profile Image">
                             <div class="card-body">
                                 <h5 class="card-title">@cards.FirstName, @cards.LastName</h5>
                                 <p class="card-text">@cards.Description</p>
                                 <p class="card-text">@cards.City,@cards.State</p>
+                                <button type="button" class="btn btn-secondary">Show Profile</button>
+                                <button type="button" class="btn btn-primary">Like</button>
                             </div>
                         </div>
-                    </div>
-                }
+                    }
+                </div>
             </div>
-        </div>
     </div>
     <footer>
         <p>2024 MatchUp by Abhijay & Johnson</p>
