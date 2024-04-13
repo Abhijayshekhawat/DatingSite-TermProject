@@ -18,8 +18,9 @@ namespace DatingSite_TermProject.Controllers
                 if (decryptedCode == userEnteredCode)
                 {
                     ViewBag.ErrorMessage = "The codes are the same.";
-                    List<CardsModel> Cardslist = populateProfiles();
+                    List<CardsModel> Cardslist = PopulateProfiles();
                     ViewBag.ProfileImage = GetUserImage();
+                    PopulateFilters();
                     return View("~/Views/Main/Dashboard.cshtml", Cardslist);
                 }
                 else
@@ -34,7 +35,7 @@ namespace DatingSite_TermProject.Controllers
                 return View("~/Views/Home/Verification.cshtml");
             }
         }
-        private List<CardsModel> populateProfiles()
+        private List<CardsModel> PopulateProfiles()
         {
             string savedUsername2 = Request.Cookies["Username"].ToString();
             UserProfileModel userProfile = new UserProfileModel();
@@ -95,6 +96,66 @@ namespace DatingSite_TermProject.Controllers
             }
             return picture;
             
+        }
+        private void PopulateFilters()
+        {
+            //Populate States
+            {
+                List<string> uniqueStates = new List<string>();
+                DBConnect DB = new DBConnect();
+                DataSet DS;
+                SqlCommand Cmd = new SqlCommand();
+                Cmd.CommandType = CommandType.StoredProcedure;
+                Cmd.CommandText = "TP_GetUniqueStates";
+                DS = DB.GetDataSet(Cmd);
+                foreach (DataRow row in DS.Tables[0].Rows)
+                {
+                    string state = row["State"].ToString();
+                    uniqueStates.Add(state);
+                }
+                ViewBag.States = uniqueStates;
+            }
+            //Populate Interests
+            {
+                DBConnect DB = new DBConnect();
+                DataSet DS;
+                SqlCommand Cmd = new SqlCommand();
+                Cmd.CommandType = CommandType.StoredProcedure;
+                Cmd.CommandText = "TP_GetUniqueInterests";
+                DS = DB.GetDataSet(Cmd);
+
+                List<string> uniqueInterests = new List<string>();
+                foreach (DataRow row in DS.Tables[0].Rows)
+                {
+                    string interestList = row["Interests"].ToString();
+                    string[] interests = interestList.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                    foreach (string interest in interests)
+                    {
+                        string trimmedInterest = interest.Trim();
+                        if (!uniqueInterests.Contains(trimmedInterest))
+                        {
+                            uniqueInterests.Add(trimmedInterest);
+                        }
+                    }
+                }
+                ViewBag.Interests = uniqueInterests;
+            }
+            //Populate Commitment Types
+            {
+                List<string> uniqueCommitments = new List<string>();
+                DBConnect DB = new DBConnect();
+                DataSet DS;
+                SqlCommand Cmd = new SqlCommand();
+                Cmd.CommandType = CommandType.StoredProcedure;
+                Cmd.CommandText = "TP_GetUniqueCommitmentTypes";
+                DS = DB.GetDataSet(Cmd);
+                foreach (DataRow row in DS.Tables[0].Rows)
+                {
+                    string commitmentType = row["CommitmentType"].ToString();
+                    uniqueCommitments.Add(commitmentType);
+                }
+                ViewBag.Commitments = uniqueCommitments;
+            }
         }
     }
 }

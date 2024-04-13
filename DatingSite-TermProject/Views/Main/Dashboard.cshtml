@@ -48,10 +48,44 @@
                 <div class="filters-section">
                     <h2>Filters</h2>
                     <!-- Filters form -->
-                    <form>
-                        <!-- Generate filters here -->
-                        <button type="submit" class="btnFilter">Apply Filters</button>
-                        <button type="reset" class="btnFilter">Reset Filters</button>
+                    <form asp-controller="YourController" asp-action="FilterAction" method="post">
+                        <label for="lessThanAge">Age under:</label>
+                        <input type="text" id="lessThanAge" name="lessThanAge" class="form-control" />
+
+                        <label for="filterCity">City:</label>
+                        <input type="text" id="filterCity" name="filterCity" class="form-control" />
+
+                        <label for="filterState">State:</label>
+                        <select id="filterState" name="filterState" class="form-control">
+                            @foreach (var state in ViewBag.States as List<string>)
+                            {
+                                <option value="@state">@state</option>
+                            }
+                        </select>
+
+                        <label for="filterOccupation">Occupation:</label>
+                        <input type="text" id="filterOccupation" name="filterOccupation" class="form-control" />
+
+                        <label for="chkInterests"><strong>Your Interests:</strong></label>
+                        <div class="checkbox-container">
+                            @foreach (var interest in ViewBag.Interests as List<string>)
+                            {
+                                <input type="checkbox" id="interest_@interest" name="interests" value="@interest">
+                                <label for="interest_@interest">@interest</label>
+                                <br />
+                            }
+                        </div>
+
+                        <label for="filterCommitmentType">Commitment Type:</label>
+                        <select id="filterCommitmentType" name="filterCommitmentType" class="form-control">
+                            @foreach (var Commitment in ViewBag.Commitments as List<string>)
+                            {
+                                <option value="@Commitment">@Commitment</option>
+                            }
+                        </select>
+
+                        <button type="submit" class="btn btn-primary">Apply Filters</button>
+                        <button type="reset" class="btn btn-secondary">Reset Filters</button>
                     </form>
                 </div>
             </div>
