@@ -33,7 +33,11 @@ namespace DatingSite_TermProject.Controllers
         {
             return View();
         }
-        public IActionResult Privacy()
+        public IActionResult Maps()
+        {
+            return View();
+        }
+        public IActionResult Events()
         {
             return View();
         }
