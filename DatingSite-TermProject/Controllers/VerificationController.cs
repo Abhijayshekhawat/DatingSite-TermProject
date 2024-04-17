@@ -9,6 +9,16 @@ namespace DatingSite_TermProject.Controllers
 {
     public class VerificationController : Controller
     {
+
+        public ActionResult actionresult()
+
+
+        { 
+            
+            return View("~/Views/Main/Dashboard.cshtml"); 
+        
+        
+        }
         public IActionResult Verification()
         {
             if (Request.Cookies.TryGetValue("VerCode", out string encryptedCookie))
