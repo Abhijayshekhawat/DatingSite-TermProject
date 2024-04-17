@@ -25,6 +25,7 @@ namespace DatingSite_TermProject.Models
                     using (CryptoStream cs = new CryptoStream(ms, aes.CreateEncryptor(), CryptoStreamMode.Write))
                     {
                         cs.Write(plainTextBytes, 0, plainTextBytes.Length);
+                        cs.FlushFinalBlock();
                         cs.Close();
                     }
                     plainText = Convert.ToBase64String(ms.ToArray());
@@ -49,6 +50,7 @@ namespace DatingSite_TermProject.Models
                     using (CryptoStream cs = new CryptoStream(ms, aes.CreateDecryptor(), CryptoStreamMode.Write))
                     {
                         cs.Write(cipherTextBytes, 0, cipherTextBytes.Length);
+                        cs.FlushFinalBlock();
                         cs.Close();
                     }
                     encryptedText = Encoding.UTF8.GetString(ms.ToArray());
