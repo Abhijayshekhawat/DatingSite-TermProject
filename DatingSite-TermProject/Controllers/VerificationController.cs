@@ -5,10 +5,21 @@ using System.Data;
 using System.Data.SqlClient;
 using Utilities;
 
+
 namespace DatingSite_TermProject.Controllers
 {
     public class VerificationController : Controller
     {
+
+        public ActionResult actionresult()
+
+
+        { 
+            
+            return View("~/Views/Main/Dashboard.cshtml"); 
+        
+        
+        }
         public IActionResult Verification()
         {
             if (Request.Cookies.TryGetValue("VerCode", out string encryptedCookie))
@@ -17,8 +28,12 @@ namespace DatingSite_TermProject.Controllers
                 string userEnteredCode = Request.Form["VerificationCode"].ToString();
                 if (decryptedCode == userEnteredCode)
                 {
+
                     ViewBag.ErrorMessage = "The codes are the same.";
-                    List<CardsModel> Cardslist = PopulateProfiles();
+                    string savedUsername2 = Request.Cookies["Username"].ToString();
+                    UserProfileModel userProfile = new UserProfileModel();
+                    int privateid = userProfile.getPrivateId(savedUsername2);
+                    List<CardsModel> Cardslist = PopulateProfiles(privateid);
                     ViewBag.ProfileImage = GetUserImage();
                     PopulateFilters();
                     return View("~/Views/Main/Dashboard.cshtml", Cardslist);
@@ -35,12 +50,9 @@ namespace DatingSite_TermProject.Controllers
                 return View("~/Views/Home/Verification.cshtml");
             }
         }
-        private List<CardsModel> PopulateProfiles()
+        public List<CardsModel> PopulateProfiles(int privateid)
         {
-            string savedUsername2 = Request.Cookies["Username"].ToString();
-            UserProfileModel userProfile = new UserProfileModel();
-
-            int privateid = userProfile.getPrivateId(savedUsername2);
+           
 
             List<CardsModel> Cardslist = new List<CardsModel>();
             CardsModel cards;
@@ -156,6 +168,14 @@ namespace DatingSite_TermProject.Controllers
                 }
                 ViewBag.Commitments = uniqueCommitments;
             }
+
+           
+
         }
+
+
+      
+
+
     }
 }
