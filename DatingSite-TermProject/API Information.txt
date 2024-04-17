@@ -1,4 +1,10 @@
-﻿API Key = AIzaSyD5Zq_-OdrLWo4Wm8Qy0gaefwYNnI2_Mms
+﻿Google Maps API Key = AIzaSyD5Zq_-OdrLWo4Wm8Qy0gaefwYNnI2_Mms
+Ticketmaster API Key = aexPQKTALebKhslAwRVeIUMoaEdiEA7g
+Ticketmaster:
+-find API and usage: https://developer.ticketmaster.com/products-and-docs/apis/discovery-api/v2/
+-try api: https://developer.ticketmaster.com/api-explorer/v2/
+
+Google Maps:
 https://developers.google.com/maps/documentation/embed/embedding-map?hl=en
 Creating the Maps Embed API URL
 The following is an example URL that loads the Maps Embed API:

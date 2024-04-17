@@ -1,0 +1,73 @@
+﻿@{
+    Layout = null; // Assuming you don't want to use a layout page
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Map Examples</title>
+    <script>
+        function updateMap(searchQuery) {
+            var iframe = document.getElementById('searchMap');
+            iframe.src = 'https://www.google.com/maps/embed/v1/search?key=AIzaSyD5Zq_-OdrLWo4Wm8Qy0gaefwYNnI2_Mms&q=' + encodeURIComponent(searchQuery);
+        }
+    </script>
+</head>
+<body>
+    <h1>Map Examples</h1>
+    <p>Examples where we will use maps api.</p>
+    <p>There are 2 ways to implement this:</p>
+    <p>1. Embedding it using iframe(Free)</p>
+    <p>2. Using javascript API(Free)</p>
+
+    <!-- Place Mode Example -->
+    <h3>Place Mode - Eiffel Tower</h3>
+    <iframe
+        width="600"
+        height="450"
+        style="border:0"
+        referrerpolicy="no-referrer-when-downgrade"
+        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyD5Zq_-OdrLWo4Wm8Qy0gaefwYNnI2_Mms&q=Eiffel+Tower,Paris+France"
+        allowfullscreen>
+    </iframe>
+
+    <!-- Directions Mode Example -->
+    <h3>Directions Mode - Oslo to Telemark, Norway</h3>
+    <iframe
+        width="600"
+        height="450"
+        style="border:0"
+        referrerpolicy="no-referrer-when-downgrade"
+        src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyD5Zq_-OdrLWo4Wm8Qy0gaefwYNnI2_Mms&origin=Oslo+Norway&destination=Telemark+Norway&avoid=tolls|highways"
+        allowfullscreen>
+    </iframe>
+
+    <!-- Streetview Mode Example -->
+    <h3>Streetview Mode - Dolomites, Italy</h3>
+    <iframe
+        width="600"
+        height="450"
+        style="border:0"
+        referrerpolicy="no-referrer-when-downgrade"
+        src="https://www.google.com/maps/embed/v1/streetview?key=AIzaSyD5Zq_-OdrLWo4Wm8Qy0gaefwYNnI2_Mms&location=46.414382,10.013988&heading=210&pitch=10&fov=35"
+        allowfullscreen>
+    </iframe>
+
+    <!-- Search Mode Example -->
+    <h3>Search for a Good Date Place in Seattle</h3>
+    <div>
+        <button onclick="updateMap('romantic restaurants in Seattle')">Romantic Restaurants</button>
+        <button onclick="updateMap('movie theaters in Seattle')">Movie Theaters</button>
+        <button onclick="updateMap('parks in Seattle')">Parks</button>
+        <button onclick="updateMap('art galleries in Seattle')">Art Galleries</button>
+    </div>
+    <iframe id="searchMap"
+            width="600"
+            height="450"
+            style="border:0"
+            referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps/embed/v1/search?key=AIzaSyD5Zq_-OdrLWo4Wm8Qy0gaefwYNnI2_Mms&q=record+stores+in+Seattle"
+            allowfullscreen>
+    </iframe>
+</body>
+</html>

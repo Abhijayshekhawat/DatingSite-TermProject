@@ -1,0 +1,130 @@
+﻿@{
+    Layout = null; // Assuming you don't want to use a layout page
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Event Examples</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .card {
+            width: 220px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            background-color: #FFFFFF;
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+        .card-body {
+            padding: 15px;
+            text-align: center;
+        }
+        .card-title {
+            margin: 0;
+            font-size: 18px;
+            color: #333;
+        }
+        .card-text {
+            font-size: 14px;
+            color: #666;
+        }
+        .btn-primary {
+            background-color: #FF4B2B;
+            color: #FFFFFF;
+            border: none;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: block;
+            width: calc(100% - 40px);
+            margin: 10px auto;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #FF6B45;
+        }
+        #eventsContainer {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+    </style>
+
+</head>
+<body>
+    <h1>Event examples using Eventbrite</h1>
+    <p>Examples where we will use Event api.</p>
+    <div id="eventsContainer"></div>
+
+    <script>
+        function fetchEvents() {
+            const apiUrl = `https://app.ticketmaster.com/discovery/v2/events?apikey=aexPQKTALebKhslAwRVeIUMoaEdiEA7g&locale=*&startDateTime=2024-04-16T23:59:00Z&endDateTime=2024-04-18T00:00:00Z&city=Philadelphia&stateCode=PA`;
+
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    const events = data._embedded.events;
+                    const container = document.getElementById('eventsContainer');
+                    container.innerHTML = ''; // Clear previous content
+
+                    events.forEach(event => {
+                        const card = document.createElement('div');
+                        card.className = 'card';
+
+                        const image = document.createElement('img');
+                        image.src = event.images[0].url; // Using the first image from the list
+
+                        const body = document.createElement('div');
+                        body.className = 'card-body';
+
+                        const title = document.createElement('h4');
+                        title.className = 'card-title';
+                        title.textContent = event.name;
+
+                        // Create a paragraph for date and time
+                        const dateParagraph = document.createElement('p');
+                        dateParagraph.className = 'card-date';
+                        const eventDate = new Date(event.dates.start.dateTime);
+                        dateParagraph.textContent = `Date: ${eventDate.toLocaleDateString()} at ${eventDate.toLocaleTimeString([], { timeZone: event.dates.timezone, hour: '2-digit', minute: '2-digit' })}`;
+
+                        const link = document.createElement('a');
+                        link.className = 'btn-primary';
+                        link.href = event.url;
+                        link.textContent = 'More Info';
+                        link.target = '_blank';
+
+                        body.appendChild(title);
+                        body.appendChild(dateParagraph); // Append date information
+                        body.appendChild(link);
+
+                        card.appendChild(image);
+                        card.appendChild(body);
+                        container.appendChild(card);
+                    });
+                })
+                .catch(error => console.error('Error fetching events:', error));
+
+        }
+
+        // Fetch events on page load
+        document.addEventListener('DOMContentLoaded', fetchEvents);
+    </script>
+
+</body>
+</html>
