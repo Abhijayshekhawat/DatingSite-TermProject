@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc.ViewEngines;
 using System.IO;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.Identity.Client;
 
 
 
@@ -28,7 +29,7 @@ namespace DatingSite_TermProject.Controllers.Tests
         {
             VerificationController controller = new VerificationController();
 
-            // Act
+            
             var result = controller.actionresult() as ViewResult;
 
             Assert.IsNotNull(result);
@@ -68,20 +69,26 @@ namespace DatingSite_TermProject.Controllers.Tests
 
                 bool ExpectedValue2 = true;
 
-                Assert.AreEqual(ExpectedValue2, ActualValue2);
+                Assert.AreEqual(ExpectedValue2, ActualValue2);     
 
-
-
-
-                
-
-            }
+            }      
 
         }
 
 
 
+        public void PopulateProfiles()
+        {
+            VerificationController controller = new VerificationController();
 
+
+
+
+
+
+
+
+        }
 
 
 

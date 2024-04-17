@@ -102,7 +102,7 @@ namespace DatingSite_TermProject.Controllers
                         Console.WriteLine($"Failed to send verification email: {ex.Message}");
                         ViewBag.ErrorMessage = "The email wasn't sent because: " + ex.Message;
                     }
-                    ViewBag.ErrorMessage = "The customer was successfully loggedin.";
+                    ViewBag.ErrorMessage = "Please enter your verification code to login." + " " + privateinfo.PrivateUsername;
                     return View("~/Views/Home/Verification.cshtml");
 
                 }
