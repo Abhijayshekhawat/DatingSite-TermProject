@@ -90,7 +90,7 @@ namespace DatingSite_TermProject.Controllers
 
         [HttpPost]
 
-        public IActionResult FilterAction(string username, string lessThanAge, string filterCity, string filterState, string filterOccupation, string interestsString, string filterCommitmentType)
+        public IActionResult FilterAction()
         {
 
             // should this be a method or an IActionResult type of method ?
@@ -104,16 +104,16 @@ namespace DatingSite_TermProject.Controllers
 
 
 
-            username = Request.Cookies["Username"].ToString();
+            string username = Request.Cookies["Username"].ToString();
             UserProfileModel userProfile = new UserProfileModel();
 
-            lessThanAge = Request.Form["lessThanAge"].ToString();
-            filterCity = Request.Form["filterCity"].ToString();
-            filterState = Request.Form["filterState"].ToString();
-            filterOccupation = Request.Form["filterOccupation"].ToString();
-            interestsString = Request.Form["interests"].ToString();
+            string lessThanAge = Request.Form["lessThanAge"].ToString();
+            string filterCity = Request.Form["filterCity"].ToString();
+            string filterState = Request.Form["filterState"].ToString();
+            string filterOccupation = Request.Form["filterOccupation"].ToString();
+            string interestsString = Request.Form["interests"].ToString();
 
-            filterCommitmentType = Request.Form["filterCommitmentType"].ToString();
+            string filterCommitmentType = Request.Form["filterCommitmentType"].ToString();
 
             List<CardsModel> Cardslist = new List<CardsModel>();
             CardsModel cards;
@@ -150,7 +150,8 @@ namespace DatingSite_TermProject.Controllers
 
                 Cardslist.Add(cards);
             }
-
+            // creating a tempdata for testing // 
+            TempData["Cardslist"] = Cardslist;
 
             return View("~/Views/Main/Dashboard.cshtml", Cardslist);
         }
