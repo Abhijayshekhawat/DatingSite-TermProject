@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using System.Data;
 using System.Data.SqlClient;
 using Utilities;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace DatingSite_TermProject.Controllers
 {
@@ -32,7 +33,7 @@ namespace DatingSite_TermProject.Controllers
             }
         }
         [HttpPost]
-        public IActionResult Profile(string profileModel)
+        public IActionResult Profile(UserProfileModel profileModel)
         {
             ViewBag.CommitmentTypes = new List<string> { "Friends", "Short-Term Relationship", "Long-Term Relationship", "Open-Relationship", "Marriage" };
             ViewBag.BookGenres = new List<string> { "Fiction", "Non-Fiction", "Mystery", "Sci-Fi", "Biography" };
@@ -68,10 +69,6 @@ namespace DatingSite_TermProject.Controllers
 
             // combine these into one since having two seperate table is hard to insert with
             // web api --> mvc core
-
-
-
-
             // Serialize an Account object into a JSON string.
             var jsonPayload = JsonSerializer.Serialize(userProfile);
             try
@@ -90,7 +87,7 @@ namespace DatingSite_TermProject.Controllers
                 writer.Close();
                 // Read the data from the Web Response, which requires working with streams.
                 WebResponse response = request.GetResponse();
-                    Stream theDataStream = response.GetResponseStream();
+                Stream theDataStream = response.GetResponseStream();
                 StreamReader reader = new StreamReader(theDataStream);
                 String data = reader.ReadToEnd();
                 reader.Close();
@@ -98,7 +95,8 @@ namespace DatingSite_TermProject.Controllers
                 if (data == "true")
                 {
                     ViewBag.ErrorMessage = "User's Information was successfully added";
-                    return View("~/Views/Profile/ProfileImages.cshtml");
+                    ProfileImagesModel imageProfile = GetImages(savedUsername);
+                    return View("~/Views/Profile/ProfileImages.cshtml", imageProfile);
 
                 }
                 else
@@ -152,6 +150,36 @@ namespace DatingSite_TermProject.Controllers
                 profile.Dislikes = dr["Dislikes"].ToString();
 
                 return profile; // Assuming you want to return this model from a method
+            }
+            else
+            {
+                return null; // Or however you wish to handle cases where no profile data is returned
+            }
+        }
+        private ProfileImagesModel GetImages(string savedUsername)
+        {
+            DBConnect objDB = new DBConnect();
+            SqlCommand objCommand = new SqlCommand();
+            objCommand.CommandType = CommandType.StoredProcedure;
+            objCommand.CommandText = "TP_GetImagesForProfile";
+
+            SqlParameter inputParameter1 = new SqlParameter("@Username", savedUsername);
+            objCommand.Parameters.Add(inputParameter1);
+
+
+            DataSet ds = objDB.GetDataSet(objCommand);
+
+            DataTable dt = ds.Tables[0];
+            ProfileImagesModel image = new ProfileImagesModel();
+            if (dt.Rows.Count > 0)
+            {
+                DataRow dr = dt.Rows[0];
+                image.Image1 = dr["Image1"].ToString();
+                image.Image2 = dr["Image2"].ToString();
+                image.Image3 = dr["Image3"].ToString();
+                image.Image4 = dr["Image4"].ToString();
+                image.Image5 = dr["Image5"].ToString();
+                return image; // Assuming you want to return this model from a method
             }
             else
             {
