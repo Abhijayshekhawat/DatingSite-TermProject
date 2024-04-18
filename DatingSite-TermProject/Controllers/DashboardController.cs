@@ -84,7 +84,7 @@ namespace DatingSite_TermProject.Controllers
                 Cardslist.Add(cards);
             }
 
-            return View("~/Views/Main/Dashboard.cshtml",Cardslist);
+            return View("~/Views/Main/Dashboard.cshtml", Cardslist);
         }
 
 
@@ -114,7 +114,7 @@ namespace DatingSite_TermProject.Controllers
             string interestsString = Request.Form["interests"].ToString();
 
             string filterCommitmentType = Request.Form["filterCommitmentType"].ToString();
-       
+
             List<CardsModel> Cardslist = new List<CardsModel>();
             CardsModel cards;
 
@@ -150,11 +150,11 @@ namespace DatingSite_TermProject.Controllers
 
                 Cardslist.Add(cards);
             }
-          
+           
 
             return View("~/Views/Main/Dashboard.cshtml", Cardslist);
         }
-        
+
         private void PopulateStates()
         {
             // Code for populating ViewBag.States
