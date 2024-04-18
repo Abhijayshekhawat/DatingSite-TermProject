@@ -155,7 +155,7 @@
 
                 <div class="preference-section">
                     <label for="FavoriteMovieGenre">Favorite Movie Genre:</label>
-                    <select asp-for="FavoriteMovieGenre" class="form-control">
+                    <select asp-for="FavoriteMovieGenre" name="MovieGenres" class="form-control">
                         @foreach (var type in ViewBag.MovieGenres as List<string>)
                         {
                             <option value="@type" selected="@(type == Model.FavoriteMovieGenre)">@type</option>
@@ -170,7 +170,7 @@
 
                 <div class="preference-section">
                     <label for="FavoriteBookGenre">Favorite Book Genre:</label>
-                    <select asp-for="FavoriteBookGenre" class="form-control">
+                    <select asp-for="FavoriteBookGenre" name="BookGenres" class="form-control">
                         @foreach (var book in ViewBag.BookGenres as List<string>)
                         {
                             <option value="@book" selected="@(book == Model.FavoriteBookGenre.Trim())">@book</option>
@@ -185,7 +185,7 @@
 
                 <div class="preference-section">
                     <label for="Commitment">Commitment Type:</label>
-                    <select asp-for="CommitmentType" class="form-control">
+                    <select asp-for="CommitmentType" name="Commitment" class="form-control">
                         @foreach (var type in ViewBag.CommitmentTypes as List<string>)
                         {
                             <option value="@type" selected="@(type == Model.CommitmentType)">@type</option>

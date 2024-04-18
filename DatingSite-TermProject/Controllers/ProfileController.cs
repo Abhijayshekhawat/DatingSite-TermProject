@@ -20,7 +20,6 @@ namespace DatingSite_TermProject.Controllers
             UserProfileModel profile = GetProfile(savedUsername);
             ViewBag.CommitmentTypes = new List<string> { "Friends", "Short-Term Relationship", "Long-Term Relationship", "Open-Relationship", "Marriage" };
             ViewBag.BookGenres = new List<string> { "Fiction", "Non-Fiction", "Mystery", "Sci-Fi", "Biography" };
-
             ViewBag.MovieGenres = new List<string> { "Action", "Comedy", "Drama", "Fantasy", "Horror" };
             if (profile != null)
             {
@@ -35,6 +34,9 @@ namespace DatingSite_TermProject.Controllers
         [HttpPost]
         public IActionResult Profile(string profileModel)
         {
+            ViewBag.CommitmentTypes = new List<string> { "Friends", "Short-Term Relationship", "Long-Term Relationship", "Open-Relationship", "Marriage" };
+            ViewBag.BookGenres = new List<string> { "Fiction", "Non-Fiction", "Mystery", "Sci-Fi", "Biography" };
+            ViewBag.MovieGenres = new List<string> { "Action", "Comedy", "Drama", "Fantasy", "Horror" };
             UserProfileModel userProfile = new UserProfileModel();
 
             string savedUsername = Request.Cookies["Username"].ToString();
@@ -100,13 +102,13 @@ namespace DatingSite_TermProject.Controllers
 
                 }
                 else
-                    ViewBag.ErrorMessage = "A problem occurred while adding the customer to the database. The data wasn't recorded.";
+                    ViewBag.ErrorMessage = "A problem occurred while adding the profile to the database. The data wasn't recorded.";
             }
             catch (Exception ex)
             {
                 ViewBag.ErrorMessage = "Error: " + ex.Message;
             }
-            return View();
+            return View("~/Views/Profile/Profile.cshtml", userProfile);
         }
         private UserProfileModel GetProfile(string savedUsername)
         {
