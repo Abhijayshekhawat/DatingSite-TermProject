@@ -16,9 +16,7 @@ namespace DatingSite_TermProject.Controllers
     {
         public IActionResult Dashboard()
         {
-            
-            return View();
-
+            return View("~/Views/Main/Dashboard.cshtml");
         }
         private String GetUserImage()
         {

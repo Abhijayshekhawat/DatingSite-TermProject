@@ -16,12 +16,12 @@
         <div class="navbar-left">
             <img src="~/css/logo.png" alt="Logo" class="logo" />
             <nav>
-                <a href="#">Dashboard</a>
-                <a href="#">Matches</a>
-                <a href="#">Likes</a>
-                <a href="#">Dates</a>
-                <a href="#">Plan Date</a>
-                <a href="#" class="active">Edit Profile</a>
+                <a asp-controller="Dashboard" asp-action="Dashboard" class="active">Dashboard</a>
+                <a asp-controller="Matches" asp-action="Matches">Matches</a>
+                <a asp-controller="Likes" asp-action="Likes">Likes</a>
+                <a asp-controller="Dates" asp-action="Dates">Dates</a>
+                <a asp-controller="DatePlanning" asp-action="DatePlanning">Plan Date</a>
+                <a asp-controller="Profile" asp-action="Profile">Edit Profile</a>
             </nav>
         </div>
         <div class="navbar-right">

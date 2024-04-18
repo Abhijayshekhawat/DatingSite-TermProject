@@ -4,21 +4,40 @@ using System.Net;
 using System.Text.Json;  // needed for JSON serializers
 using System.IO;    // needed for Stream and Stream Reader
 using Microsoft.AspNetCore.Http;
+using System.Data;
+using System.Data.SqlClient;
+using Utilities;
 
 namespace DatingSite_TermProject.Controllers
 {
     public class ProfileController : Controller
     {
         string CreateAccountAPI_Url = "http://localhost:5046/api/CreateAccount";
-
-        [HttpPost]
+        [HttpGet]
         public IActionResult Profile()
         {
+            string savedUsername = Request.Cookies["Username"].ToString();
+            UserProfileModel profile = GetProfile(savedUsername);
+            ViewBag.CommitmentTypes = new List<string> { "Friends", "Short-Term Relationship", "Long-Term Relationship", "Open-Relationship", "Marriage" };
+            ViewBag.BookGenres = new List<string> { "Fiction", "Non-Fiction", "Mystery", "Sci-Fi", "Biography" };
 
-           
+            ViewBag.MovieGenres = new List<string> { "Action", "Comedy", "Drama", "Fantasy", "Horror" };
+            if (profile != null)
+            {
+                return View("~/Views/Profile/Profile.cshtml", profile);
+            }
+            else
+            {
+                // Handle case where no profile is found
+                return View("~/Views/Profile/Profile.cshtml", new UserProfileModel());
+            }
+        }
+        [HttpPost]
+        public IActionResult Profile(string profileModel)
+        {
             UserProfileModel userProfile = new UserProfileModel();
 
-            string savedUsername = Request.Cookies["Username"].ToString() ;
+            string savedUsername = Request.Cookies["Username"].ToString();
             // get the data from the form / model UserProfileModel  
             userProfile.PrivateId = userProfile.getPrivateId(savedUsername); // get method in userprofilemodel --> get id by username ?cookie? response?
             userProfile.Age = Int32.Parse(Request.Form["Age"].ToString());
@@ -29,15 +48,11 @@ namespace DatingSite_TermProject.Controllers
             userProfile.State = Request.Form["State"].ToString();
             userProfile.Description = Request.Form["Description"].ToString();
             userProfile.Occupation = Request.Form["Occupation"].ToString();
-
             userProfile.Interests = Request.Form["Interests"].ToString();
-
             userProfile.FavoriteCuisine = Request.Form["Cuisines"].ToString();
-
             userProfile.FavouriteQuote = Request.Form["FavouriteQuote"].ToString();
             userProfile.Goals = Request.Form["Goals"].ToString();
             userProfile.CommitmentType = Request.Form["Commitment"].ToString();
-
             userProfile.FavoriteMovieGenre = Request.Form["MovieGenres"].ToString();
             userProfile.FavoriteBookGenre = Request.Form["BookGenres"].ToString();
             userProfile.Address = Request.Form["Address"].ToString();
@@ -92,6 +107,54 @@ namespace DatingSite_TermProject.Controllers
                 ViewBag.ErrorMessage = "Error: " + ex.Message;
             }
             return View();
+        }
+        private UserProfileModel GetProfile(string savedUsername)
+        {
+            DBConnect objDB = new DBConnect();
+            SqlCommand objCommand = new SqlCommand();
+            objCommand.CommandType = CommandType.StoredProcedure;
+            objCommand.CommandText = "TP_GetProfileFromUsername";
+
+            SqlParameter inputParameter1 = new SqlParameter("@Username", savedUsername);
+            objCommand.Parameters.Add(inputParameter1);
+
+
+            DataSet ds = objDB.GetDataSet(objCommand);
+
+            DataTable dt = ds.Tables[0];
+            UserProfileModel profile = new UserProfileModel();
+            if (dt.Rows.Count > 0)
+            {
+                DataRow dr = dt.Rows[0];
+                profile.Age = Convert.ToInt32(dr["Age"]);
+                profile.Height = dr["Height"].ToString();
+                profile.Weight = dr["Weight"].ToString();
+                profile.ProfilePhotoURL = dr["ProfilePhotoURL"].ToString();
+                profile.City = dr["City"].ToString();
+                profile.State = dr["State"].ToString();
+                profile.Description = dr["Description"].ToString();
+                profile.Occupation = dr["Occupation"].ToString();
+                profile.Interests = dr["Interests"].ToString();
+                profile.FavoriteCuisine = dr["FavouriteCuisine"].ToString();
+                profile.FavouriteQuote = dr["FavouriteQuote"].ToString();
+                profile.Goals = dr["Goals"].ToString();
+                profile.CommitmentType = dr["CommitmentType"].ToString();
+                profile.IsVisible = Convert.ToBoolean(dr["IsVisible"]);
+                profile.FavoriteMovieGenre = dr["FavouriteMovieGenre"].ToString();
+                profile.FavoriteBookGenre = dr["FavouriteBookGenre"].ToString();
+                profile.Address = dr["Address"].ToString();
+                profile.PhoneNumber = dr["PhoneNumber"].ToString();
+                profile.FavoriteMovie = dr["FavouriteMovie"].ToString();
+                profile.FavoriteBook = dr["FavouriteBook"].ToString();
+                profile.FavoriteRestaurant = dr["FavouriteRestaurant"].ToString();
+                profile.Dislikes = dr["Dislikes"].ToString();
+
+                return profile; // Assuming you want to return this model from a method
+            }
+            else
+            {
+                return null; // Or however you wish to handle cases where no profile data is returned
+            }
         }
     }
 }

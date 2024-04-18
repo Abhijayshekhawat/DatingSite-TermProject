@@ -7,7 +7,6 @@ using System.Net;
 using System.Data;
 using System.Data.SqlClient;
 using Microsoft.AspNetCore.Identity;
-using static DatingSite_TermProject.Models.ProfileModel;
 using Utilities;
 
 
@@ -102,7 +101,7 @@ namespace DatingSite_TermProject.Controllers
                         Console.WriteLine($"Failed to send verification email: {ex.Message}");
                         ViewBag.ErrorMessage = "The email wasn't sent because: " + ex.Message;
                     }
-                    ViewBag.ErrorMessage = "Please enter your verification code to login." + " " + privateinfo.PrivateUsername;
+                    ViewBag.ErrorMessage = "Hi " + FirstName + ", Please enter your verification code to login.";
                     return View("~/Views/Home/Verification.cshtml");
 
                 }
