@@ -150,8 +150,7 @@ namespace DatingSite_TermProject.Controllers
 
                 Cardslist.Add(cards);
             }
-            // creating a tempdata for testing // 
-            TempData["Cardslist"] = Cardslist;
+           
 
             return View("~/Views/Main/Dashboard.cshtml", Cardslist);
         }
