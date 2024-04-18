@@ -1,8 +1,12 @@
 ﻿using DatingSite_TermProject.Models;
+using DatingSiteCoreAPI;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
+using System.Data.SqlClient;
 using System.Net;
 using System.Text.Json;
+using System.Xml.Linq;
+using Utilities;
 
 namespace DatingSite_TermProject.Controllers
 {
@@ -67,7 +71,7 @@ namespace DatingSite_TermProject.Controllers
                     CookieOptions tokenOptions = new CookieOptions();
                     tokenOptions.Expires = DateTime.Now.AddMinutes(2);
                     HttpContext.Response.Cookies.Append("Token", secretToken, tokenOptions);
-                    string link = Url.Action("ResetPassword", "ResetPassword", new { token = secretToken }, protocol: HttpContext.Request.Scheme);
+                    string link = Url.Action("AnswerSecQuestion", "AnswerSecQuestion", new { token = secretToken }, protocol: HttpContext.Request.Scheme);
 
 
                     DataSet mydata = privateinfo.GetUserInfo("",privateinfo.Email);
@@ -109,6 +113,7 @@ namespace DatingSite_TermProject.Controllers
                         ViewBag.ErrorMessage = "The email wasn't sent because: " + ex.Message;
                     }
                     ViewBag.ErrorMessage = "Check your email for the reset link!";
+                    PopulateQuestion(strTO);
                     return View("~/Views/Home/Login.cshtml");
 
                 }
@@ -128,6 +133,69 @@ namespace DatingSite_TermProject.Controllers
             }
             return View("~/Views/Home/Login.cshtml");
 
+        }
+
+        private void PopulateQuestion(string email)
+        {
+            ProfileSecQuestionModel secQuestion = new ProfileSecQuestionModel();
+            DBConnect objDB = new DBConnect();
+
+            SqlCommand objCommand = new SqlCommand();
+
+            objCommand.CommandType = CommandType.StoredProcedure;
+            objCommand.CommandText = "TP_GetSecurityQuestionsByEmail";
+
+            SqlParameter inputParameter = new SqlParameter("@Email", email);
+            objCommand.Parameters.Add(inputParameter);
+
+            DataSet ds = objDB.GetDataSet(objCommand);
+
+            DataTable dt = ds.Tables[0];
+            foreach (DataRow dr in dt.Rows)
+            {
+                secQuestion.Question_One = dr["Question_One"].ToString();
+                secQuestion.Question_Two = dr["Question_Two"].ToString();
+                secQuestion.Question_Three = dr["Question_Three"].ToString();
+                secQuestion.Answer_One = dr["Answer_One"].ToString();
+                secQuestion.Answer_Two = dr["Answer_Two"].ToString();
+                secQuestion.Answer_Three = dr["Answer_Three"].ToString();
+            }
+            Random rnd = new Random();
+            int questionIndex = rnd.Next(1, 4);
+
+            // Select random question and answer
+            string selectedQuestion = "";
+            string selectedAnswer = "";
+
+            switch (questionIndex)
+            {
+                case 1:
+                    selectedQuestion = secQuestion.Question_One; 
+                    selectedAnswer = secQuestion.Answer_One;
+                    break;
+                case 2:
+                    selectedQuestion = secQuestion.Question_Two;
+                    selectedAnswer = secQuestion.Answer_Two;
+                    break;
+                case 3:
+                    selectedQuestion = secQuestion.Question_Three;
+                    selectedAnswer = secQuestion.Answer_Three;
+                    break;
+            }
+            // Package the selected question and answer
+            var selectedQA = new
+            {
+                Question = selectedQuestion,
+                Answer = selectedAnswer
+            };
+            ViewBag.Question = selectedQuestion;
+            
+            //Serialize the object to string
+            string cookieObject = JsonSerializer.Serialize(selectedQA);
+            CookieOptions options = new CookieOptions();
+            options.Expires = DateTime.Now.AddSeconds(100);
+            string SecretCookie = EncryptionHelper.Encrypt(cookieObject);
+            HttpContext.Response.Cookies.Append("SecurityQuestion", SecretCookie, options);
         }
     }
 }

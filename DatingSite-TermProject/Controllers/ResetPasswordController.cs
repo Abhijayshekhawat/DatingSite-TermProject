@@ -11,7 +11,6 @@ namespace DatingSite_TermProject.Controllers
         [HttpGet]
         public IActionResult ResetPassword()
         {
-            ViewBag.Token = HttpContext.Request.Query["token"].ToString();
             return View("~/Views/Home/ResetPassword.cshtml");
         }
 
@@ -23,49 +22,24 @@ namespace DatingSite_TermProject.Controllers
                 ViewBag.ErrorMessage = "Please enter your email.";
                 return View("~/Views/Home/ForgotPassword.cshtml");
             }
-            if (Request.Cookies.TryGetValue("Token", out string encryptedToken))
+            if (Request.Cookies.TryGetValue("userDetails", out string encryptedCookie))
             {
-                string decryptedToken = EncryptionHelper.Decrypt(encryptedToken);
-                string tokenFromLink = Request.Form["token"];
-                string decryptedTokenFromLink = EncryptionHelper.Decrypt(tokenFromLink);
-
-                if (!string.IsNullOrEmpty(decryptedTokenFromLink))
+                string decryptedCookie = EncryptionHelper.Decrypt(encryptedCookie);
+                // Deserialize the decryptedCookie to get back the user details
+                PrivateUserInfoModel userDetails = JsonSerializer.Deserialize<PrivateUserInfoModel>(decryptedCookie);
+                userDetails.Password = Request.Form["Password"].ToString();
+                bool result = SaveAccount(userDetails);
+                if (result)
                 {
-                    tokenFromLink = WebUtility.UrlDecode(decryptedTokenFromLink);
-                }
+                    ViewBag.ErrorMessage = "The details were successfully saved to the database.";
+                    return View("~/Views/Home/Login.cshtml");
 
-                if (decryptedToken== decryptedTokenFromLink)
-                {
-                    if (Request.Cookies.TryGetValue("userDetails", out string encryptedCookie))
-                    {
-                        string decryptedCookie = EncryptionHelper.Decrypt(encryptedCookie);
-                        // Deserialize the decryptedCookie to get back the user details
-                        PrivateUserInfoModel userDetails = JsonSerializer.Deserialize<PrivateUserInfoModel>(decryptedCookie);
-                        userDetails.Password = Request.Form["Password"].ToString();
-                        bool result = SaveAccount(userDetails);
-                        if (result)
-                        {
-                            ViewBag.ErrorMessage = "The details were successfully saved to the database.";
-                            return View("~/Views/Home/Login.cshtml");
-
-                        }
-                        else
-                        {
-                            ViewBag.ErrorMessage = "A problem occurred while resetting your password. The data wasn't recorded.";
-                            return View("~/Views/Home/Login.cshtml");
-
-                        }
-                    }
-                    else
-                    {
-                        ViewBag.ErrorMessage = "A problem occurred Please go through the reset process again.";
-                        return View("~/Views/Home/Login.cshtml");
-                    }
                 }
                 else
                 {
-                    ViewBag.ErrorMessage = "A problem occurred Please go through the reset process again.";
+                    ViewBag.ErrorMessage = "A problem occurred while resetting your password. The data wasn't recorded.";
                     return View("~/Views/Home/Login.cshtml");
+
                 }
             }
             else
