@@ -1,5 +1,4 @@
-﻿@model DatingSite_TermProject.Models.ProfileModel.UserProfile
-
+﻿@model DatingSite_TermProject.Models.UserProfileModel
 @{
     Layout = null; // Assuming you don't want to use a layout page
 }
@@ -16,12 +15,12 @@
         <div class="navbar-left">
             <img src="~/css/logo.png" alt="Logo" class="logo" />
             <nav>
-                <a href="#">Dashboard</a>
-                <a href="#">Matches</a>
-                <a href="#">Likes</a>
-                <a href="#">Dates</a>
-                <a href="#">Plan Date</a>
-                <a href="#" class="active">Edit Profile</a>
+                <a asp-controller="Dashboard" asp-action="Dashboard" class="active">Dashboard</a>
+                <a asp-controller="Matches" asp-action="Matches">Matches</a>
+                <a asp-controller="Likes" asp-action="Likes">Likes</a>
+                <a asp-controller="Dates" asp-action="Dates">Dates</a>
+                <a asp-controller="DatePlanning" asp-action="DatePlanning">Plan Date</a>
+                <a asp-controller="Profile" asp-action="Profile">Edit Profile</a>
             </nav>
         </div>
         <div class="navbar-right">
@@ -97,12 +96,25 @@
                 <div class="preference-section">
                     <label>Your Interests:</label>
                     <div class="form-control">
-                        @foreach (var interest in new List<string> { "Cooking", "Watching Sports", "Watching Movies/Shows", "Playing Sports", "Playing Instruments", "Gaming", "Dancing", "Reading" })
-                        {
-                            <input type="checkbox" name="Interests" value="@interest" id="interest-@interest" />
-                            <label for="interest-@interest">@interest</label>
+                        @{
+                            List<string> userInterests;
+                            if (Model != null && Model.Interests != null)
+                            {
+                                userInterests = Model.Interests.Split(", ", StringSplitOptions.RemoveEmptyEntries).ToList();
+                            }
+                            else
+                            {
+                                userInterests = new List<string>();
+                            }
+                            List<string> allInterests = new List<string> { "Cooking", "Watching Sports", "Watching Movies/Shows", "Playing Sports", "Playing Instruments", "Gaming", "Dancing", "Reading" };
 
-                            <br />
+                            foreach (var interest in allInterests)
+                            {
+                                bool isChecked = userInterests.Contains(interest);
+                                <input type="checkbox" name="Interests" value="@interest" id="interest-@interest" checked="@isChecked" />
+                                <label for="interest-@interest">@interest</label>
+                                <br />
+                            }
                         }
                     </div>
                 </div>
@@ -110,48 +122,61 @@
                 <div class="preference-section">
                     <label>Favorite Cuisine:</label>
                     <div class="form-control">
-                        @foreach (var cuisine in new List<string> { "Indian", "Mexican", "Korean", "Chinese", "Fast-Food", "French", "Dessert", "Sea-Food" })
-                        {
-                            <input type="checkbox" name="Cuisines" value="@cuisine" id="cuisine-@cuisine" />
-                            <label for="cuisine-@cuisine">@cuisine</label>
+                        @{
+                            List<string> userCuisines;
+                            if (Model != null && Model.FavoriteCuisine != null)
+                            {
+                                userCuisines = Model.FavoriteCuisine.Split(", ", StringSplitOptions.RemoveEmptyEntries).ToList();
+                            }
+                            else
+                            {
+                                userCuisines = new List<string>();
+                            }
+                            List<string> allCuisines = new List<string> { "Indian", "Mexican", "Korean", "Chinese", "Fast-Food", "French", "Dessert", "Sea-Food" };
 
-                            <br />
+                            foreach (var cuisine in allCuisines)
+                            {
+                                bool isChecked = userCuisines.Contains(cuisine);
+                                <input type="checkbox" name="Cuisines" value="@cuisine" id="cuisine-@cuisine" checked="@isChecked" />
+                                <label for="cuisine-@cuisine">@cuisine</label>
+                                <br />
+                            }
                         }
                     </div>
                 </div>
 
-                <label asp-for="FavouriteRestaurant">Favourite Restaurant:</label>
-                <input asp-for="FavouriteRestaurant" name="FavouriteRestaurant" placeholder="Enter your Favourite Restaurant" class="form-control" />
-                <span asp-validation-for="FavouriteRestaurant" class="text-danger"></span>
+                <label asp-for="FavoriteRestaurant">Favourite Restaurant:</label>
+                <input asp-for="FavoriteRestaurant" name="FavouriteRestaurant" placeholder="Enter your Favourite Restaurant" class="form-control" />
+                <span asp-validation-for="FavoriteRestaurant" class="text-danger"></span>
 
-                <label asp-for="FavouriteMovie">Favorite Movie:</label>
-                <input asp-for="FavouriteMovie" name="FavouriteMovie" placeholder="Enter your Favorite Movie" class="form-control" />
-                <span asp-validation-for="FavouriteMovie" class="text-danger"></span>
+                <label asp-for="FavoriteMovie">Favorite Movie:</label>
+                <input asp-for="FavoriteMovie" name="FavouriteMovie" placeholder="Enter your Favorite Movie" class="form-control" />
+                <span asp-validation-for="FavoriteMovie" class="text-danger"></span>
 
                 <div class="preference-section">
-                    <label for="MovieGenres">Favorite Movie Genre:</label>
-                    <select name="MovieGenres" id="MovieGenres" class="form-control">
-                        <option value="Action">Action</option>
-                        <option value="Comedy">Comedy</option>
-                        <option value="Drama">Drama</option>
-                        <option value="Fantasy">Fantasy</option>
-                        <option value="Horror">Horror</option>
+                    <label for="FavoriteMovieGenre">Favorite Movie Genre:</label>
+                    <select asp-for="FavoriteMovieGenre" class="form-control">
+                        @foreach (var type in ViewBag.MovieGenres as List<string>)
+                        {
+                            <option value="@type" selected="@(type == Model.FavoriteMovieGenre)">@type</option>
+                        }
                     </select>
+                    <span asp-validation-for="FavoriteMovieGenre" class="text-danger"></span>
                 </div>
 
-                <label asp-for="FavouriteBook">Favorite Book:</label>
-                <input asp-for="FavouriteBook" name="FavouriteBook" placeholder="Enter your Favorite Book" class="form-control" />
-                <span asp-validation-for="FavouriteBook" class="text-danger"></span>
+                <label asp-for="FavoriteBook">Favorite Book:</label>
+                <input asp-for="FavoriteBook" name="FavouriteBook" placeholder="Enter your Favorite Book" class="form-control" />
+                <span asp-validation-for="FavoriteBook" class="text-danger"></span>
 
                 <div class="preference-section">
-                    <label for="BookGenres">Favorite Book Genre:</label>
-                    <select name="BookGenres" id="BookGenres" class="form-control">
-                        <option value="Fiction">Fiction</option>
-                        <option value="Non-Fiction">Non-Fiction</option>
-                        <option value="Mystery">Mystery</option>
-                        <option value="Sci-Fi">Sci-Fi</option>
-                        <option value="Biography">Biography</option>
+                    <label for="FavoriteBookGenre">Favorite Book Genre:</label>
+                    <select asp-for="FavoriteBookGenre" class="form-control">
+                        @foreach (var book in ViewBag.BookGenres as List<string>)
+                        {
+                            <option value="@book" selected="@(book == Model.FavoriteBookGenre.Trim())">@book</option>
+                        }
                     </select>
+                    <span asp-validation-for="FavoriteBookGenre" class="text-danger"></span>
                 </div>
 
                 <label asp-for="Dislikes">What do you dislike:</label>
@@ -160,19 +185,19 @@
 
                 <div class="preference-section">
                     <label for="Commitment">Commitment Type:</label>
-                    <select name="Commitment" id="Commitment" class="form-control">
-                        <option value="Friends">Friends</option>
-                        <option value="Short-Term Relationship">Short-Term Relationship</option>
-                        <option value="Long-Term Relationship">Long-Term Relationship</option>
-                        <option value="Open-Relationship">Open-Relationship</option>
-                        <option value="Marriage">Marriage</option>
+                    <select asp-for="CommitmentType" class="form-control">
+                        @foreach (var type in ViewBag.CommitmentTypes as List<string>)
+                        {
+                            <option value="@type" selected="@(type == Model.CommitmentType)">@type</option>
+                        }
                     </select>
+                    <span asp-validation-for="CommitmentType" class="text-danger"></span>
                 </div>
                 <div>
                     <h3>Make Profile Visible?</h3>
-                    <input type="radio" id="VisibilityYes" name="ProfileVisibility" value="Yes" checked />
+                    <input type="radio" id="VisibilityYes" name="ProfileVisibility" value="Yes" checked="@Model.IsVisible"  />
                     <label for="VisibilityYes">Yes</label>
-                    <input type="radio" id="VisibilityNo" name="ProfileVisibility" value="No" />
+                    <input type="radio" id="VisibilityNo" name="ProfileVisibility" value="No" checked="@(!Model.IsVisible)" />
                     <label for="VisibilityNo">No</label>
                 </div>
             </div>
