@@ -30,6 +30,7 @@ namespace DatingSite_TermProject.Controllers
                 {
 
                     ViewBag.ErrorMessage = "The codes are the same.";
+                    // get id 
                     string savedUsername2 = Request.Cookies["Username"].ToString();
                     UserProfileModel userProfile = new UserProfileModel();
                     int privateid = userProfile.getPrivateId(savedUsername2);
@@ -85,6 +86,7 @@ namespace DatingSite_TermProject.Controllers
             return Cardslist;
 
         }
+
         private String GetUserImage()
         {
             string savedUsername2 = Request.Cookies["Username"].ToString();
@@ -109,7 +111,7 @@ namespace DatingSite_TermProject.Controllers
             return picture;
             
         }
-        private void PopulateFilters()
+        public void PopulateFilters()
         {
             //Populate States
             {

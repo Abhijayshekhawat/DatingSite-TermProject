@@ -36,7 +36,7 @@ namespace DatingSiteCoreAPI.Controllers.Tests
             // add the private user class to create a account variable 
 
             DBUserAccountController PrivateController = new DBUserAccountController();
-            acc.FirstName = "John"; acc.LastName = "doe"; acc.Email = "1"; acc.PrivateUsername = "wonderworld"; acc.Password = "password";
+            acc.FirstName = "John"; acc.LastName = "doe"; acc.Email = "1"; acc.PrivateUsername = "wonderwho"; acc.Password = "password";
 
             acc2.FirstName = "Jay"; acc2.LastName = "Bo"; acc2.Email = "2"; acc2.PrivateUsername = "SungJinwoo"; acc2.Password = "password2";
 
@@ -677,6 +677,8 @@ namespace DatingSiteCoreAPI.Controllers.Tests
 
 
         }
+
+
 
 
 

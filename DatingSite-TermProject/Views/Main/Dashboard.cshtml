@@ -85,8 +85,12 @@
                         </select>
 
                         <button type="submit" class="btn btn-primary">Apply Filters</button>
-                        <button type="reset" class="btn btn-secondary">Reset Filters</button>
+                       
                     </form>
+                    <form asp-controller="Dashboard" asp-action="ResetFilters" method="post">
+                        <button type="submit" class="btn btn-secondary">Reset Filters</button>
+                    </form>
+
                 </div>
             </div>
             <div class="cards-container">
