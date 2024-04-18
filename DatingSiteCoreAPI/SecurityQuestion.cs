@@ -84,7 +84,7 @@ namespace DatingSiteCoreAPI
             SqlCommand objCommand = new SqlCommand();
 
             objCommand.CommandType = CommandType.StoredProcedure;
-            objCommand.CommandText = "TP_AddSecurityQuestion";
+            objCommand.CommandText = "TP_UpsertSecurityQuestion";
 
             SqlParameter inputParameter2 = new SqlParameter("@PrivateId", privateid);
             objCommand.Parameters.Add(inputParameter2);

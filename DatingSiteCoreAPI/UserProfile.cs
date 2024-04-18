@@ -136,13 +136,17 @@ namespace DatingSiteCoreAPI
             objCommand.Parameters.Add(inputParameter23);
 
             SqlParameter inputParameter24 = new SqlParameter("@AdditionalInterests", additionalInterests);
-            objCommand.Parameters.Add(inputParameter23);
+            objCommand.Parameters.Add(inputParameter24);
 
             SqlParameter inputParameter25 = new SqlParameter("@Dealbreaker", dealbreaker);
-            objCommand.Parameters.Add(inputParameter23);
+            objCommand.Parameters.Add(inputParameter25);
 
             SqlParameter inputParameter26 = new SqlParameter("@Biography", biography);
-            objCommand.Parameters.Add(inputParameter23);
+            objCommand.Parameters.Add(inputParameter26);
+
+            SqlParameter returnParameter = new SqlParameter("@OperationResult", SqlDbType.Int);
+            returnParameter.Direction = ParameterDirection.Output;
+            objCommand.Parameters.Add(returnParameter);
 
             int result = objDB.DoUpdateUsingCmdObj(objCommand);
 

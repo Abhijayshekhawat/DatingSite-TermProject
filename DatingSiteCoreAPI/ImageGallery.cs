@@ -81,7 +81,7 @@ namespace DatingSiteCoreAPI
             SqlCommand objCommand = new SqlCommand();
 
             objCommand.CommandType = CommandType.StoredProcedure;
-            objCommand.CommandText = "TP_AddImages";
+            objCommand.CommandText = "TP_UpsertImageGallery";
 
             SqlParameter inputParameter1 = new SqlParameter("@PrivateId", privateid);
             objCommand.Parameters.Add(inputParameter1); 
