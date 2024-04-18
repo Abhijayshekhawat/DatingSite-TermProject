@@ -49,7 +49,7 @@ namespace DatingSite_TermProject.Controllers
             userProfile.ProfilePhotoURL = Request.Form["ProfilePhotoURL"].ToString();
             userProfile.City = Request.Form["City"].ToString();
             userProfile.State = Request.Form["State"].ToString();
-            userProfile.Description = Request.Form["Description"].ToString();
+            userProfile.Tagline = Request.Form["Tagline"].ToString();
             userProfile.Occupation = Request.Form["Occupation"].ToString();
             userProfile.Interests = Request.Form["Interests"].ToString();
             userProfile.FavoriteCuisine = Request.Form["Cuisines"].ToString();
@@ -65,6 +65,9 @@ namespace DatingSite_TermProject.Controllers
             userProfile.FavoriteRestaurant = Request.Form["FavouriteRestaurant"].ToString();
             userProfile.Dislikes = Request.Form["Dislikes"].ToString();
             userProfile.IsVisible = Request.Form["ProfileVisibility"].ToString() == "Yes";
+            userProfile.AdditionalInterests = Request.Form["AdditionalInterests"].ToString();
+            userProfile.Dealbreaker = Request.Form["Dealbreaker"].ToString();
+            userProfile.Biography = Request.Form["Biography"].ToString();
 
 
             // combine these into one since having two seperate table is hard to insert with
@@ -132,7 +135,7 @@ namespace DatingSite_TermProject.Controllers
                 profile.ProfilePhotoURL = dr["ProfilePhotoURL"].ToString();
                 profile.City = dr["City"].ToString();
                 profile.State = dr["State"].ToString();
-                profile.Description = dr["Description"].ToString();
+                profile.Tagline = dr["Tagline"].ToString();
                 profile.Occupation = dr["Occupation"].ToString();
                 profile.Interests = dr["Interests"].ToString();
                 profile.FavoriteCuisine = dr["FavouriteCuisine"].ToString();
@@ -148,6 +151,9 @@ namespace DatingSite_TermProject.Controllers
                 profile.FavoriteBook = dr["FavouriteBook"].ToString();
                 profile.FavoriteRestaurant = dr["FavouriteRestaurant"].ToString();
                 profile.Dislikes = dr["Dislikes"].ToString();
+                profile.AdditionalInterests = dr["AdditionalInterests"].ToString();
+                profile.Dealbreaker = dr["Dealbreaker"].ToString();
+                profile.Biography = dr["Biography"].ToString();
 
                 return profile; // Assuming you want to return this model from a method
             }

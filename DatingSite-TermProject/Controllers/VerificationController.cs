@@ -76,7 +76,7 @@ namespace DatingSite_TermProject.Controllers
                     dr["FirstName"].ToString(),
                     dr["LastName"].ToString(),
                     dr["ProfilePhotoURL"].ToString(),
-                    dr["Description"].ToString(),
+                    dr["Tagline"].ToString(),
                     dr["City"].ToString(),
                     dr["State"].ToString()
                 );

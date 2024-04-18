@@ -13,7 +13,7 @@ namespace DatingSiteCoreAPI
         private string profilePhotoURL;
         private string city;
         private string state;
-        private string description;
+        private string tagline;
         private string occupation;
         private string interests;
         private string favoritecusine;
@@ -29,6 +29,9 @@ namespace DatingSiteCoreAPI
         private string favoriterestaurant;
         private string dislikes;
         private bool isVisible;
+        private string additionalInterests;
+        private string dealbreaker;
+        private string biography;
 
         public int getPrivateId(string username)
         {
@@ -56,12 +59,12 @@ namespace DatingSiteCoreAPI
 
         }
 
-            public int AddUserInfo(int privateid, int age, string height, string weight, string profilePhotoURL, string city, string state, string description, string occupation, string interests, string favoritecusine, string favouritequote, string goals, string commitmentType, string favoriteMovieGenre, string favoriteBookGenre, string address, string phonenumber, string favoritemovie, string favoritebook, string favoriterestaurant, string dislikes, bool isVisible)
+            public int AddUserInfo(int privateid, int age, string height, string weight, string profilePhotoURL, string city, string state, string tagline, string occupation, string interests, string favoritecusine, string favouritequote, string goals, string commitmentType, string favoriteMovieGenre, string favoriteBookGenre, string address, string phonenumber, string favoritemovie, string favoritebook, string favoriterestaurant, string dislikes, bool isVisible, string additionalInterests, string dealbreaker, string biography)
         {
             DBConnect objDB = new DBConnect();
             SqlCommand objCommand = new SqlCommand();
             objCommand.CommandType = CommandType.StoredProcedure;
-            objCommand.CommandText = "TP_AddUserInfo";
+            objCommand.CommandText = "TP_UpdateProfileByPrivateId";
 
             SqlParameter inputParameter1 = new SqlParameter("@PrivateId", privateid);
             objCommand.Parameters.Add(inputParameter1);
@@ -84,7 +87,7 @@ namespace DatingSiteCoreAPI
             SqlParameter inputParameter7 = new SqlParameter("@State", state);
             objCommand.Parameters.Add(inputParameter7);
 
-            SqlParameter inputParameter8 = new SqlParameter("@Description", description);
+            SqlParameter inputParameter8 = new SqlParameter("@Tagline", tagline);
             objCommand.Parameters.Add(inputParameter8);
 
             SqlParameter inputParameter9 = new SqlParameter("@Occupation", occupation);
@@ -132,18 +135,18 @@ namespace DatingSiteCoreAPI
             SqlParameter inputParameter23 = new SqlParameter("@IsVisible", isVisible);
             objCommand.Parameters.Add(inputParameter23);
 
+            SqlParameter inputParameter24 = new SqlParameter("@AdditionalInterests", additionalInterests);
+            objCommand.Parameters.Add(inputParameter23);
 
+            SqlParameter inputParameter25 = new SqlParameter("@Dealbreaker", dealbreaker);
+            objCommand.Parameters.Add(inputParameter23);
 
-
-
+            SqlParameter inputParameter26 = new SqlParameter("@Biography", biography);
+            objCommand.Parameters.Add(inputParameter23);
 
             int result = objDB.DoUpdateUsingCmdObj(objCommand);
 
             return result;
-
-
-
-
 
         }
 
@@ -152,7 +155,7 @@ namespace DatingSiteCoreAPI
 
         }
 
-        public UserProfile(int privateid, int age, string height, string weight, string profilePhotoURL, string city, string state, string description, string occupation, string interests, string favoritecusine, string favouritequote, string goals, string commitmentType,  string favoriteMovieGenre, string favoriteBookGenre, string address, string phonenumber, string favoritemovie, string favoritebook, string favoriterestaurant, string dislikes, bool isVisible)
+        public UserProfile(int privateid, int age, string height, string weight, string profilePhotoURL, string city, string state, string tagline, string occupation, string interests, string favoritecusine, string favouritequote, string goals, string commitmentType,  string favoriteMovieGenre, string favoriteBookGenre, string address, string phonenumber, string favoritemovie, string favoritebook, string favoriterestaurant, string dislikes, bool isVisible, string additionalInterests, string dealbreaker, string biography)
         {
             this.privateid = privateid;
             this.age = age;
@@ -160,27 +163,29 @@ namespace DatingSiteCoreAPI
             this.weight = weight;
             this.profilePhotoURL = profilePhotoURL;
             this.city = city;
-            this.state = state; 
-            this.description = description;
+            this.state = state;
+            this.tagline = tagline;
             this.occupation = occupation;
             this.interests = interests;
-            this.favoritecusine = favoritecusine;   
+            this.favoritecusine = favoritecusine;
             this.favouritequote = favouritequote;
             this.goals = goals;
             this.commitmentType = commitmentType;
             this.favoriteMovieGenre = favoriteMovieGenre;
             this.address = address;
-            this.favoriteBookGenre = favoriteBookGenre; 
-            this.phonenumber = phonenumber; 
-            this.favoritemovie = favoritemovie; 
+            this.favoriteBookGenre = favoriteBookGenre;
+            this.phonenumber = phonenumber;
+            this.favoritemovie = favoritemovie;
             this.favoritebook = favoritebook;
             this.favoriterestaurant = favoriterestaurant;
             this.dislikes = dislikes;
             this.isVisible = isVisible;
-
+            this.additionalInterests = additionalInterests;
+            this.dealbreaker = dealbreaker;
+            this.biography = biography;
         }
 
-       
+
         public int PrivateId
         {
             get { return privateid; }
@@ -226,10 +231,10 @@ namespace DatingSiteCoreAPI
             set { state = value; }
         }
 
-        public string Description
+        public string Tagline
         {
-            get { return description; }
-            set { description = value; }
+            get { return tagline; }
+            set { tagline = value; }
         }
 
         public string Occupation
@@ -323,6 +328,21 @@ namespace DatingSiteCoreAPI
         {
             get { return isVisible; }
             set { isVisible = value; }
+        }
+        public string AdditionalInterests
+        {
+            get { return additionalInterests; }
+            set { additionalInterests = value; }
+        }
+        public string Dealbreaker
+        {
+            get { return dealbreaker; }
+            set { dealbreaker = value; }
+        }
+        public string Biography
+        {
+            get { return biography; }
+            set { biography = value; }
         }
     }
 }

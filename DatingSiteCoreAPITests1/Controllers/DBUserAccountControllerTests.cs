@@ -198,7 +198,7 @@ namespace DatingSiteCoreAPI.Controllers.Tests
             profile.PrivateId = profile.getPrivateId(username1); profile.Age = 25; profile.Height = "6'2";
             profile.Weight = "180 lbs"; profile.ProfilePhotoURL = "aaa";
             profile.City = "New York"; profile.State = "NY";
-            profile.Description = "I am a software engineer."; profile.Occupation = "Software Engineer";
+            profile.Tagline = "I am a software engineer."; profile.Occupation = "Software Engineer";
             profile.Interests = "Reading, hiking, programming"; profile.FavoriteCuisine = "Italian";
             profile.FavouriteQuote = "Success is not final, failure is not fatal: It is the courage to continue that counts.";
             profile.Goals = "Become a senior developer"; profile.CommitmentType = "Serious";
@@ -207,11 +207,15 @@ namespace DatingSiteCoreAPI.Controllers.Tests
             profile.FavoriteMovie = "Inception"; profile.FavoriteBook = "The Lord of the Rings";
             profile.FavoriteRestaurant = "Sushi Palace"; profile.Dislikes = "Cold weather";
             profile.IsVisible = true;
+            profile.AdditionalInterests = "Sushi AdditionalInterests";
+            profile.Dealbreaker = "Sushi Dealbreaker"; 
+            profile.Biography = "Sushi Biography"; 
+
 
             //profile 2
             string username2 = "SungJinwoo";
             profile2.PrivateId = profile2.getPrivateId(username2); profile2.Age = 30; profile2.Height = "5'10"; profile2.Weight = "160 lbs";
-            profile2.ProfilePhotoURL = "bbb"; profile2.City = "Los Angeles"; profile2.State = "CA"; profile2.Description = "I work in marketing."; profile2.Occupation = "Marketing Manager";
+            profile2.ProfilePhotoURL = "bbb"; profile2.City = "Los Angeles"; profile2.State = "CA"; profile2.Tagline = "I work in marketing."; profile2.Occupation = "Marketing Manager";
             profile2.Interests = "Cooking, painting, traveling"; profile2.FavoriteCuisine = "Mexican"; profile2.FavouriteQuote = "The only way to do great work is to love what you do.";
             profile2.Goals = "Start my own business"; profile2.CommitmentType = "Open Relationship"; profile2.FavoriteMovieGenre = "Comedy"; profile2.FavoriteBookGenre = "Mystery";
             profile2.Address = "456 Elm St"; profile2.PhoneNumber = "555-987-6543"; profile2.FavoriteMovie = "The Hangover"; profile2.FavoriteBook = "Gone Girl";
@@ -221,7 +225,7 @@ namespace DatingSiteCoreAPI.Controllers.Tests
 
             string username3 = "SungJinwoo";
             profile3.PrivateId = profile3.getPrivateId(username3); profile3.Age = 50; profile3.Height = "6'10"; profile3.Weight = "130 lbs";
-            profile3.ProfilePhotoURL = "bbb"; profile3.City = "Los Angeles"; profile3.State = "PA"; profile3.Description = "I work in marketing."; profile3.Occupation = "Marketing Manager";
+            profile3.ProfilePhotoURL = "bbb"; profile3.City = "Los Angeles"; profile3.State = "PA"; profile3.Tagline = "I work in marketing."; profile3.Occupation = "Marketing Manager";
             profile3.Interests = "Cooking, painting, traveling"; profile3.FavoriteCuisine = "Chinese"; profile3.FavouriteQuote = "The only way to do great work is to love what you do.";
             profile3.Goals = "Start my own business"; profile3.CommitmentType = "Close Relationship"; profile3.FavoriteMovieGenre = "Comedy"; profile3.FavoriteBookGenre = "Mystery";
             profile3.Address = "456 Elm St"; profile3.PhoneNumber = "555-987-6543"; profile3.FavoriteMovie = "The Hangover"; profile3.FavoriteBook = "How Not to Age";

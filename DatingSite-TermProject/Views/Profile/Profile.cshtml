@@ -43,9 +43,17 @@
                 <input asp-for="ProfilePhotoURL" name="ProfilePhotoURL" placeholder="Please enter a valid image URL." class="form-control" />
                 <span asp-validation-for="ProfilePhotoURL" class="text-danger"></span>
 
-                <label asp-for="Description">Description:</label>
-                <textarea asp-for="Description" name="Description" placeholder="Please describe yourself." class="form-control"></textarea>
-                <span asp-validation-for="Description" class="text-danger"></span>
+                <label asp-for="Tagline">Tagline:</label>
+                <textarea asp-for="Tagline" name="Tagline" placeholder="Please add a Tagline for yourself." class="form-control"></textarea>
+                <span asp-validation-for="Tagline" class="text-danger"></span>
+
+                <label asp-for="Dealbreaker">Dealbreaker:</label>
+                <textarea asp-for="Dealbreaker" name="Dealbreaker" placeholder="Please describe yourself." class="form-control"></textarea>
+                <span asp-validation-for="Dealbreaker" class="text-danger"></span>
+
+                <label asp-for="Biography">Biography:</label>
+                <textarea asp-for="Biography" name="Biography" placeholder="Please describe yourself." class="form-control"></textarea>
+                <span asp-validation-for="Biography" class="text-danger"></span>
 
                 <label asp-for="City">City:</label>
                 <input asp-for="City" name="City" placeholder="Enter your city" class="form-control" required />
@@ -63,12 +71,6 @@
                 <textarea asp-for="Goals" name="Goals" placeholder="Enter your goals" class="form-control"></textarea>
                 <span asp-validation-for="Goals" class="text-danger"></span>
 
-            </div>
-            <div class="form-section">
-                <h2>Private Information</h2>
-                <h4>This information will only be shared once there has been a match between 2 users.</h4>
-                
-                <!-- Private information fields-->
                 <label asp-for="Age">Age:</label>
                 <input asp-for="Age" name="Age" placeholder="Enter your Age" class="form-control" />
                 <span asp-validation-for="Occupation" class="text-danger"></span>
@@ -80,14 +82,6 @@
                 <label asp-for="Weight">Weight:</label>
                 <input asp-for="Weight" name="Weight" placeholder="Enter your Weight" class="form-control" />
                 <span asp-validation-for="Weight" class="text-danger"></span>
-
-                <label asp-for="Address">Address:</label>
-                <textarea asp-for="Address" name="Address" placeholder="Enter your address." class="form-control"></textarea>
-                <span asp-validation-for="Address" class="text-danger"></span>
-
-                <label asp-for="PhoneNumber">Phone Number:</label>
-                <input asp-for="PhoneNumber" name="PhoneNumber" placeholder="Enter your Phone Number" class="form-control" />
-                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
 
                 <label asp-for="Occupation">Occupation:</label>
                 <input asp-for="Occupation" name="Occupation" placeholder="Enter your Occupation" class="form-control" />
@@ -118,6 +112,11 @@
                         }
                     </div>
                 </div>
+
+                <label asp-for="AdditionalInterests">Some additional Interests:</label>
+                <textarea asp-for="AdditionalInterests" name="AdditionalInterests" placeholder="Enter any additional interests you may have" class="form-control"></textarea>
+                <span asp-validation-for="AdditionalInterests" class="text-danger"></span>
+                
 
                 <div class="preference-section">
                     <label>Favorite Cuisine:</label>
@@ -193,6 +192,22 @@
                     </select>
                     <span asp-validation-for="CommitmentType" class="text-danger"></span>
                 </div>
+            </div>
+            <div class="form-section">
+                <h2>Private Information</h2>
+                <h4>This information will only be shared once there has been a match between 2 users.</h4>
+                
+                <!-- Private information fields-->
+
+
+                <label asp-for="Address">Address:</label>
+                <textarea asp-for="Address" name="Address" placeholder="Enter your address." class="form-control"></textarea>
+                <span asp-validation-for="Address" class="text-danger"></span>
+
+                <label asp-for="PhoneNumber">Phone Number:</label>
+                <input asp-for="PhoneNumber" name="PhoneNumber" placeholder="Enter your Phone Number" class="form-control" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+
                 <div>
                     <h3>Make Profile Visible?</h3>
                     <input type="radio" id="VisibilityYes" name="ProfileVisibility" value="Yes" checked="@Model.IsVisible"  />
@@ -200,6 +215,7 @@
                     <input type="radio" id="VisibilityNo" name="ProfileVisibility" value="No" checked="@(!Model.IsVisible)" />
                     <label for="VisibilityNo">No</label>
                 </div>
+
             </div>
             <div class="button-container">
                 <button type="submit" class="btn btn-primary">Save Profile</button>

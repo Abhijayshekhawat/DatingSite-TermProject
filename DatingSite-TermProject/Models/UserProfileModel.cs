@@ -13,7 +13,7 @@ namespace DatingSite_TermProject.Models
         private string profilePhotoURL;
         private string city;
         private string state;
-        private string description;
+        private string tagline;
         private string occupation;
         private string interests;
         private string favoritecusine;
@@ -29,6 +29,9 @@ namespace DatingSite_TermProject.Models
         private string favoriterestaurant;
         private string dislikes;
         private bool isVisible;
+        private string additionalInterests;
+        private string dealbreaker;
+        private string biography;
 
 
 
@@ -36,7 +39,7 @@ namespace DatingSite_TermProject.Models
 
         public UserProfileModel() { }
 
-        public UserProfileModel(int privateid, int age, string height, string weight, string profilePhotoURL, string city, string state, string description, string occupation, string interests, string favoritecusine, string favouritequote, string goals, string commitmentType, string favoriteMovieGenre, string favoriteBookGenre, string address, string phonenumber, string favoritemovie, string favoritebook, string favoriterestaurant, string dislikes, bool isVisible)
+        public UserProfileModel(int privateid, int age, string height, string weight, string profilePhotoURL, string city, string state, string tagline, string occupation, string interests, string favoritecusine, string favouritequote, string goals, string commitmentType, string favoriteMovieGenre, string favoriteBookGenre, string address, string phonenumber, string favoritemovie, string favoritebook, string favoriterestaurant, string dislikes, bool isVisible, string additionalInterests, string dealbreaker, string biography)
         {
             this.privateid = privateid;
             this.age = age;
@@ -45,7 +48,7 @@ namespace DatingSite_TermProject.Models
             this.profilePhotoURL = profilePhotoURL;
             this.city = city;
             this.state = state;
-            this.description = description;
+            this.tagline = tagline;
             this.occupation = occupation;
             this.interests = interests;
             this.favoritecusine = favoritecusine;
@@ -61,6 +64,9 @@ namespace DatingSite_TermProject.Models
             this.favoriterestaurant = favoriterestaurant;
             this.dislikes = dislikes;
             this.isVisible = isVisible;
+            this.additionalInterests = additionalInterests;
+            this.dealbreaker = dealbreaker;
+            this.biography = biography;
         }
 
         public int PrivateId
@@ -108,10 +114,10 @@ namespace DatingSite_TermProject.Models
             set { state = value; }
         }
 
-        public string Description
+        public string Tagline
         {
-            get { return description; }
-            set { description = value; }
+            get { return tagline; }
+            set { tagline = value; }
         }
 
         public string Occupation
@@ -206,8 +212,21 @@ namespace DatingSite_TermProject.Models
             get { return isVisible; }
             set { isVisible = value; }
         }
-
-
+        public string AdditionalInterests
+        {
+            get { return additionalInterests; }
+            set { additionalInterests = value; }
+        }
+        public string Dealbreaker
+        {
+            get { return dealbreaker; }
+            set { dealbreaker = value; }
+        }
+        public string Biography
+        {
+            get { return biography; }
+            set { biography = value; }
+        }
         public int getPrivateId(string username)
         {
             int result = 0;
