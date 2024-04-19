@@ -124,11 +124,10 @@
                                         data-image5="@cards.Image5">
                                     Show Profile
                                 </button>
-                                <form asp-controller="Dashboard" asp-action="AddLikes" method="post">
-                                    <input type="hidden" name="LikeeID" value="@cards.PrivateId" />
-                                    <button type="submit" class="btn btn-primary like-button">Like</button>
+                                <form asp-controller="Likes" asp-action="" method="delete">
+                                    <input type="hidden" name="DislikeeID" value="@cards.PrivateId" />
+                                    <button type="submit" class="btn btn-primary like-button">UnLike</button>
                                 </form>
-
 
 
                             </div>

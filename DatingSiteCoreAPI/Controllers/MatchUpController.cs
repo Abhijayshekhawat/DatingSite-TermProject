@@ -32,7 +32,7 @@ namespace DatingSiteCoreAPI.Controllers
         }
 
         [HttpDelete()]
-        [HttpDelete]
+        [HttpDelete("DeleteLikes")]
 
         public bool Hater(DislikeRequest hater)
         
