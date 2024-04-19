@@ -30,9 +30,10 @@
         private string firstname;
         private string lastname;
 
-
+        public CardsModel() { }
         public CardsModel(
-
+            string firstname,
+            string lastname,
             string profilePhotoUrl,
             string city,
             string state,
@@ -56,9 +57,7 @@
             string biography,
             int age,
             string height,
-            string weight,
-            string firstname,
-            string lastname
+            string weight
             )
         {
             this.age = age;
