@@ -99,7 +99,7 @@ namespace DatingSite_TermProject.Controllers
             };
             List<CardsModel> Cardslist = PopulateProfiles(privateid);
             ViewBag.ProfileImage = GetUserImage();
-            return View("~/Views/Main/Likes.cshtml", Cardslist);
+            return View("~/Views/Main/Likes.cshtml", likeCards);
         }
         public List<CardsModel> PopulateProfiles(int privateid)
         {

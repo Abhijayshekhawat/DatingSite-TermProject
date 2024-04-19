@@ -1,5 +1,4 @@
-﻿@using DatingSite_TermProject.Models
-@model List<CardsModel>
+﻿@model DatingSite_TermProject.Models.LikeCardsModel
 
 @{
     Layout = null;
@@ -44,7 +43,7 @@
             <h2 class="likes-title">People that liked you</h2>
             <div class="cards-container">
                 <div class="container">
-                    @foreach (CardsModel cards in Model)
+                    @foreach (var cards in Model.PeopleWhoLikedYou)
                     {
                         <div class="card">
                             <img src=@cards.ProfilePhotoURL alt="Profile Image">
@@ -92,7 +91,7 @@
                 <h2 class="likes-title">People that you liked</h2>
             <div class="cards-container">
                 <div class="container">
-                    @foreach (CardsModel cards in Model)
+                    @foreach (var cards in Model.PeopleYouLiked)
                     {
                         <div class="card">
                             <img src=@cards.ProfilePhotoURL alt="Profile Image">
@@ -128,7 +127,7 @@
                                     <input type="hidden" name="DislikeeID" value="@cards.PrivateId" />
                                     <button type="submit" class="btn btn-primary like-button">UnLike</button>
                                 </form>
-
+                                
 
                             </div>
                         </div>
