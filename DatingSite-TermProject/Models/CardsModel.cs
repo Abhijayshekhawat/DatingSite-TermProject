@@ -105,7 +105,7 @@
             this.image3 = image3;
             this.image4 = image4;
             this.image5 = image5;
-            this.privateid = privateid;
+            this.privateid = privateId;
 
         }
 
