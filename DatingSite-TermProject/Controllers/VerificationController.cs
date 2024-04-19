@@ -12,8 +12,8 @@ namespace DatingSite_TermProject.Controllers
     {
 
         public ActionResult actionresult()
-        { 
-            return View("~/Views/Main/Dashboard.cshtml"); 
+        {
+            return View("~/Views/Main/Dashboard.cshtml");
         }
         public IActionResult Verification()
         {
@@ -48,7 +48,7 @@ namespace DatingSite_TermProject.Controllers
         }
         public List<CardsModel> PopulateProfiles(int privateid)
         {
-           
+
 
             List<CardsModel> Cardslist = new List<CardsModel>();
             CardsModel cards;
@@ -70,7 +70,7 @@ namespace DatingSite_TermProject.Controllers
                 cards = new CardsModel(
                     dr["FirstName"].ToString(),
                     dr["LastName"].ToString(),
-                    int.Parse(dr["PrivateId"].ToString()),
+
                     dr["ProfilePhotoURL"].ToString(),
                     dr["City"].ToString(),
                     dr["State"].ToString(),
@@ -93,6 +93,7 @@ namespace DatingSite_TermProject.Controllers
                     dr["Dealbreaker"].ToString(),
                     dr["Biography"].ToString(),
                     int.Parse(dr["Age"].ToString()),
+                    int.Parse(dr["PrivateId"].ToString()),
                     dr["Height"].ToString(),
                     dr["Weight"].ToString(),
                     dr["Image1"].ToString(),
@@ -101,9 +102,9 @@ namespace DatingSite_TermProject.Controllers
                     dr["Image4"].ToString(),
                     dr["Image5"].ToString()
 
-                ) ;
+                );
 
-                 Cardslist.Add(cards);
+                Cardslist.Add(cards);
             }
             return Cardslist;
 
@@ -124,14 +125,14 @@ namespace DatingSite_TermProject.Controllers
             DataSet ds = objDB.GetDataSet(objCommand);
 
             DataTable dt = ds.Tables[0];
-            string picture="";
+            string picture = "";
             foreach (DataRow dr in dt.Rows)
             {
                 picture = dr["ProfilePhotoURL"].ToString();
                 ViewBag.FirstName = dr["FirstName"].ToString();
             }
             return picture;
-            
+
         }
         public void PopulateFilters()
         {
@@ -193,12 +194,12 @@ namespace DatingSite_TermProject.Controllers
                 ViewBag.Commitments = uniqueCommitments;
             }
 
-           
+
 
         }
 
 
-      
+
 
 
     }

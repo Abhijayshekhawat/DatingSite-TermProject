@@ -28,14 +28,16 @@ namespace DatingSite_TermProject.Controllers
 
 
         [HttpPost]
-        public IActionResult AddLikes([FromBody] LikeRequestModel likerequest2)
+        public IActionResult AddLikes()
         {
 
             string savedUsername = Request.Cookies["Username"].ToString();
-            LikeRequestModel like = likerequest2;
+            LikeRequestModel like = new LikeRequestModel();
+
             // get the data from the form / model PrivateUserInfoModel  
-            like.LIkeeId = likerequest2.LIkeeId;
+             
             like.LikerUsername = savedUsername;
+            like.LIkeeId = Int32.Parse(Request.Form["LikeeID"].ToString());
             // Serialize an Account object into a JSON string.
             var jsonPayload = JsonSerializer.Serialize(like);
             try
@@ -86,7 +88,7 @@ namespace DatingSite_TermProject.Controllers
             UserProfileModel userProfile2 = new UserProfileModel();
             int privateid2 = userProfile2.getPrivateId(savedUsername3);
             List<CardsModel> Cardslist2 = PopulateProfiles(privateid2);
-
+            PopulateFilters();  
             return View("~/Views/Main/Dashboard.cshtml", Cardslist2);
 
 
@@ -160,7 +162,7 @@ namespace DatingSite_TermProject.Controllers
                 cards = new CardsModel(
                 dr["FirstName"].ToString(),
                     dr["LastName"].ToString(),
-                    int.Parse(dr["PrivateId"].ToString()),
+                   
                     dr["ProfilePhotoURL"].ToString(),
                     dr["City"].ToString(),
                     dr["State"].ToString(),
@@ -183,6 +185,7 @@ namespace DatingSite_TermProject.Controllers
                     dr["Dealbreaker"].ToString(),
                     dr["Biography"].ToString(),
                     int.Parse(dr["Age"].ToString()),
+                    int.Parse(dr["PrivateId"].ToString()),
                     dr["Height"].ToString(),
                     dr["Weight"].ToString(),
                     dr["Image1"].ToString(),
@@ -255,7 +258,7 @@ namespace DatingSite_TermProject.Controllers
                 cards = new CardsModel(
                     dr["FirstName"].ToString(),
                     dr["LastName"].ToString(),
-                    int.Parse(dr["PrivateId"].ToString()),
+                   
                     dr["ProfilePhotoURL"].ToString(),
                     dr["City"].ToString(),
                     dr["State"].ToString(),
@@ -278,6 +281,7 @@ namespace DatingSite_TermProject.Controllers
                     dr["Dealbreaker"].ToString(),
                     dr["Biography"].ToString(),
                     int.Parse(dr["Age"].ToString()),
+                    int.Parse(dr["PrivateId"].ToString()),
                     dr["Height"].ToString(),
                     dr["Weight"].ToString(),
                     dr["Image1"].ToString(),
@@ -318,7 +322,7 @@ namespace DatingSite_TermProject.Controllers
                 cards = new CardsModel(
                     dr["FirstName"].ToString(),
                     dr["LastName"].ToString(),
-                    int.Parse(dr["PrivateId"].ToString()),
+                    
                     dr["ProfilePhotoURL"].ToString(),
                     dr["City"].ToString(),
                     dr["State"].ToString(),
@@ -341,6 +345,7 @@ namespace DatingSite_TermProject.Controllers
                     dr["Dealbreaker"].ToString(),
                     dr["Biography"].ToString(),
                     int.Parse(dr["Age"].ToString()),
+                    int.Parse(dr["PrivateId"].ToString()),
                     dr["Height"].ToString(),
                     dr["Weight"].ToString(),
                     dr["Image1"].ToString(),
