@@ -100,7 +100,8 @@ namespace DatingSite_TermProject.Controllers
                     dr["Image2"].ToString(),
                     dr["Image3"].ToString(),
                     dr["Image4"].ToString(),
-                    dr["Image5"].ToString()
+                    dr["Image5"].ToString(),
+                    int.Parse(dr["PrivateId"].ToString())
 
                 );
 
