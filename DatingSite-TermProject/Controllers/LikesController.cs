@@ -89,7 +89,6 @@ namespace DatingSite_TermProject.Controllers
         }
         public IActionResult Likes()
         {
-            
             string savedUsername2 = Request.Cookies["Username"].ToString();
             UserProfileModel userProfile = new UserProfileModel();
             int privateid = userProfile.getPrivateId(savedUsername2);
@@ -97,7 +96,7 @@ namespace DatingSite_TermProject.Controllers
             {
                 PeopleWhoLikedYou = PopulatePeopleWhoLikedYou(privateid),
                 PeopleYouLiked = PopulatePeopleYouLiked(privateid)
-        };
+            };
             List<CardsModel> Cardslist = PopulateProfiles(privateid);
             ViewBag.ProfileImage = GetUserImage();
             return View("~/Views/Main/Likes.cshtml", Cardslist);
@@ -168,9 +167,10 @@ namespace DatingSite_TermProject.Controllers
             DBConnect objDB = new DBConnect();
             SqlCommand objCommand = new SqlCommand();
             objCommand.CommandType = CommandType.StoredProcedure;
-            objCommand.CommandText = "TP_GetPeopleWhoLikedYou";
+            objCommand.CommandText = "TP_GetPeopleWhoLikedUserName";
+            string savedUsername = Request.Cookies["Username"].ToString();
 
-            SqlParameter inputParameter1 = new SqlParameter("@ExcludedUserId", privateid);
+            SqlParameter inputParameter1 = new SqlParameter("@UserName", savedUsername);
             objCommand.Parameters.Add(inputParameter1);
 
 
@@ -227,9 +227,10 @@ namespace DatingSite_TermProject.Controllers
             DBConnect objDB = new DBConnect();
             SqlCommand objCommand = new SqlCommand();
             objCommand.CommandType = CommandType.StoredProcedure;
-            objCommand.CommandText = "TP_GetUsersCards";
+            objCommand.CommandText = "TP_GetLikesGivenByUsername";
+            string savedUsername = Request.Cookies["Username"].ToString();
 
-            SqlParameter inputParameter1 = new SqlParameter("@ExcludedUserId", privateid);
+            SqlParameter inputParameter1 = new SqlParameter("@UserName", savedUsername);
             objCommand.Parameters.Add(inputParameter1);
 
 
