@@ -31,6 +31,31 @@ namespace DatingSiteCoreAPI.Controllers
             return result;
         }
 
+        [HttpDelete()]
+        [HttpDelete]
+
+        public bool Hater(DislikeRequest hater)
+        
+        {
+
+            bool result;
+
+            DislikeRequest dislike = hater;
+
+            int successfullike = dislike.DeleteLikeSuccessfully(hater.LikerUsername, hater.LikeeId);
+
+
+            if (successfullike > 0)
+            {
+                result = true;
+            }
+            else { result = false; }
+
+
+            return result;
+
+        }
+
 
 
 

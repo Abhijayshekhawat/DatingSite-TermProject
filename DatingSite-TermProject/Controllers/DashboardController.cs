@@ -66,6 +66,7 @@ namespace DatingSite_TermProject.Controllers
                     UserProfileModel userProfile = new UserProfileModel();
                     int privateid = userProfile.getPrivateId(savedUsername2);
                     List<CardsModel> Cardslist = PopulateProfiles(privateid);
+                    ViewBag.ProfileImage = GetUserImage();
                     PopulateFilters();
 
 
@@ -88,6 +89,7 @@ namespace DatingSite_TermProject.Controllers
             UserProfileModel userProfile2 = new UserProfileModel();
             int privateid2 = userProfile2.getPrivateId(savedUsername3);
             List<CardsModel> Cardslist2 = PopulateProfiles(privateid2);
+            ViewBag.ProfileImage = GetUserImage();
             PopulateFilters();  
             return View("~/Views/Main/Dashboard.cshtml", Cardslist2);
 

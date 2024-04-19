@@ -4,24 +4,33 @@ using Utilities;
 
 namespace DatingSiteCoreAPI
 {
-    public class LikeRequest
+    public class DislikeRequest
     {
 
         private int likeeId;
         private string likerusername;
 
-        public LikeRequest() { }
-
-
-
-        public LikeRequest(int likeeId, string likerusername)
+        public DislikeRequest()
         {
-            likeeId = likeeId;
-            this.likerusername = likerusername;
-           
+
         }
-        
-        public int AddLikeSuccessfully(string likerusername, int likeeid)
+
+        public DislikeRequest(int likeeId, string likerusername)
+        {
+            this.likeeId = likeeId;
+            this.likerusername = likerusername;
+        }   
+
+
+        public int LikeeId { get { return likeeId; } set { likeeId = value; }
+
+
+
+        }
+
+        public string LikerUsername { get {  return likerusername; } set {  likerusername = value; } }
+
+        public int DeleteLikeSuccessfully(string likerusername, int likeeid)
         {
             int result = 0;
 
@@ -30,7 +39,7 @@ namespace DatingSiteCoreAPI
             SqlCommand objCommand = new SqlCommand();
 
             objCommand.CommandType = CommandType.StoredProcedure;
-            objCommand.CommandText = "TP_AddNewLike";
+            objCommand.CommandText = "TP_DeleteLike";
 
             SqlParameter inputParameter2 = new SqlParameter("@LikerUserName", likerusername);
             objCommand.Parameters.Add(inputParameter2);
@@ -42,24 +51,9 @@ namespace DatingSiteCoreAPI
             returnParameter.Direction = ParameterDirection.Output;
             objCommand.Parameters.Add(returnParameter);
 
-            result  =  objDB.DoUpdateUsingCmdObj(objCommand);
-            return result;  
+            result = objDB.DoUpdateUsingCmdObj(objCommand);
+
+            return result;
         }
-
-        public int LIkeeId
-        {
-            get { return likeeId; }
-            set { likeeId = value; }
-        }
-
-        public string LikerUsername
-        {
-            get { return likerusername; }
-            set { likerusername = value; }
-        }
-
-
-
     }
 }
-
