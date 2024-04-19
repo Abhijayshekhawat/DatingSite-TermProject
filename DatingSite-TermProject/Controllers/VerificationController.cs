@@ -70,6 +70,7 @@ namespace DatingSite_TermProject.Controllers
                 cards = new CardsModel(
                     dr["FirstName"].ToString(),
                     dr["LastName"].ToString(),
+                    int.Parse(dr["PrivateId"].ToString()),
                     dr["ProfilePhotoURL"].ToString(),
                     dr["City"].ToString(),
                     dr["State"].ToString(),

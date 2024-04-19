@@ -15,7 +15,7 @@
         private string favouriteQuote;
         private string goals;
         private string commitmentType;
-     
+        
         private string favouriteMovieGenre;
         private string favouriteBookGenre;
         private string address;
@@ -34,12 +34,13 @@
         private string image3;
         private string image4;
         private string image5;
-
+        private int privateid;
 
         public CardsModel() { }
         public CardsModel(
             string firstname,
             string lastname,
+            int privateid,
             string profilePhotoUrl,
             string city,
             string state,
@@ -102,9 +103,16 @@
             this.image3 = image3;
             this.image4 = image4;
             this.image5 = image5;
+            this.privateid = privateid; 
 
         }
 
+        public int PrivateId
+        {
+            get { return privateid; }
+            set { privateid = value; }
+        }
+        
         public string Image1
         {
             get { return image1; }

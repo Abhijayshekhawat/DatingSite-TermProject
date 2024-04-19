@@ -150,7 +150,10 @@
                                         data-description="@cards.Tagline" data-city="@cards.City" data-state="@cards.State">
                                     Show Profile
                                 </button>
-                                <button type="button" class="btn btn-primary">Like</button>
+                                <form asp-controller="Dashboard" action="@Url.Action("AddLikes", "Dashboard")" method="post">
+                                    <input type="hidden" name="LikeeID" value="@cards.PrivateId" />
+                                    <button type="submit" class="btn btn-primary like-button">Like</button>
+                                </form>
                             </div>
                         </div>
                         <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
