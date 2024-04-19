@@ -9,6 +9,8 @@ using System.Data.SqlClient;
 using Utilities;
 using DatingSite_TermProject.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
+using Microsoft.AspNetCore.Http;
 
 
 namespace DatingSite_TermProject.Controllers.Tests
@@ -19,16 +21,17 @@ namespace DatingSite_TermProject.Controllers.Tests
         [TestMethod()]
         public void FilterActionTest()
         {
-            DashboardController controller = new DashboardController();
-            string username = "john_doe";
-            string Lessthanage = "";
-            string filtercity = "";
-            string filterstate = "AZ";
-            string filteroccupation = "";
-            string interests = "";
-            string filterCommitmentType = "";
 
-            controller.FilterAction();
+            //Random Verfication = new Random();
+            //string code = "";
+            //code = Verfication.Next(100000, 1000000).ToString();
+            //string cookieToken = code;
+            //string secretToken = EncryptionHelper.Encrypt(cookieToken);
+            //CookieOptions tokenOptions = new CookieOptions();
+            //tokenOptions.Expires = DateTime.Now.AddMinutes(2);
+            //HttpContext.Response.Cookies.Append("Token", secretToken, tokenOptions);
+            DashboardController controller = new DashboardController();
+           
            
             ViewResult v = controller.View();
 
