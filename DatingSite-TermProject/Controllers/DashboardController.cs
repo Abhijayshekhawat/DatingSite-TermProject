@@ -16,7 +16,13 @@ namespace DatingSite_TermProject.Controllers
     {
         public IActionResult Dashboard()
         {
-            return View("~/Views/Main/Dashboard.cshtml");
+            string savedUsername2 = Request.Cookies["Username"].ToString();
+            UserProfileModel userProfile = new UserProfileModel();
+            int privateid = userProfile.getPrivateId(savedUsername2);
+            List<CardsModel> Cardslist = PopulateProfiles(privateid);
+            ViewBag.ProfileImage = GetUserImage();
+            PopulateFilters();
+            return View("~/Views/Main/Dashboard.cshtml", Cardslist);
         }
         private String GetUserImage()
         {
@@ -118,9 +124,10 @@ namespace DatingSite_TermProject.Controllers
             // get the  dataset then redo the cardlist and send return the view again ?
             // should repopulate with new cardlist that has all the character
             // then reset filter is going to have the populateprofile() method to
-            PopulateStates();
-            PopulateInterests();
-            PopulateCommitmentTypes();
+            //PopulateStates();
+            //PopulateInterests();
+            //PopulateCommitmentTypes();
+            PopulateFilters();
 
            
 
@@ -196,6 +203,41 @@ namespace DatingSite_TermProject.Controllers
             return View("~/Views/Main/Dashboard.cshtml", Cardslist);
         }
 
+        public List<CardsModel> PopulateProfiles(int privateid)
+        {
+
+
+            List<CardsModel> Cardslist = new List<CardsModel>();
+            CardsModel cards;
+            DBConnect objDB = new DBConnect();
+            SqlCommand objCommand = new SqlCommand();
+            objCommand.CommandType = CommandType.StoredProcedure;
+            objCommand.CommandText = "TP_GetUsersCards";
+
+            SqlParameter inputParameter1 = new SqlParameter("@ExcludedUserId", privateid);
+            objCommand.Parameters.Add(inputParameter1);
+
+
+            DataSet ds = objDB.GetDataSet(objCommand);
+
+            DataTable dt2 = ds.Tables[0];
+
+            foreach (DataRow dr in dt2.Rows)
+            {
+                cards = new CardsModel(
+                    dr["FirstName"].ToString(),
+                    dr["LastName"].ToString(),
+                    dr["ProfilePhotoURL"].ToString(),
+                    dr["Tagline"].ToString(),
+                    dr["City"].ToString(),
+                    dr["State"].ToString()
+                );
+
+                Cardslist.Add(cards);
+            }
+            return Cardslist;
+
+        }
         private void PopulateStates()
         {
             // Code for populating ViewBag.States
@@ -212,6 +254,69 @@ namespace DatingSite_TermProject.Controllers
                 uniqueStates.Add(state);
             }
             ViewBag.States = uniqueStates;
+        }
+        public void PopulateFilters()
+        {
+            //Populate States
+            {
+                List<string> uniqueStates = new List<string>();
+                DBConnect DB = new DBConnect();
+                DataSet DS;
+                SqlCommand Cmd = new SqlCommand();
+                Cmd.CommandType = CommandType.StoredProcedure;
+                Cmd.CommandText = "TP_GetUniqueStates";
+                DS = DB.GetDataSet(Cmd);
+                foreach (DataRow row in DS.Tables[0].Rows)
+                {
+                    string state = row["State"].ToString();
+                    uniqueStates.Add(state);
+                }
+                ViewBag.States = uniqueStates;
+            }
+            //Populate Interests
+            {
+                DBConnect DB = new DBConnect();
+                DataSet DS;
+                SqlCommand Cmd = new SqlCommand();
+                Cmd.CommandType = CommandType.StoredProcedure;
+                Cmd.CommandText = "TP_GetUniqueInterests";
+                DS = DB.GetDataSet(Cmd);
+
+                List<string> uniqueInterests = new List<string>();
+                foreach (DataRow row in DS.Tables[0].Rows)
+                {
+                    string interestList = row["Interests"].ToString();
+                    string[] interests = interestList.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                    foreach (string interest in interests)
+                    {
+                        string trimmedInterest = interest.Trim();
+                        if (!uniqueInterests.Contains(trimmedInterest))
+                        {
+                            uniqueInterests.Add(trimmedInterest);
+                        }
+                    }
+                }
+                ViewBag.Interests = uniqueInterests;
+            }
+            //Populate Commitment Types
+            {
+                List<string> uniqueCommitments = new List<string>();
+                DBConnect DB = new DBConnect();
+                DataSet DS;
+                SqlCommand Cmd = new SqlCommand();
+                Cmd.CommandType = CommandType.StoredProcedure;
+                Cmd.CommandText = "TP_GetUniqueCommitmentTypes";
+                DS = DB.GetDataSet(Cmd);
+                foreach (DataRow row in DS.Tables[0].Rows)
+                {
+                    string commitmentType = row["CommitmentType"].ToString();
+                    uniqueCommitments.Add(commitmentType);
+                }
+                ViewBag.Commitments = uniqueCommitments;
+            }
+
+
+
         }
 
         private void PopulateInterests()

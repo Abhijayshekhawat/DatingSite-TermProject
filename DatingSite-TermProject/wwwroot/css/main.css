@@ -237,6 +237,7 @@
     color: #F72E50;
     font-weight: bold;
 }
+
 @media (max-width: 768px) {
     .header nav {
         display: none;

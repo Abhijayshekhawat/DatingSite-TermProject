@@ -94,7 +94,7 @@
                             List<string> userInterests;
                             if (Model != null && Model.Interests != null)
                             {
-                                userInterests = Model.Interests.Split(", ", StringSplitOptions.RemoveEmptyEntries).ToList();
+                                userInterests = Model.Interests.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(i => i.Trim()).ToList();
                             }
                             else
                             {
@@ -125,7 +125,7 @@
                             List<string> userCuisines;
                             if (Model != null && Model.FavoriteCuisine != null)
                             {
-                                userCuisines = Model.FavoriteCuisine.Split(", ", StringSplitOptions.RemoveEmptyEntries).ToList();
+                                userCuisines = Model.FavoriteCuisine.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(c => c.Trim()).ToList();
                             }
                             else
                             {
