@@ -12,13 +12,8 @@ namespace DatingSite_TermProject.Controllers
     {
 
         public ActionResult actionresult()
-
-
         { 
-            
             return View("~/Views/Main/Dashboard.cshtml"); 
-        
-        
         }
         public IActionResult Verification()
         {
