@@ -20,13 +20,13 @@ namespace DatingSite_TermProject.Controllers
         }
         private String GetUserImage()
         {
-            string savedUsername2 = Request.Cookies["Username"].ToString();
+            string savedUsername = Request.Cookies["Username"].ToString();
             DBConnect objDB = new DBConnect();
             SqlCommand objCommand = new SqlCommand();
             objCommand.CommandType = CommandType.StoredProcedure;
             objCommand.CommandText = "TP_GetProfileFromUsername";
 
-            SqlParameter inputParameter1 = new SqlParameter("@Username", savedUsername2);
+            SqlParameter inputParameter1 = new SqlParameter("@Username", savedUsername);
             objCommand.Parameters.Add(inputParameter1);
 
 
@@ -50,9 +50,9 @@ namespace DatingSite_TermProject.Controllers
             PopulateStates();
             PopulateInterests();
             PopulateCommitmentTypes();
-            ViewBag.ProfileImage = GetUserImage();
+            
             string savedUsername2 = Request.Cookies["Username"].ToString();
-
+            ViewBag.ProfileImage = GetUserImage();
             UserProfileModel userProfile = new UserProfileModel();
             int privateid = userProfile.getPrivateId(savedUsername2);
             List<CardsModel> Cardslist = new List<CardsModel>();
@@ -102,9 +102,10 @@ namespace DatingSite_TermProject.Controllers
             PopulateInterests();
             PopulateCommitmentTypes();
 
-
+           
 
             string username = Request.Cookies["Username"].ToString();
+            ViewBag.ProfileImage = GetUserImage();
             UserProfileModel userProfile = new UserProfileModel();
 
             string lessThanAge = Request.Form["lessThanAge"].ToString();
