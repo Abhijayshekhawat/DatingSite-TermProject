@@ -93,7 +93,6 @@ namespace DatingSite_TermProject.Controllers
                     dr["Dealbreaker"].ToString(),
                     dr["Biography"].ToString(),
                     int.Parse(dr["Age"].ToString()),
-                    int.Parse(dr["PrivateId"].ToString()),
                     dr["Height"].ToString(),
                     dr["Weight"].ToString(),
                     dr["Image1"].ToString(),

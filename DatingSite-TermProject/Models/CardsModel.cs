@@ -63,7 +63,6 @@
             string dealbreaker,
             string biography,
             int age,
-             int privateid,
             string height,
             string weight,
             string image1,
@@ -72,6 +71,7 @@
             string image4,
             string image5,
             int privateId
+            
             )
         {
             this.age = age;
