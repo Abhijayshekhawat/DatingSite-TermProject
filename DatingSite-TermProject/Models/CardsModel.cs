@@ -29,6 +29,12 @@
         private string biography;
         private string firstname;
         private string lastname;
+        private string image1;
+        private string image2;
+        private string image3;
+        private string image4;
+        private string image5;
+
 
         public CardsModel() { }
         public CardsModel(
@@ -57,7 +63,12 @@
             string biography,
             int age,
             string height,
-            string weight
+            string weight,
+            string image1,
+            string image2,
+            string image3,
+            string image4,
+            string image5
             )
         {
             this.age = age;
@@ -86,8 +97,42 @@
             this.biography = biography;
             this.firstname = firstname;
             this.lastname = lastname;
+            this.image1 = image1;
+            this.image2 = image2;
+            this.image3 = image3;
+            this.image4 = image4;
+            this.image5 = image5;
+
         }
 
+        public string Image1
+        {
+            get { return image1; }
+            set { image1 = value; }
+        }
+        public string Image2
+        {
+            get { return image2; }
+            set { image2 = value; }
+
+        }
+        public string Image3
+        {
+            get { return image3; }
+            set { image3 = value; }
+        }
+        public string Image4
+        {
+            get { return image4; }
+            set { image4 = value; }
+        }
+
+        public string Image5
+        {
+            get { return image5;}
+            set { image5 = value;}
+
+        }
         public string FirstName
         {
             get { return firstname; }
