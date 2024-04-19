@@ -38,8 +38,11 @@ namespace DatingSiteCoreAPI
             SqlParameter inputParameter3 = new SqlParameter("@LikeeID", likeeid);
             objCommand.Parameters.Add(inputParameter3);
 
-          result  =  objDB.DoUpdateUsingCmdObj(objCommand);
+            SqlParameter returnParameter = new SqlParameter("@Result", SqlDbType.Int);
+            returnParameter.Direction = ParameterDirection.Output;
+            objCommand.Parameters.Add(returnParameter);
 
+            result  =  objDB.DoUpdateUsingCmdObj(objCommand);
             return result;  
         }
 
