@@ -95,11 +95,17 @@ namespace DatingSite_TermProject.Controllers
             List<CardsModel> Cardslist = PopulateProfiles(privateid);
             ViewBag.ProfileImage = GetUserImage();
             return View("~/Views/Main/Likes.cshtml", Cardslist);
+
+            var peopleWhoLikedYou = // get data
+    var peopleYouLiked = // get data
+
+    ViewBag.PeopleWhoLikedYou = peopleWhoLikedYou;
+            ViewBag.PeopleYouLiked = peopleYouLiked;
+
+            return View(peopleYouLiked); 
         }
         public List<CardsModel> PopulateProfiles(int privateid)
         {
-
-
             List<CardsModel> Cardslist = new List<CardsModel>();
             CardsModel cards;
             DBConnect objDB = new DBConnect();
@@ -120,7 +126,6 @@ namespace DatingSite_TermProject.Controllers
                 cards = new CardsModel(
                     dr["FirstName"].ToString(),
                     dr["LastName"].ToString(),
-
                     dr["ProfilePhotoURL"].ToString(),
                     dr["City"].ToString(),
                     dr["State"].ToString(),
@@ -143,7 +148,6 @@ namespace DatingSite_TermProject.Controllers
                     dr["Dealbreaker"].ToString(),
                     dr["Biography"].ToString(),
                     int.Parse(dr["Age"].ToString()),
-
                     dr["Height"].ToString(),
                     dr["Weight"].ToString(),
                     dr["Image1"].ToString(),
