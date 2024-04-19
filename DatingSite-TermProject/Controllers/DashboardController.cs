@@ -73,12 +73,32 @@ namespace DatingSite_TermProject.Controllers
             foreach (DataRow dr in dt2.Rows)
             {
                 cards = new CardsModel(
-                    dr["FirstName"].ToString(),
-                    dr["LastName"].ToString(),
-                    dr["ProfilePhotoURL"].ToString(),
-                    dr["Tagline"].ToString(),
-                    dr["City"].ToString(),
-                    dr["State"].ToString()
+                dr["ProfilePhotoURL"].ToString(),
+                dr["City"].ToString(),
+                dr["State"].ToString(),
+                dr["Tagline"].ToString(),
+                dr["Occupation"].ToString(),
+                dr["Interests"].ToString(),
+                dr["FavouriteCuisine"].ToString(),
+                dr["FavouriteQuote"].ToString(),
+                dr["Goals"].ToString(),
+                dr["CommitmentType"].ToString(),
+                dr["FavouriteMovieGenre"].ToString(),
+                dr["FavouriteBookGenre"].ToString(),
+                dr["Address"].ToString(),
+                dr["PhoneNumber"].ToString(),
+                dr["FavouriteMovie"].ToString(),
+                dr["FavouriteBook"].ToString(),
+                dr["FavouriteRestaurant"].ToString(),
+                dr["Dislikes"].ToString(),
+                dr["AdditionalInterests"].ToString(),
+                dr["Dealbreaker"].ToString(),
+                dr["Biography"].ToString(),
+                Convert.ToInt32(dr["Age"]),
+                dr["Height"].ToString(),
+                dr["Weight"].ToString(),
+                dr["FirstName"].ToString(),
+                dr["LastName"].ToString()
                 );
 
                 Cardslist.Add(cards);
@@ -141,13 +161,33 @@ namespace DatingSite_TermProject.Controllers
             foreach (DataRow dr in dt2.Rows)
             {
                 cards = new CardsModel(
-                    dr["FirstName"].ToString(),
-                    dr["LastName"].ToString(),
-                    dr["ProfilePhotoURL"].ToString(),
-                    dr["Tagline"].ToString(),
-                    dr["City"].ToString(),
-                    dr["State"].ToString()
-                );
+                   dr["ProfilePhotoURL"].ToString(),
+                   dr["City"].ToString(),
+                   dr["State"].ToString(),
+                   dr["Tagline"].ToString(),
+                   dr["Occupation"].ToString(),
+                   dr["Interests"].ToString(),
+                   dr["FavouriteCuisine"].ToString(),
+                   dr["FavouriteQuote"].ToString(),
+                   dr["Goals"].ToString(),
+                   dr["CommitmentType"].ToString(),
+                   dr["FavouriteMovieGenre"].ToString(),
+                   dr["FavouriteBookGenre"].ToString(),
+                   dr["Address"].ToString(),
+                   dr["PhoneNumber"].ToString(),
+                   dr["FavouriteMovie"].ToString(),
+                   dr["FavouriteBook"].ToString(),
+                   dr["FavouriteRestaurant"].ToString(),
+                   dr["Dislikes"].ToString(),
+                   dr["AdditionalInterests"].ToString(),
+                   dr["Dealbreaker"].ToString(),
+                   dr["Biography"].ToString(),
+                   Convert.ToInt32(dr["Age"]),
+                   dr["Height"].ToString(),
+                   dr["Weight"].ToString(),
+                   dr["FirstName"].ToString(),
+                   dr["LastName"].ToString()
+                   );
 
                 Cardslist.Add(cards);
             }
