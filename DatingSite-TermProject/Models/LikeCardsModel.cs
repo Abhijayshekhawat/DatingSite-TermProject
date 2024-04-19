@@ -1,6 +1,6 @@
 ﻿namespace DatingSite_TermProject.Models
 {
-    public class LikesCardModel
+    public class LikeCardsModel
     {
         private List<CardsModel> peopleWhoLikedYou;
         private List<CardsModel> peopleYouLiked;
