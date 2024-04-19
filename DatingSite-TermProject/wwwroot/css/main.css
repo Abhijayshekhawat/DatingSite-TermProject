@@ -203,6 +203,42 @@
     font-size: 14px;
     color: #666;
 }
+.profile-gallery-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 images per row */
+    gap: 10px; /* space between images */
+    margin-top: 20px;
+}
+
+.profile-gallery-container img {
+    width: 100%; /* each image takes full width of its column */
+    height: 150px; /* fixed height for all images */
+    object-fit: cover; /* ensures images are not stretched */
+    border-radius: 8px; /* rounded corners */
+    transition: transform 0.5s ease, box-shadow 0.5s ease; /* smooth transition for hover effects */
+}
+
+.profile-gallery-container img:hover {
+    transform: scale(1.05); /* slight increase in size on hover */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5); /* shadow effect on hover */
+}
+
+.modal-body {
+    background-color: #fff; /* white background for the modal content */
+    padding: 20px; /* padding around the modal content */
+}
+
+.modal-content {
+    border-radius: 15px; /* rounded corners for the modal */
+    overflow: hidden; /* ensures nothing overflows the modal's rounded corners */
+}
+
+/* Styles for the text content in the modal to ensure clear readability */
+.modal-body p {
+    font-size: 16px; /* readable font size */
+    margin-bottom: 10px; /* space between paragraphs */
+    color: #333; /* dark gray text for readability */
+}
 .btn {
     padding: 8px 15px;
     text-decoration: none;

@@ -20,44 +20,6 @@
 
 </head>
 <body>
-    <style>
-    .profile-gallery-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 10px;
-        margin-top: 20px;
-    }
-    .profile-gallery-container img {
-        width: 100%;
-        border-radius: 8px;
-        transition: transform 0.5s ease, box-shadow 0.5s ease;
-    }
-    .profile-gallery-container img:hover {
-        transform: scale(1.05);
-        box-shadow: 0 4px 8px rgba(0,0,0,0.5);
-    }
-    .profile-image {
-        grid-column: span 2; /* Makes the profile image larger */
-        object-fit: cover;
-    }
-    .modal-content {
-        background: #f8f9fa; /* Light background for the modal content */
-        border-radius: 15px; /* Rounded borders for the modal */
-    }
-    .modal-header {
-        border-bottom: none; /* Removes the border from the modal header */
-    }
-    .modal-footer {
-        border-top: none; /* Removes the border from the modal footer */
-    }
-    .btn-close {
-        background-color: #ccc; /* Styles the close button */
-        border-radius: 50%;
-    }
-    .btn-secondary {
-        border-color: #6c757d;
-    }
-</style>
     <div class="navbar">
         <div class="navbar-left">
             <img src="~/css/logo.png" alt="Logo" class="logo" />
@@ -146,83 +108,138 @@
                                 <p class="card-text">@cards.Tagline</p>
                                 <p class="card-text">@cards.City,@cards.State</p>
                                 <button type="button" class="btn btn-secondary btn-show-profile"
-                                        data-bs-toggle="modal" data-bs-target="#detailModal" data-name="@cards.FirstName @cards.LastName"
-                                        data-description="@cards.Tagline" data-city="@cards.City" data-state="@cards.State">
+                                        data-bs-toggle="modal" data-bs-target="#detailModal"
+                                        data-profile-photo-url="@cards.ProfilePhotoURL"
+                                        data-name="@cards.FirstName @cards.LastName"
+                                        data-tagline="@cards.Tagline"
+                                        data-city="@cards.City" data-state="@cards.State"
+                                        data-age="@cards.Age" data-height="@cards.Height"
+                                        data-weight="@cards.Weight" data-occupation="@cards.Occupation"
+                                        data-interests="@cards.Interests" data-favourite-cuisine="@cards.FavouriteCuisine"
+                                        data-favourite-quote="@cards.FavouriteQuote" data-goals="@cards.Goals"
+                                        data-commitment-type="@cards.CommitmentType" data-biography="@cards.Biography"
+                                        data-favourite-movie-genre="@cards.FavouriteMovieGenre"
+                                        data-favourite-book-genre="@cards.FavouriteBookGenre"
+                                        data-favourite-movie="@cards.FavouriteMovie"
+                                        data-favourite-book="@cards.FavouriteBook"
+                                        data-favourite-restaurant="@cards.FavouriteRestaurant"
+                                        data-dislikes="@cards.Dislikes"
+                                        data-additional-interests="@cards.AdditionalInterests"
+                                        data-dealbreaker="@cards.Dealbreaker"
+                                        data-image1="@cards.Image1" data-image2="@cards.Image2"
+                                        data-image3="@cards.Image3" data-image4="@cards.Image4"
+                                        data-image5="@cards.Image5">
                                     Show Profile
                                 </button>
                                 <form asp-controller="Dashboard" action="@Url.Action("AddLikes", "Dashboard")" method="post">
                                     <input type="hidden" name="LikeeID" value="@cards.PrivateId" />
                                     <button type="submit" class="btn btn-primary like-button">Like</button>
                                 </form>
+
+                                <button type="button" class="btn btn-primary">Like</button>
                             </div>
                         </div>
-                        <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-lg">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="modalLabel">Profile Details</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <img src="@cards.ProfilePhotoURL" alt="Profile Photo" class="img-fluid">
-                                                <p><strong>Name:</strong>@cards.FirstName, @cards.LastName</p>
-                                                <p><strong>Age:</strong>@cards.Age</p>
-                                                <p><strong>Height:</strong>@cards.Height</p>
-                                                <p><strong>Weight:</strong>@cards.Weight</p>
-                                                <p><strong>City:</strong>@cards.City</p>
-                                                <p><strong>State:</strong>@cards.State</p>
-                                                <p><strong>Occupation:</strong>@cards.Occupation</p>
-                                                <p><strong>Interests:</strong>@cards.Interests</p>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p><strong>Tagline:</strong>@cards.Tagline</p>
-                                                <p><strong>Favourite Cuisine:</strong>@cards.FavouriteCuisine</p>
-                                                <p><strong>Favourite Quote:</strong>@cards.FavouriteQuote</p>
-                                                <p><strong>Goals:</strong>@cards.Goals</p>
-                                                <p><strong>Commitment Type:</strong>@cards.CommitmentType</p>
-                                                <p><strong>Biography:</strong>@cards.Biography</p>
-                                            </div>
-                                        </div>
-                                        <div class="profile-gallery-container">
-                                            <!-- Profile image styled differently -->
-                                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk1wr1yrOBQiwirwFdBeIUAeIU9vPg09-NpaXWEipuyQ&s" alt="Profile Photo" class="profile-image img-fluid">
-                                            <!-- Image gallery -->
-                                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk1wr1yrOBQiwirwFdBeIUAeIU9vPg09-NpaXWEipuyQ&s" alt="Gallery Image 1" class="img-fluid">
-                                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk1wr1yrOBQiwirwFdBeIUAeIU9vPg09-NpaXWEipuyQ&s" alt="Gallery Image 2" class="img-fluid">
-                                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk1wr1yrOBQiwirwFdBeIUAeIU9vPg09-NpaXWEipuyQ&s" alt="Gallery Image 3" class="img-fluid">
-                                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk1wr1yrOBQiwirwFdBeIUAeIU9vPg09-NpaXWEipuyQ&s" alt="Gallery Image 4" class="img-fluid">
-                                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk1wr1yrOBQiwirwFdBeIUAeIU9vPg09-NpaXWEipuyQ&s" alt="Gallery Image 5" class="img-fluid">
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        
                     }
                 </div>
             </div>
     </div>
-        
 
+        <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalLabel">Profile Details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <img id="modalProfilePhoto" alt="Profile Photo" class="img-fluid">
+                                <p><strong>Favourite Movie Genre:</strong> <span id="modalFavMovieGenre"></span></p>
+                                <p><strong>Favourite Book Genre:</strong> <span id="modalFavBookGenre"></span></p>
+                                <p><strong>Favourite Movie:</strong> <span id="modalFavMovie"></span></p>
+                                <p><strong>Favourite Book:</strong> <span id="modalFavBook"></span></p>
+                                <p><strong>Favourite Restaurant:</strong> <span id="modalFavRestaurant"></span></p>
+                                <p><strong>Dislikes:</strong> <span id="modalDislikes"></span></p>
+                                <p><strong>Additional Interests:</strong> <span id="modalAdditionalInterests"></span></p>
+                                <p><strong>Dealbreaker:</strong> <span id="modalDealbreaker"></span></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Name:</strong> <span id="modalName"></span></p>
+                                <p><strong>Age:</strong> <span id="modalAge"></span></p>
+                                <p><strong>Height:</strong> <span id="modalHeight"></span></p>
+                                <p><strong>Weight:</strong> <span id="modalWeight"></span></p>
+                                <p><strong>City:</strong> <span id="modalCity"></span></p>
+                                <p><strong>State:</strong> <span id="modalState"></span></p>
+                                <p><strong>Occupation:</strong> <span id="modalOccupation"></span></p>
+                                <p><strong>Interests:</strong> <span id="modalInterests"></span></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Tagline:</strong> <span id="modalTagline"></span></p>
+                                <p><strong>Favourite Cuisine:</strong> <span id="modalFavCuisine"></span></p>
+                                <p><strong>Favourite Quote:</strong> <span id="modalFavQuote"></span></p>
+                                <p><strong>Goals:</strong> <span id="modalGoals"></span></p>
+                                <p><strong>Commitment Type:</strong> <span id="modalCommitmentType"></span></p>
+                                <p><strong>Biography:</strong> <span id="modalBiography"></span></p>
+                            </div>
+                        </div>
+                        <div class="profile-gallery-container">
+                            <img id="image1" alt="Gallery Image 1" class="img-fluid">
+                            <img id="image2" alt="Gallery Image 2" class="img-fluid">
+                            <img id="image3" alt="Gallery Image 3" class="img-fluid">
+                            <img id="image4" alt="Gallery Image 4" class="img-fluid">
+                            <img id="image5" alt="Gallery Image 5" class="img-fluid">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <script>
+        document.querySelectorAll('.btn-show-profile').forEach(button => {
+            button.addEventListener('click', function () {
+                const name = this.getAttribute('data-name');
+                const description = this.getAttribute('data-description');
+                const city = this.getAttribute('data-city');
+                const state = this.getAttribute('data-state');
+                    document.getElementById('modalProfilePhoto').src = this.dataset.profilePhotoUrl;
+                    document.getElementById('modalName').textContent = this.dataset.name;
+                    document.getElementById('modalAge').textContent = this.dataset.age;
+                    document.getElementById('modalHeight').textContent = this.dataset.height;
+                    document.getElementById('modalWeight').textContent = this.dataset.weight;
+                    document.getElementById('modalCity').textContent = this.dataset.city;
+                    document.getElementById('modalState').textContent = this.dataset.state;
+                    document.getElementById('modalOccupation').textContent = this.dataset.occupation;
+                    document.getElementById('modalInterests').textContent = this.dataset.interests;
 
-        <script>
-            document.querySelectorAll('.btn-show-profile').forEach(button => {
-                button.addEventListener('click', function () {
-                    const name = this.getAttribute('data-name');
-                    const description = this.getAttribute('data-description');
-                    const city = this.getAttribute('data-city');
-                    const state = this.getAttribute('data-state');
+                    // Update additional details
+                    document.getElementById('modalTagline').textContent = this.dataset.tagline;
+                    document.getElementById('modalFavCuisine').textContent = this.dataset.favouriteCuisine;
+                    document.getElementById('modalFavQuote').textContent = this.dataset.favouriteQuote;
+                    document.getElementById('modalGoals').textContent = this.dataset.goals;
+                    document.getElementById('modalCommitmentType').textContent = this.dataset.commitmentType;
+                    document.getElementById('modalBiography').textContent = this.dataset.biography;
+                    document.getElementById('modalFavMovieGenre').textContent = this.dataset.favMovieGenre;
+                    document.getElementById('modalFavBookGenre').textContent = this.dataset.favBookGenre;
+                    document.getElementById('modalFavMovie').textContent = this.dataset.favMovie;
+                    document.getElementById('modalFavBook').textContent = this.dataset.favBook;
+                    document.getElementById('modalFavRestaurant').textContent = this.dataset.favRestaurant;
+                    document.getElementById('modalDislikes').textContent = this.dataset.dislikes;
+                    document.getElementById('modalAdditionalInterests').textContent = this.dataset.additionalInterests;
+                    document.getElementById('modalDealbreaker').textContent = this.dataset.dealbreaker;
 
-                    document.getElementById('modalName').textContent = name;
-                    document.getElementById('modalDescription').textContent = description;
-                    document.getElementById('modalLocation').textContent = city + ', ' + state;
-                });
+                    // Update images in the gallery
+                    document.getElementById('image1').src = this.dataset.image1;
+                    document.getElementById('image2').src = this.dataset.image2;
+                    document.getElementById('image3').src = this.dataset.image3;
+                    document.getElementById('image4').src = this.dataset.image4;
+                    document.getElementById('image5').src = this.dataset.image5;
             });
-        </script>
+        });
+    </script>
     <footer>
         <p>2024 MatchUp by Abhijay & Johnson</p>
     </footer>
