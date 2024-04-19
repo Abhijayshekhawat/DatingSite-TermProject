@@ -20,6 +20,44 @@
 
 </head>
 <body>
+    <style>
+    .profile-gallery-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 10px;
+        margin-top: 20px;
+    }
+    .profile-gallery-container img {
+        width: 100%;
+        border-radius: 8px;
+        transition: transform 0.5s ease, box-shadow 0.5s ease;
+    }
+    .profile-gallery-container img:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+    }
+    .profile-image {
+        grid-column: span 2; /* Makes the profile image larger */
+        object-fit: cover;
+    }
+    .modal-content {
+        background: #f8f9fa; /* Light background for the modal content */
+        border-radius: 15px; /* Rounded borders for the modal */
+    }
+    .modal-header {
+        border-bottom: none; /* Removes the border from the modal header */
+    }
+    .modal-footer {
+        border-top: none; /* Removes the border from the modal footer */
+    }
+    .btn-close {
+        background-color: #ccc; /* Styles the close button */
+        border-radius: 50%;
+    }
+    .btn-secondary {
+        border-color: #6c757d;
+    }
+</style>
     <div class="navbar">
         <div class="navbar-left">
             <img src="~/css/logo.png" alt="Logo" class="logo" />
@@ -120,16 +158,44 @@
             </div>
     </div>
         <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modalLabel">Card Details</h5>
+                        <h5 class="modal-title" id="modalLabel">Profile Details</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <p id="modalName"></p>
-                        <p id="modalDescription"></p>
-                        <p id="modalLocation"></p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk1wr1yrOBQiwirwFdBeIUAeIU9vPg09-NpaXWEipuyQ&s" alt="Profile Photo" class="img-fluid">
+                                <p><strong>Name:</strong> John Doe</p>
+                                <p><strong>Age:</strong> 29</p>
+                                <p><strong>Height:</strong> 5'11"</p>
+                                <p><strong>Weight:</strong> 165 lbs</p>
+                                <p><strong>City:</strong> New York</p>
+                                <p><strong>State:</strong> NY</p>
+                                <p><strong>Occupation:</strong> Software Developer</p>
+                                <p><strong>Interests:</strong> Hiking, Reading, Coding</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Tagline:</strong> "Live, Laugh, Code"</p>
+                                <p><strong>Favourite Cuisine:</strong> Italian</p>
+                                <p><strong>Favourite Quote:</strong> "To be or not to be"</p>
+                                <p><strong>Goals:</strong> To develop a revolutionary app</p>
+                                <p><strong>Commitment Type:</strong> Long-term</p>
+                                <p><strong>Biography:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
+                            </div>
+                        </div>
+                        <div class="profile-gallery-container">
+                            <!-- Profile image styled differently -->
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk1wr1yrOBQiwirwFdBeIUAeIU9vPg09-NpaXWEipuyQ&s" alt="Profile Photo" class="profile-image img-fluid">
+                            <!-- Image gallery -->
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk1wr1yrOBQiwirwFdBeIUAeIU9vPg09-NpaXWEipuyQ&s" alt="Gallery Image 1" class="img-fluid">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk1wr1yrOBQiwirwFdBeIUAeIU9vPg09-NpaXWEipuyQ&s" alt="Gallery Image 2" class="img-fluid">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk1wr1yrOBQiwirwFdBeIUAeIU9vPg09-NpaXWEipuyQ&s" alt="Gallery Image 3" class="img-fluid">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk1wr1yrOBQiwirwFdBeIUAeIU9vPg09-NpaXWEipuyQ&s" alt="Gallery Image 4" class="img-fluid">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk1wr1yrOBQiwirwFdBeIUAeIU9vPg09-NpaXWEipuyQ&s" alt="Gallery Image 5" class="img-fluid">
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -137,6 +203,7 @@
                 </div>
             </div>
         </div>
+
 
         <script>
             document.querySelectorAll('.btn-show-profile').forEach(button => {
