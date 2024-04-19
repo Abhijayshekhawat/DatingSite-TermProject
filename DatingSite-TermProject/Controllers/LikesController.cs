@@ -12,8 +12,81 @@ using DatingSite_TermProject.Controllers;
 
 namespace DatingSite_TermProject.Controllers
 {
+
     public class LikesController : Controller
     {
+        string CreateAccountAPI_Url = "http://localhost:5046/api/MatchUp";
+
+
+        [HttpDelete]
+        public IActionResult DeleteLike()
+        {
+            string savedUsername = Request.Cookies["Username"].ToString();
+            LikeRequestModel like = new LikeRequestModel();
+
+            // get the data from the form / model PrivateUserInfoModel  
+
+            like.LikerUsername = savedUsername;
+            like.LIkeeId = Int32.Parse(Request.Form["DisLikeeID"].ToString());
+            // Serialize an Account object into a JSON string.
+            var jsonPayload = JsonSerializer.Serialize(like);
+            try
+            {
+                // Send the account object to the Web API that will be used to store a new account record in the database.
+                // Setup an HTTP POST Web Request and get the HTTP Web Response from the server.
+                WebRequest request = WebRequest.Create(CreateAccountAPI_Url + "/DeleteLikes");
+                request.Method = "DELETE";
+                request.ContentLength = jsonPayload.Length;
+                request.ContentType = "application/json";
+                // Write the JSON data to the Web Request
+                StreamWriter writer = new StreamWriter(request.GetRequestStream());
+                writer.Write(jsonPayload);
+                writer.Flush();
+                writer.Close();
+                // Read the data from the Web Response, which requires working with streams.
+                WebResponse response = request.GetResponse();
+                Stream theDataStream = response.GetResponseStream();
+                StreamReader reader = new StreamReader(theDataStream);
+                String data = reader.ReadToEnd();
+                reader.Close();
+                response.Close();
+                if (data == "true")
+                {
+                    string savedUsername2 = Request.Cookies["Username"].ToString();
+                    UserProfileModel userProfile = new UserProfileModel();
+                    int privateid = userProfile.getPrivateId(savedUsername2);
+                    List<CardsModel> Cardslist = PopulateProfiles(privateid);
+                    ViewBag.ProfileImage = GetUserImage();
+                    
+
+
+
+
+                    return View("~/Views/Main/Likes.cshtml", Cardslist);
+
+
+
+                }
+                else
+                    ViewBag.ErrorMessage = "A problem occurred while adding the customer to the database. The data wasn't recorded.";
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = "Error: " + ex.Message;
+            }
+
+            string savedUsername3 = Request.Cookies["Username"].ToString();
+            UserProfileModel userProfile2 = new UserProfileModel();
+            int privateid2 = userProfile2.getPrivateId(savedUsername3);
+            List<CardsModel> Cardslist2 = PopulateProfiles(privateid2);
+            ViewBag.ProfileImage = GetUserImage();
+            
+            return View("~/Views/Main/Likes.cshtml", Cardslist2);
+
+
+
+            
+        }
         public IActionResult Likes()
         {
             
