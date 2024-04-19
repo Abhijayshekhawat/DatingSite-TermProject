@@ -153,56 +153,57 @@
                                 <button type="button" class="btn btn-primary">Like</button>
                             </div>
                         </div>
+                        <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="modalLabel">Profile Details</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <img src="@cards.ProfilePhotoURL" alt="Profile Photo" class="img-fluid">
+                                                <p><strong>Name:</strong>@cards.FirstName, @cards.LastName</p>
+                                                <p><strong>Age:</strong>@cards.Age</p>
+                                                <p><strong>Height:</strong>@cards.Height</p>
+                                                <p><strong>Weight:</strong>@cards.Weight</p>
+                                                <p><strong>City:</strong>@cards.City</p>
+                                                <p><strong>State:</strong>@cards.State</p>
+                                                <p><strong>Occupation:</strong>@cards.Occupation</p>
+                                                <p><strong>Interests:</strong>@cards.Interests</p>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><strong>Tagline:</strong>@cards.Tagline</p>
+                                                <p><strong>Favourite Cuisine:</strong>@cards.FavouriteCuisine</p>
+                                                <p><strong>Favourite Quote:</strong>@cards.FavouriteQuote</p>
+                                                <p><strong>Goals:</strong>@cards.Goals</p>
+                                                <p><strong>Commitment Type:</strong>@cards.CommitmentType</p>
+                                                <p><strong>Biography:</strong>@cards.Biography</p>
+                                            </div>
+                                        </div>
+                                        <div class="profile-gallery-container">
+                                            <!-- Profile image styled differently -->
+                                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk1wr1yrOBQiwirwFdBeIUAeIU9vPg09-NpaXWEipuyQ&s" alt="Profile Photo" class="profile-image img-fluid">
+                                            <!-- Image gallery -->
+                                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk1wr1yrOBQiwirwFdBeIUAeIU9vPg09-NpaXWEipuyQ&s" alt="Gallery Image 1" class="img-fluid">
+                                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk1wr1yrOBQiwirwFdBeIUAeIU9vPg09-NpaXWEipuyQ&s" alt="Gallery Image 2" class="img-fluid">
+                                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk1wr1yrOBQiwirwFdBeIUAeIU9vPg09-NpaXWEipuyQ&s" alt="Gallery Image 3" class="img-fluid">
+                                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk1wr1yrOBQiwirwFdBeIUAeIU9vPg09-NpaXWEipuyQ&s" alt="Gallery Image 4" class="img-fluid">
+                                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk1wr1yrOBQiwirwFdBeIUAeIU9vPg09-NpaXWEipuyQ&s" alt="Gallery Image 5" class="img-fluid">
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     }
                 </div>
             </div>
     </div>
-        <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="modalLabel">Profile Details</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk1wr1yrOBQiwirwFdBeIUAeIU9vPg09-NpaXWEipuyQ&s" alt="Profile Photo" class="img-fluid">
-                                <p><strong>Name:</strong> John Doe</p>
-                                <p><strong>Age:</strong> 29</p>
-                                <p><strong>Height:</strong> 5'11"</p>
-                                <p><strong>Weight:</strong> 165 lbs</p>
-                                <p><strong>City:</strong> New York</p>
-                                <p><strong>State:</strong> NY</p>
-                                <p><strong>Occupation:</strong> Software Developer</p>
-                                <p><strong>Interests:</strong> Hiking, Reading, Coding</p>
-                            </div>
-                            <div class="col-md-6">
-                                <p><strong>Tagline:</strong> "Live, Laugh, Code"</p>
-                                <p><strong>Favourite Cuisine:</strong> Italian</p>
-                                <p><strong>Favourite Quote:</strong> "To be or not to be"</p>
-                                <p><strong>Goals:</strong> To develop a revolutionary app</p>
-                                <p><strong>Commitment Type:</strong> Long-term</p>
-                                <p><strong>Biography:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
-                            </div>
-                        </div>
-                        <div class="profile-gallery-container">
-                            <!-- Profile image styled differently -->
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk1wr1yrOBQiwirwFdBeIUAeIU9vPg09-NpaXWEipuyQ&s" alt="Profile Photo" class="profile-image img-fluid">
-                            <!-- Image gallery -->
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk1wr1yrOBQiwirwFdBeIUAeIU9vPg09-NpaXWEipuyQ&s" alt="Gallery Image 1" class="img-fluid">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk1wr1yrOBQiwirwFdBeIUAeIU9vPg09-NpaXWEipuyQ&s" alt="Gallery Image 2" class="img-fluid">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk1wr1yrOBQiwirwFdBeIUAeIU9vPg09-NpaXWEipuyQ&s" alt="Gallery Image 3" class="img-fluid">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk1wr1yrOBQiwirwFdBeIUAeIU9vPg09-NpaXWEipuyQ&s" alt="Gallery Image 4" class="img-fluid">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk1wr1yrOBQiwirwFdBeIUAeIU9vPg09-NpaXWEipuyQ&s" alt="Gallery Image 5" class="img-fluid">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
 
 
         <script>
