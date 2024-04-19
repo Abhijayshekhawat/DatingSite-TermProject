@@ -157,11 +157,11 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <img id="modalProfilePhoto" alt="Profile Photo" class="img-fluid">
-                                <p><strong>Favourite Movie Genre:</strong> <span id="modalFavMovieGenre"></span></p>
-                                <p><strong>Favourite Book Genre:</strong> <span id="modalFavBookGenre"></span></p>
-                                <p><strong>Favourite Movie:</strong> <span id="modalFavMovie"></span></p>
-                                <p><strong>Favourite Book:</strong> <span id="modalFavBook"></span></p>
-                                <p><strong>Favourite Restaurant:</strong> <span id="modalFavRestaurant"></span></p>
+                                <p><strong>Favourite Movie Genre:</strong> <span id="modalFavouriteMovieGenre"></span></p>
+                                <p><strong>Favourite Book Genre:</strong> <span id="modalFavouriteBookGenre"></span></p>
+                                <p><strong>Favourite Movie:</strong> <span id="modalFavouriteMovie"></span></p>
+                                <p><strong>Favourite Book:</strong> <span id="modalFavouriteBook"></span></p>
+                                <p><strong>Favourite Restaurant:</strong> <span id="modalFavouriteRestaurant"></span></p>
                                 <p><strong>Dislikes:</strong> <span id="modalDislikes"></span></p>
                                 <p><strong>Additional Interests:</strong> <span id="modalAdditionalInterests"></span></p>
                                 <p><strong>Dealbreaker:</strong> <span id="modalDealbreaker"></span></p>
@@ -183,6 +183,15 @@
                                 <p><strong>Goals:</strong> <span id="modalGoals"></span></p>
                                 <p><strong>Commitment Type:</strong> <span id="modalCommitmentType"></span></p>
                                 <p><strong>Biography:</strong> <span id="modalBiography"></span></p>
+                            </div>
+                            <div class="col-md-6">
+                                <iframe width="600"
+                                        height="450"
+                                        style="border:0"
+                                        referrerpolicy="no-referrer-when-downgrade"
+                                        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyD5Zq_-OdrLWo4Wm8Qy0gaefwYNnI2_Mms&q=Paris"
+                                        allowfullscreen>
+                                </iframe>
                             </div>
                         </div>
                         <div class="profile-gallery-container">
@@ -223,11 +232,11 @@
                     document.getElementById('modalGoals').textContent = this.dataset.goals;
                     document.getElementById('modalCommitmentType').textContent = this.dataset.commitmentType;
                     document.getElementById('modalBiography').textContent = this.dataset.biography;
-                    document.getElementById('modalFavMovieGenre').textContent = this.dataset.favMovieGenre;
-                    document.getElementById('modalFavBookGenre').textContent = this.dataset.favBookGenre;
-                    document.getElementById('modalFavMovie').textContent = this.dataset.favMovie;
-                    document.getElementById('modalFavBook').textContent = this.dataset.favBook;
-                    document.getElementById('modalFavRestaurant').textContent = this.dataset.favRestaurant;
+                    document.getElementById('modalFavouriteMovieGenre').textContent = this.dataset.favouriteMovieGenre;
+                    document.getElementById('modalFavouriteBookGenre').textContent = this.dataset.favouriteBookGenre;
+                    document.getElementById('modalFavouriteMovie').textContent = this.dataset.favouriteMovie;
+                    document.getElementById('modalFavouriteBook').textContent = this.dataset.favouriteBook;
+                    document.getElementById('modalFavouriteRestaurant').textContent = this.dataset.favouriteRestaurant;
                     document.getElementById('modalDislikes').textContent = this.dataset.dislikes;
                     document.getElementById('modalAdditionalInterests').textContent = this.dataset.additionalInterests;
                     document.getElementById('modalDealbreaker').textContent = this.dataset.dealbreaker;
