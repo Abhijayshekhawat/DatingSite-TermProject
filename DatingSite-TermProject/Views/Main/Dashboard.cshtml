@@ -28,7 +28,7 @@
                 <a asp-controller="Matches" asp-action="Matches">Matches</a>
                 <a asp-controller="Likes" asp-action="Likes">Likes</a>
                 <a asp-controller="Dates" asp-action="Dates">Dates</a>
-                <a asp-controller="DatePlanning" asp-action="DatePlanning">Plan Date</a>
+                <a asp-controller="PlanDate" asp-action="PlanDate">Plan Date</a>
                 <a asp-controller="Profile" asp-action="Profile">Edit Profile</a>
             </nav>
         </div>
@@ -144,70 +144,70 @@
                     }
                 </div>
             </div>
+        </div>
     </div>
-
-        <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="modalLabel">Profile Details</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <img id="modalProfilePhoto" alt="Profile Photo" class="img-fluid">
-                                <p><strong>Favourite Movie Genre:</strong> <span id="modalFavouriteMovieGenre"></span></p>
-                                <p><strong>Favourite Book Genre:</strong> <span id="modalFavouriteBookGenre"></span></p>
-                                <p><strong>Favourite Movie:</strong> <span id="modalFavouriteMovie"></span></p>
-                                <p><strong>Favourite Book:</strong> <span id="modalFavouriteBook"></span></p>
-                                <p><strong>Favourite Restaurant:</strong> <span id="modalFavouriteRestaurant"></span></p>
-                                <p><strong>Dislikes:</strong> <span id="modalDislikes"></span></p>
-                                <p><strong>Additional Interests:</strong> <span id="modalAdditionalInterests"></span></p>
-                                <p><strong>Dealbreaker:</strong> <span id="modalDealbreaker"></span></p>
-                            </div>
-                            <div class="col-md-6">
-                                <p><strong>Name:</strong> <span id="modalName"></span></p>
-                                <p><strong>Age:</strong> <span id="modalAge"></span></p>
-                                <p><strong>Height:</strong> <span id="modalHeight"></span></p>
-                                <p><strong>Weight:</strong> <span id="modalWeight"></span></p>
-                                <p><strong>City:</strong> <span id="modalCity"></span></p>
-                                <p><strong>State:</strong> <span id="modalState"></span></p>
-                                <p><strong>Occupation:</strong> <span id="modalOccupation"></span></p>
-                                <p><strong>Interests:</strong> <span id="modalInterests"></span></p>
-                            </div>
-                            <div class="col-md-6">
-                                <p><strong>Tagline:</strong> <span id="modalTagline"></span></p>
-                                <p><strong>Favourite Cuisine:</strong> <span id="modalFavCuisine"></span></p>
-                                <p><strong>Favourite Quote:</strong> <span id="modalFavQuote"></span></p>
-                                <p><strong>Goals:</strong> <span id="modalGoals"></span></p>
-                                <p><strong>Commitment Type:</strong> <span id="modalCommitmentType"></span></p>
-                                <p><strong>Biography:</strong> <span id="modalBiography"></span></p>
-                            </div>
-                            <div class="col-md-6">
-                                <iframe width="600"
-                                        height="450"
-                                        style="border:0"
-                                        referrerpolicy="no-referrer-when-downgrade"
-                                        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyD5Zq_-OdrLWo4Wm8Qy0gaefwYNnI2_Mms&q=Paris"
-                                        allowfullscreen>
-                                </iframe>
-                            </div>
+    <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel">Profile Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img id="modalProfilePhoto" alt="Profile Photo" class="img-fluid">
+                            <p><strong>Favourite Movie Genre:</strong> <span id="modalFavouriteMovieGenre"></span></p>
+                            <p><strong>Favourite Book Genre:</strong> <span id="modalFavouriteBookGenre"></span></p>
+                            <p><strong>Favourite Movie:</strong> <span id="modalFavouriteMovie"></span></p>
+                            <p><strong>Favourite Book:</strong> <span id="modalFavouriteBook"></span></p>
+                            <p><strong>Favourite Restaurant:</strong> <span id="modalFavouriteRestaurant"></span></p>
+                            <p><strong>Dislikes:</strong> <span id="modalDislikes"></span></p>
+                            <p><strong>Additional Interests:</strong> <span id="modalAdditionalInterests"></span></p>
+                            <p><strong>Dealbreaker:</strong> <span id="modalDealbreaker"></span></p>
                         </div>
-                        <div class="profile-gallery-container">
-                            <img id="image1" alt="Gallery Image 1" class="img-fluid">
-                            <img id="image2" alt="Gallery Image 2" class="img-fluid">
-                            <img id="image3" alt="Gallery Image 3" class="img-fluid">
-                            <img id="image4" alt="Gallery Image 4" class="img-fluid">
-                            <img id="image5" alt="Gallery Image 5" class="img-fluid">
+                        <div class="col-md-6">
+                            <p><strong>Name:</strong> <span id="modalName"></span></p>
+                            <p><strong>Age:</strong> <span id="modalAge"></span></p>
+                            <p><strong>Height:</strong> <span id="modalHeight"></span></p>
+                            <p><strong>Weight:</strong> <span id="modalWeight"></span></p>
+                            <p><strong>City:</strong> <span id="modalCity"></span></p>
+                            <p><strong>State:</strong> <span id="modalState"></span></p>
+                            <p><strong>Occupation:</strong> <span id="modalOccupation"></span></p>
+                            <p><strong>Interests:</strong> <span id="modalInterests"></span></p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Tagline:</strong> <span id="modalTagline"></span></p>
+                            <p><strong>Favourite Cuisine:</strong> <span id="modalFavCuisine"></span></p>
+                            <p><strong>Favourite Quote:</strong> <span id="modalFavQuote"></span></p>
+                            <p><strong>Goals:</strong> <span id="modalGoals"></span></p>
+                            <p><strong>Commitment Type:</strong> <span id="modalCommitmentType"></span></p>
+                            <p><strong>Biography:</strong> <span id="modalBiography"></span></p>
+                        </div>
+                        <div class="col-md-6">
+                            <iframe width="600"
+                                    height="450"
+                                    style="border:0"
+                                    referrerpolicy="no-referrer-when-downgrade"
+                                    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyD5Zq_-OdrLWo4Wm8Qy0gaefwYNnI2_Mms&q=Paris"
+                                    allowfullscreen>
+                            </iframe>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <div class="profile-gallery-container">
+                        <img id="image1" alt="Gallery Image 1" class="img-fluid">
+                        <img id="image2" alt="Gallery Image 2" class="img-fluid">
+                        <img id="image3" alt="Gallery Image 3" class="img-fluid">
+                        <img id="image4" alt="Gallery Image 4" class="img-fluid">
+                        <img id="image5" alt="Gallery Image 5" class="img-fluid">
                     </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
+    </div>
     <script>
         document.querySelectorAll('.btn-show-profile').forEach(button => {
             button.addEventListener('click', function () {

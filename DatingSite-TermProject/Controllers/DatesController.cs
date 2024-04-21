@@ -12,36 +12,32 @@ using DatingSite_TermProject.Controllers;
 
 namespace DatingSite_TermProject.Controllers
 {
-
-    public class MatchesController : Controller
+    public class DatesController : Controller
     {
-        string CreateAccountAPI_Url = "http://localhost:5046/api/MatchUp";
-
-
-        //[HttpDelete]
-        //public IActionResult DeleteMatch()
-        //{
-        //    return View("~/Views/Main/Matches.cshtml", Cardslist2);
-
-        //}
-        public IActionResult Matches()
+        public IActionResult Dates()
         {
-            string savedUsername = Request.Cookies["Username"].ToString();
+            string savedUsername2 = Request.Cookies["Username"].ToString();
             UserProfileModel userProfile = new UserProfileModel();
-            List<CardsModel> Cardslist = PopulateProfiles(savedUsername);
+            int privateid = userProfile.getPrivateId(savedUsername2);
+            var dateCards = new DatesCardModel
+            {
+                DatesYouSent = DatesYouSent(privateid),
+                DatesYouReceived = DatesYouReceived(privateid)
+            };
             ViewBag.ProfileImage = GetUserImage();
-            return View("~/Views/Main/Matches.cshtml", Cardslist);
+            return View("~/Views/Main/Dates/Dates.cshtml", dateCards);
         }
-        public List<CardsModel> PopulateProfiles(string savedUsername2)
+        public List<CardsModel> DatesYouSent(int privateid)
         {
             List<CardsModel> Cardslist = new List<CardsModel>();
             CardsModel cards;
             DBConnect objDB = new DBConnect();
             SqlCommand objCommand = new SqlCommand();
             objCommand.CommandType = CommandType.StoredProcedure;
-            objCommand.CommandText = "TP_GetMatches";
+            objCommand.CommandText = "TP_GetDateRequestsFromUser";
+            string savedUsername = Request.Cookies["Username"].ToString();
 
-            SqlParameter inputParameter1 = new SqlParameter("@UserName", savedUsername2);
+            SqlParameter inputParameter1 = new SqlParameter("@UserName", savedUsername);
             objCommand.Parameters.Add(inputParameter1);
 
 
@@ -54,7 +50,6 @@ namespace DatingSite_TermProject.Controllers
                 cards = new CardsModel(
                     dr["FirstName"].ToString(),
                     dr["LastName"].ToString(),
-
                     dr["ProfilePhotoURL"].ToString(),
                     dr["City"].ToString(),
                     dr["State"].ToString(),
@@ -77,7 +72,66 @@ namespace DatingSite_TermProject.Controllers
                     dr["Dealbreaker"].ToString(),
                     dr["Biography"].ToString(),
                     int.Parse(dr["Age"].ToString()),
+                    dr["Height"].ToString(),
+                    dr["Weight"].ToString(),
+                    dr["Image1"].ToString(),
+                    dr["Image2"].ToString(),
+                    dr["Image3"].ToString(),
+                    dr["Image4"].ToString(),
+                    dr["Image5"].ToString(),
+                    int.Parse(dr["PrivateId"].ToString())
+                );
 
+                Cardslist.Add(cards);
+            }
+            return Cardslist;
+
+        }
+        public List<CardsModel> DatesYouReceived(int privateid)
+        {
+            List<CardsModel> Cardslist = new List<CardsModel>();
+            CardsModel cards;
+            DBConnect objDB = new DBConnect();
+            SqlCommand objCommand = new SqlCommand();
+            objCommand.CommandType = CommandType.StoredProcedure;
+            objCommand.CommandText = "TP_GetDateRequestsToUser";
+            string savedUsername = Request.Cookies["Username"].ToString();
+
+            SqlParameter inputParameter1 = new SqlParameter("@UserName", savedUsername);
+            objCommand.Parameters.Add(inputParameter1);
+
+
+            DataSet ds = objDB.GetDataSet(objCommand);
+
+            DataTable dt2 = ds.Tables[0];
+
+            foreach (DataRow dr in dt2.Rows)
+            {
+                cards = new CardsModel(
+                    dr["FirstName"].ToString(),
+                    dr["LastName"].ToString(),
+                    dr["ProfilePhotoURL"].ToString(),
+                    dr["City"].ToString(),
+                    dr["State"].ToString(),
+                    dr["Tagline"].ToString(),
+                    dr["Occupation"].ToString(),
+                    dr["Interests"].ToString(),
+                    dr["FavouriteCuisine"].ToString(),
+                    dr["FavouriteQuote"].ToString(),
+                    dr["Goals"].ToString(),
+                    dr["CommitmentType"].ToString(),
+                    dr["FavouriteMovieGenre"].ToString(),
+                    dr["FavouriteBookGenre"].ToString(),
+                    dr["Address"].ToString(),
+                    dr["PhoneNumber"].ToString(),
+                    dr["FavouriteMovie"].ToString(),
+                    dr["FavouriteBook"].ToString(),
+                    dr["FavouriteRestaurant"].ToString(),
+                    dr["Dislikes"].ToString(),
+                    dr["AdditionalInterests"].ToString(),
+                    dr["Dealbreaker"].ToString(),
+                    dr["Biography"].ToString(),
+                    int.Parse(dr["Age"].ToString()),
                     dr["Height"].ToString(),
                     dr["Weight"].ToString(),
                     dr["Image1"].ToString(),

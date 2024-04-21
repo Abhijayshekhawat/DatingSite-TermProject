@@ -1,4 +1,5 @@
-﻿@{
+﻿@model DatingSite_TermProject.Models.DatesCardModel
+@{
     Layout = null;
 }
 
@@ -6,26 +7,28 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>Dates - MatchUp</title>
-    <link href="~/style/update.css" rel="stylesheet" />
-    <link href="~/style/main.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/css/update.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/main.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
     <div class="navbar">
         <div class="navbar-left">
             <img src="~/css/logo.png" alt="Logo" class="logo" />
             <nav>
-                <a asp-controller="Dashboard" asp-action="Dashboard" class="active">Dashboard</a>
+                <a asp-controller="Dashboard" asp-action="Dashboard">Dashboard</a>
                 <a asp-controller="Matches" asp-action="Matches">Matches</a>
                 <a asp-controller="Likes" asp-action="Likes">Likes</a>
-                <a asp-controller="Dates" asp-action="Dates">Dates</a>
-                <a asp-controller="DatePlanning" asp-action="DatePlanning">Plan Date</a>
+                <a asp-controller="Dates" asp-action="Dates" class="active">Dates</a>
+                <a asp-controller="PlanDate" asp-action="PlanDate">Plan Date</a>
                 <a asp-controller="Profile" asp-action="Profile">Edit Profile</a>
             </nav>
         </div>
         <div class="navbar-right">
-            <span class="user-name">Welcome First Name</span> <!-- Example of displaying user name -->
-            <img src="~/css/Logo.png" alt="User Image" class="user-img" />
-            <form>
+            <span class="user-name">Welcome @ViewBag.FirstName</span>
+            <img src="@ViewBag.ProfileImage" alt="User Image" class="user-img" />
+            <form asp-controller="Account" asp-action="Logout" method="post">
                 <button type="submit" class="logout-button">Logout</button>
             </form>
         </div>
@@ -39,41 +42,198 @@
             <div class="cards-container">
                 <h2 class="likes-title">People you've sent a Date-request to</h2>
                 <div class="container">
-                    <div class="card">
-                        <img src="~/css/logo.png" alt="Profile Image">
-                        <div class="card-body">
-                            <h5 class="card-title">FirstName</h5>
-                            <p class="card-text">Description</p>
-                            <p class="card-text">City, State</p>
+                    @foreach (var cards in Model.DatesYouSent)
+                    {
+                        <div class="card">
+                            <img src=@cards.ProfilePhotoURL alt="Profile Image">
+                            <div class="card-body">
+                                <h5 class="card-title">@cards.FirstName, @cards.LastName</h5>
+                                <p class="card-text">@cards.Tagline</p>
+                                <p class="card-text">@cards.City,@cards.State</p>
+                                <button type="button" class="btn btn-secondary btn-show-profile"
+                                        data-bs-toggle="modal" data-bs-target="#detailModal"
+                                        data-profile-photo-url="@cards.ProfilePhotoURL"
+                                        data-name="@cards.FirstName @cards.LastName"
+                                        data-tagline="@cards.Tagline"
+                                        data-city="@cards.City" data-state="@cards.State"
+                                        data-age="@cards.Age" data-height="@cards.Height"
+                                        data-weight="@cards.Weight" data-occupation="@cards.Occupation"
+                                        data-interests="@cards.Interests" data-favourite-cuisine="@cards.FavouriteCuisine"
+                                        data-favourite-quote="@cards.FavouriteQuote" data-goals="@cards.Goals"
+                                        data-commitment-type="@cards.CommitmentType" data-biography="@cards.Biography"
+                                        data-favourite-movie-genre="@cards.FavouriteMovieGenre"
+                                        data-favourite-book-genre="@cards.FavouriteBookGenre"
+                                        data-favourite-movie="@cards.FavouriteMovie"
+                                        data-favourite-book="@cards.FavouriteBook"
+                                        data-favourite-restaurant="@cards.FavouriteRestaurant"
+                                        data-dislikes="@cards.Dislikes"
+                                        data-additional-interests="@cards.AdditionalInterests"
+                                        data-dealbreaker="@cards.Dealbreaker"
+                                        data-image1="@cards.Image1" data-image2="@cards.Image2"
+                                        data-image3="@cards.Image3" data-image4="@cards.Image4"
+                                        data-image5="@cards.Image5">
+                                    Show Profile
+                                </button>
+                                <form asp-controller="Dashboard" asp-action="AddLikes" method="post">
+                                    <input type="hidden" name="LikeeID" value="@cards.PrivateId" />
+                                    <button type="submit" class="btn btn-primary like-button">Like</button>
+                                </form>
+                            </div>
                         </div>
-                    </div>
+                    }
                 </div>
                 <h2 class="likes-title">People that sent you a Date-request</h2>
                 <div class="container">
-                    <div class="card">
-                        <img src="~/css/logo.png" alt="Profile Image">
-                        <div class="card-body">
-                            <h5 class="card-title">FirstName</h5>
-                            <p class="card-text">Description</p>
-                            <p class="card-text">City, State</p>
+                    @foreach (var cards in Model.DatesYouReceived)
+                    {
+                        <div class="card">
+                            <img src=@cards.ProfilePhotoURL alt="Profile Image">
+                            <div class="card-body">
+                                <h5 class="card-title">@cards.FirstName, @cards.LastName</h5>
+                                <p class="card-text">@cards.Tagline</p>
+                                <p class="card-text">@cards.City,@cards.State</p>
+                                <button type="button" class="btn btn-secondary btn-show-profile"
+                                        data-bs-toggle="modal" data-bs-target="#detailModal"
+                                        data-profile-photo-url="@cards.ProfilePhotoURL"
+                                        data-name="@cards.FirstName @cards.LastName"
+                                        data-tagline="@cards.Tagline"
+                                        data-city="@cards.City" data-state="@cards.State"
+                                        data-age="@cards.Age" data-height="@cards.Height"
+                                        data-weight="@cards.Weight" data-occupation="@cards.Occupation"
+                                        data-interests="@cards.Interests" data-favourite-cuisine="@cards.FavouriteCuisine"
+                                        data-favourite-quote="@cards.FavouriteQuote" data-goals="@cards.Goals"
+                                        data-commitment-type="@cards.CommitmentType" data-biography="@cards.Biography"
+                                        data-favourite-movie-genre="@cards.FavouriteMovieGenre"
+                                        data-favourite-book-genre="@cards.FavouriteBookGenre"
+                                        data-favourite-movie="@cards.FavouriteMovie"
+                                        data-favourite-book="@cards.FavouriteBook"
+                                        data-favourite-restaurant="@cards.FavouriteRestaurant"
+                                        data-dislikes="@cards.Dislikes"
+                                        data-additional-interests="@cards.AdditionalInterests"
+                                        data-dealbreaker="@cards.Dealbreaker"
+                                        data-image1="@cards.Image1" data-image2="@cards.Image2"
+                                        data-image3="@cards.Image3" data-image4="@cards.Image4"
+                                        data-image5="@cards.Image5">
+                                    Show Profile
+                                </button>
+                                <form asp-controller="Likes" asp-action="" method="delete">
+                                    <input type="hidden" name="DislikeeID" value="@cards.PrivateId" />
+                                    <button type="submit" class="btn btn-primary like-button">UnLike</button>
+                                </form>
+                            </div>
                         </div>
-                    </div>
+                    }
                 </div>
             </div>
         </div>
     </div>
+    <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel">Profile Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img id="modalProfilePhoto" alt="Profile Photo" class="img-fluid">
+                            <p><strong>Favourite Movie Genre:</strong> <span id="modalFavouriteMovieGenre"></span></p>
+                            <p><strong>Favourite Book Genre:</strong> <span id="modalFavouriteBookGenre"></span></p>
+                            <p><strong>Favourite Movie:</strong> <span id="modalFavouriteMovie"></span></p>
+                            <p><strong>Favourite Book:</strong> <span id="modalFavouriteBook"></span></p>
+                            <p><strong>Favourite Restaurant:</strong> <span id="modalFavouriteRestaurant"></span></p>
+                            <p><strong>Dislikes:</strong> <span id="modalDislikes"></span></p>
+                            <p><strong>Additional Interests:</strong> <span id="modalAdditionalInterests"></span></p>
+                            <p><strong>Dealbreaker:</strong> <span id="modalDealbreaker"></span></p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Name:</strong> <span id="modalName"></span></p>
+                            <p><strong>Age:</strong> <span id="modalAge"></span></p>
+                            <p><strong>Height:</strong> <span id="modalHeight"></span></p>
+                            <p><strong>Weight:</strong> <span id="modalWeight"></span></p>
+                            <p><strong>City:</strong> <span id="modalCity"></span></p>
+                            <p><strong>State:</strong> <span id="modalState"></span></p>
+                            <p><strong>Occupation:</strong> <span id="modalOccupation"></span></p>
+                            <p><strong>Interests:</strong> <span id="modalInterests"></span></p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Tagline:</strong> <span id="modalTagline"></span></p>
+                            <p><strong>Favourite Cuisine:</strong> <span id="modalFavCuisine"></span></p>
+                            <p><strong>Favourite Quote:</strong> <span id="modalFavQuote"></span></p>
+                            <p><strong>Goals:</strong> <span id="modalGoals"></span></p>
+                            <p><strong>Commitment Type:</strong> <span id="modalCommitmentType"></span></p>
+                            <p><strong>Biography:</strong> <span id="modalBiography"></span></p>
+                        </div>
+                        <div class="col-md-6">
+                            <iframe width="600"
+                                    height="450"
+                                    style="border:0"
+                                    referrerpolicy="no-referrer-when-downgrade"
+                                    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyD5Zq_-OdrLWo4Wm8Qy0gaefwYNnI2_Mms&q=Paris"
+                                    allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                    <div class="profile-gallery-container">
+                        <img id="image1" alt="Gallery Image 1" class="img-fluid">
+                        <img id="image2" alt="Gallery Image 2" class="img-fluid">
+                        <img id="image3" alt="Gallery Image 3" class="img-fluid">
+                        <img id="image4" alt="Gallery Image 4" class="img-fluid">
+                        <img id="image5" alt="Gallery Image 5" class="img-fluid">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.querySelectorAll('.btn-show-profile').forEach(button => {
+            button.addEventListener('click', function () {
+                console.log("Clicked");
+                const name = this.getAttribute('data-name');
+                const description = this.getAttribute('data-description');
+                const city = this.getAttribute('data-city');
+                const state = this.getAttribute('data-state');
+                document.getElementById('modalProfilePhoto').src = this.dataset.profilePhotoUrl;
+                document.getElementById('modalName').textContent = this.dataset.name;
+                document.getElementById('modalAge').textContent = this.dataset.age;
+                document.getElementById('modalHeight').textContent = this.dataset.height;
+                document.getElementById('modalWeight').textContent = this.dataset.weight;
+                document.getElementById('modalCity').textContent = this.dataset.city;
+                document.getElementById('modalState').textContent = this.dataset.state;
+                document.getElementById('modalOccupation').textContent = this.dataset.occupation;
+                document.getElementById('modalInterests').textContent = this.dataset.interests;
+
+                // Update additional details
+                document.getElementById('modalTagline').textContent = this.dataset.tagline;
+                document.getElementById('modalFavCuisine').textContent = this.dataset.favouriteCuisine;
+                document.getElementById('modalFavQuote').textContent = this.dataset.favouriteQuote;
+                document.getElementById('modalGoals').textContent = this.dataset.goals;
+                document.getElementById('modalCommitmentType').textContent = this.dataset.commitmentType;
+                document.getElementById('modalBiography').textContent = this.dataset.biography;
+                document.getElementById('modalFavouriteMovieGenre').textContent = this.dataset.favouriteMovieGenre;
+                document.getElementById('modalFavouriteBookGenre').textContent = this.dataset.favouriteBookGenre;
+                document.getElementById('modalFavouriteMovie').textContent = this.dataset.favouriteMovie;
+                document.getElementById('modalFavouriteBook').textContent = this.dataset.favouriteBook;
+                document.getElementById('modalFavouriteRestaurant').textContent = this.dataset.favouriteRestaurant;
+                document.getElementById('modalDislikes').textContent = this.dataset.dislikes;
+                document.getElementById('modalAdditionalInterests').textContent = this.dataset.additionalInterests;
+                document.getElementById('modalDealbreaker').textContent = this.dataset.dealbreaker;
+
+                // Update images in the gallery
+                document.getElementById('image1').src = this.dataset.image1;
+                document.getElementById('image2').src = this.dataset.image2;
+                document.getElementById('image3').src = this.dataset.image3;
+                document.getElementById('image4').src = this.dataset.image4;
+                document.getElementById('image5').src = this.dataset.image5;
+            });
+        });
+    </script>
     <footer>
         <p>2024 MatchUp by Abhijay & Johnson</p>
     </footer>
-    <script type="text/javascript">
-        // You might need to adjust or remove this script depending on how you implement showing/hiding profile details in MVC
-        function closeProfileDetail() {
-            var profileDetail = document.getElementById('profileDetail');
-            if (profileDetail) {
-                profileDetail.style.display = "none";
-            }
-            return false;
-        }
-    </script>
 </body>
 </html>
