@@ -18,18 +18,18 @@
         <div class="navbar-left">
             <img src="~/css/logo.png" alt="Logo" class="logo" />
             <nav>
-                <a asp-controller="Dashboard" asp-action="Dashboard" class="active">Dashboard</a>
+                <a asp-controller="Dashboard" asp-action="Dashboard">Dashboard</a>
                 <a asp-controller="Matches" asp-action="Matches">Matches</a>
-                <a asp-controller="Likes" asp-action="Likes">Likes</a>
+                <a asp-controller="Likes" asp-action="Likes" class="active">Likes</a>
                 <a asp-controller="Dates" asp-action="Dates">Dates</a>
-                <a asp-controller="DatePlanning" asp-action="DatePlanning">Plan Date</a>
+                <a asp-controller="PlanDate" asp-action="PlanDate">Plan Date</a>
                 <a asp-controller="Profile" asp-action="Profile">Edit Profile</a>
             </nav>
         </div>
         <div class="navbar-right">
-            <span class="user-name">Welcome First Name</span> <!-- Example of displaying user name -->
-            <img src="~/css/Logo.png" alt="User Image" class="user-img" />
-            <form>
+            <span class="user-name">Welcome @ViewBag.FirstName</span>
+            <img src="@ViewBag.ProfileImage" alt="User Image" class="user-img" />
+            <form asp-controller="Account" asp-action="Logout" method="post">
                 <button type="submit" class="logout-button">Logout</button>
             </form>
         </div>
@@ -40,9 +40,9 @@
             <h3>Likes - MatchUp</h3>
         </header>
         <div class="dashboard-layout">
-            <h2 class="likes-title">People that liked you</h2>
             <div class="cards-container">
-                <div class="container">
+                <h2 class="likes-title">People that liked you</h2>
+                <div class="container container-a">
                     @foreach (var cards in Model.PeopleWhoLikedYou)
                     {
                         <div class="card">
@@ -87,10 +87,8 @@
 
                     }
                 </div>
-            </div>
                 <h2 class="likes-title">People that you liked</h2>
-            <div class="cards-container">
-                <div class="container">
+                <div class="container container-b">
                     @foreach (var cards in Model.PeopleYouLiked)
                     {
                         <div class="card">
@@ -127,16 +125,13 @@
                                     <input type="hidden" name="DislikeeID" value="@cards.PrivateId" />
                                     <button type="submit" class="btn btn-primary like-button">UnLike</button>
                                 </form>
-                                
-
                             </div>
                         </div>
-
                     }
                 </div>
             </div>
-            </div>
         </div>
+    </div>
     <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">

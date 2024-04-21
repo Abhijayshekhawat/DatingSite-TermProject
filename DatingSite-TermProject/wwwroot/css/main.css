@@ -8,6 +8,10 @@
     justify-content: space-between;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
+header h1 {
+    margin-top: 0px;
+    padding-top: 15px;
+}
 .header .logo {
     font-size: 24px;
     font-weight: bold;
@@ -16,6 +20,10 @@
 .header nav {
     display: flex;
     gap: 20px;
+}
+.content-wrapper {
+    background-color: #FFFFFF;
+    background-image: linear-gradient(180deg, #FFFFFF 0%, #737068 180%);
 }
 .content-wrapper h3 {
     padding-left: 20px;
@@ -224,7 +232,8 @@
 }
 
 .modal-body {
-    background-color: #fff; /* white background for the modal content */
+    background-color: #FFFFFF;
+    background-image: linear-gradient(0deg, #FFFFFF 0%, #2f5059 47%, #f72e50 100%);
     padding: 20px; /* padding around the modal content */
 }
 
@@ -237,7 +246,7 @@
 .modal-body p {
     font-size: 16px; /* readable font size */
     margin-bottom: 10px; /* space between paragraphs */
-    color: #333; /* dark gray text for readability */
+    color: white; /* dark gray text for readability */
 }
 .btn {
     padding: 8px 15px;
