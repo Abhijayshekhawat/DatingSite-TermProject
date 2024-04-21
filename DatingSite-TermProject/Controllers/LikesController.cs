@@ -18,18 +18,18 @@ namespace DatingSite_TermProject.Controllers
         string CreateAccountAPI_Url = "http://localhost:5046/api/MatchUp";
 
 
-        [HttpDelete]
-        public IActionResult DeleteLike()
+        [HttpPost]
+        public IActionResult DeleteLikes()
         {
             string savedUsername = Request.Cookies["Username"].ToString();
-            LikeRequestModel like = new LikeRequestModel();
+            DislikeRequestModel dislike = new DislikeRequestModel();
 
             // get the data from the form / model PrivateUserInfoModel  
 
-            like.LikerUsername = savedUsername;
-            like.LIkeeId = Int32.Parse(Request.Form["DisLikeeID"].ToString());
+            dislike.LikerUsername = savedUsername;
+            dislike.LikeeId = Int32.Parse(Request.Form["DisLikeeID"].ToString());
             // Serialize an Account object into a JSON string.
-            var jsonPayload = JsonSerializer.Serialize(like);
+            var jsonPayload = JsonSerializer.Serialize(dislike);
             try
             {
                 // Send the account object to the Web API that will be used to store a new account record in the database.
@@ -55,14 +55,14 @@ namespace DatingSite_TermProject.Controllers
                     string savedUsername2 = Request.Cookies["Username"].ToString();
                     UserProfileModel userProfile = new UserProfileModel();
                     int privateid = userProfile.getPrivateId(savedUsername2);
-                    List<CardsModel> Cardslist = PopulateProfiles(privateid);
+                    var likeCards2 = new LikeCardsModel
+                    {
+                        PeopleWhoLikedYou = PopulatePeopleWhoLikedYou(privateid),
+                        PeopleYouLiked = PopulatePeopleYouLiked(privateid)
+                    };
+                    List<CardsModel> Cardslist2 = PopulateProfiles(privateid);
                     ViewBag.ProfileImage = GetUserImage();
-                    
-
-
-
-
-                    return View("~/Views/Main/Likes.cshtml", Cardslist);
+                    return View("~/Views/Main/Likes.cshtml", likeCards2);
 
 
 
@@ -78,14 +78,18 @@ namespace DatingSite_TermProject.Controllers
             string savedUsername3 = Request.Cookies["Username"].ToString();
             UserProfileModel userProfile2 = new UserProfileModel();
             int privateid2 = userProfile2.getPrivateId(savedUsername3);
-            List<CardsModel> Cardslist2 = PopulateProfiles(privateid2);
+            var likeCards = new LikeCardsModel
+            {
+                PeopleWhoLikedYou = PopulatePeopleWhoLikedYou(privateid2),
+                PeopleYouLiked = PopulatePeopleYouLiked(privateid2)
+            };
+            List<CardsModel> Cardslist = PopulateProfiles(privateid2);
             ViewBag.ProfileImage = GetUserImage();
-            
-            return View("~/Views/Main/Likes.cshtml", Cardslist2);
+            return View("~/Views/Main/Likes.cshtml", likeCards);
 
 
 
-            
+
         }
         public IActionResult Likes()
         {
@@ -101,6 +105,8 @@ namespace DatingSite_TermProject.Controllers
             ViewBag.ProfileImage = GetUserImage();
             return View("~/Views/Main/Likes.cshtml", likeCards);
         }
+
+
         public List<CardsModel> PopulateProfiles(int privateid)
         {
             List<CardsModel> Cardslist = new List<CardsModel>();
