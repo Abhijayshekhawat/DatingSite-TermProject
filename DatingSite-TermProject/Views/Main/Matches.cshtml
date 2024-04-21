@@ -76,7 +76,7 @@
                                     Show Profile
                                 </button>
                                 <form asp-controller="Matches" asp-action="DeleteMatches" method="post">
-                                    <input type="hidden" name="LikeeID" value="@cards.PrivateId" />
+                                    <input type="hidden" name="MatcherID" value="@cards.PrivateId" />
                                     <button type="submit" class="btn btn-primary like-button">UnMatch</button>
                                 </form>
                                 <form asp-controller="Matches" asp-action="AddDateRequest" method="post">

@@ -10,7 +10,6 @@ namespace DatingSiteCoreAPI.Controllers
 
         [HttpPost()]
         [HttpPost("AddLikes")]
-
         public bool LikeUser([FromBody] LikeRequest likerequest)
         {
 
@@ -33,7 +32,6 @@ namespace DatingSiteCoreAPI.Controllers
 
         [HttpDelete()]
         [HttpDelete("DeleteLikes")]
-
         public bool Hater(DislikeRequest hater)
         
         {
@@ -62,7 +60,7 @@ namespace DatingSiteCoreAPI.Controllers
         {
             bool result;
             int success = unmatchUser.UnMatch(unmatchUser.MatcherUsername, unmatchUser.MatcherID);
-            if (success > 0)
+            if (success >= 0)
             {
                result = true;
             }

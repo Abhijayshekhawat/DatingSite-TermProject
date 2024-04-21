@@ -25,17 +25,17 @@ namespace DatingSiteCoreAPI
             get { return matcherUsername; }
             set { matcherUsername = value; }
         }
-        public int UnMatch(string likerusername, int likeeid)
+        public int UnMatch(string username, int id)
         {
             int result = 0;
             DBConnect objDB = new DBConnect();
             SqlCommand objCommand = new SqlCommand();
             objCommand.CommandType = CommandType.StoredProcedure;
-            //objCommand.CommandText = "TP_DeleteLike";
+            objCommand.CommandText = "TP_UnmatchUsers";
 
-            SqlParameter inputParameter2 = new SqlParameter("@LikerUserName", likerusername);
+            SqlParameter inputParameter2 = new SqlParameter("@UserName", username);
             objCommand.Parameters.Add(inputParameter2);
-            SqlParameter inputParameter3 = new SqlParameter("@LikeeID", likeeid);
+            SqlParameter inputParameter3 = new SqlParameter("@OtherPrivateID", id);
             objCommand.Parameters.Add(inputParameter3);
             SqlParameter returnParameter = new SqlParameter("@Result", SqlDbType.Int);
             returnParameter.Direction = ParameterDirection.Output;
