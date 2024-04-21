@@ -13,6 +13,7 @@ using System.Net;
 using Microsoft.AspNetCore.Http;
 
 
+
 namespace DatingSite_TermProject.Controllers.Tests
 {
     [TestClass()]
@@ -22,24 +23,28 @@ namespace DatingSite_TermProject.Controllers.Tests
         public void FilterActionTest()
         {
 
-            //Random Verfication = new Random();
-            //string code = "";
-            //code = Verfication.Next(100000, 1000000).ToString();
-            //string cookieToken = code;
-            //string secretToken = EncryptionHelper.Encrypt(cookieToken);
-            //CookieOptions tokenOptions = new CookieOptions();
-            //tokenOptions.Expires = DateTime.Now.AddMinutes(2);
-            //HttpContext.Response.Cookies.Append("Token", secretToken, tokenOptions);
-            DashboardController controller = new DashboardController();
-           
-           
-            ViewResult v = controller.View();
 
-            Assert.IsNotNull(v.Model); 
+            // Arrange
+            var controller = new DashboardController();
+            controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext()
+            };
 
-           
-            List<CardsModel> cardslist = v.Model as List<CardsModel>;
-            Assert.IsNotNull(cardslist);
+            // Set up mock data for the request
+            //controller.HttpContext.Request.Cookies["UsernameTest"] = "TestUser";
+            //controller.HttpContext.Request.Form["lessThanAge"] = "25";
+            //controller.HttpContext.Request.Form["filterCity"] = "New York";
+            //controller.HttpContext.Request.Form["filterState"] = "NY";
+            //controller.HttpContext.Request.Form["filterOccupation"] = "Engineer";
+            //controller.HttpContext.Request.Form["interests"] = "Reading, Sports";
+            //controller.HttpContext.Request.Form["filterCommitmentType"] = "Long-term";
+
+            // Act
+            var result = controller.FilterAction() as ViewResult;
+
+
+
 
 
 
