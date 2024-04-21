@@ -18,7 +18,6 @@ namespace DatingSite_TermProject.Controllers
         string CreateAccountAPI_Url = "http://localhost:5046/api/MatchUp";
 
 
-        [HttpDelete]
         public IActionResult DeleteLike()
         {
             string savedUsername = Request.Cookies["Username"].ToString();
@@ -27,7 +26,7 @@ namespace DatingSite_TermProject.Controllers
             // get the data from the form / model PrivateUserInfoModel  
 
             like.LikerUsername = savedUsername;
-            like.LIkeeId = Int32.Parse(Request.Form["DisLikeeID"].ToString());
+            like.LIkeeId = int.Parse(Request.Form["DislikeeID"].ToString());
             // Serialize an Account object into a JSON string.
             var jsonPayload = JsonSerializer.Serialize(like);
             try
@@ -57,15 +56,13 @@ namespace DatingSite_TermProject.Controllers
                     int privateid = userProfile.getPrivateId(savedUsername2);
                     List<CardsModel> Cardslist = PopulateProfiles(privateid);
                     ViewBag.ProfileImage = GetUserImage();
-                    
 
-
-
-
-                    return View("~/Views/Main/Likes.cshtml", Cardslist);
-
-
-
+                    var likeCards = new LikeCardsModel
+                    {
+                        PeopleWhoLikedYou = PopulatePeopleWhoLikedYou(privateid),
+                        PeopleYouLiked = PopulatePeopleYouLiked(privateid)
+                    };
+                    return View("~/Views/Main/Likes.cshtml", likeCards);
                 }
                 else
                     ViewBag.ErrorMessage = "A problem occurred while adding the customer to the database. The data wasn't recorded.";
@@ -76,16 +73,17 @@ namespace DatingSite_TermProject.Controllers
             }
 
             string savedUsername3 = Request.Cookies["Username"].ToString();
-            UserProfileModel userProfile2 = new UserProfileModel();
-            int privateid2 = userProfile2.getPrivateId(savedUsername3);
-            List<CardsModel> Cardslist2 = PopulateProfiles(privateid2);
+            UserProfileModel userProfile1 = new UserProfileModel();
+            int privateid1 = userProfile1.getPrivateId(savedUsername3);
+            List<CardsModel> Cardslist1 = PopulateProfiles(privateid1);
             ViewBag.ProfileImage = GetUserImage();
-            
-            return View("~/Views/Main/Likes.cshtml", Cardslist2);
 
-
-
-            
+            var likeCards1 = new LikeCardsModel
+            {
+                PeopleWhoLikedYou = PopulatePeopleWhoLikedYou(privateid1),
+                PeopleYouLiked = PopulatePeopleYouLiked(privateid1)
+            };
+            return View("~/Views/Main/Likes.cshtml", likeCards1);
         }
         public IActionResult Likes()
         {

@@ -121,7 +121,7 @@
                                         data-image5="@cards.Image5">
                                     Show Profile
                                 </button>
-                                <form asp-controller="Likes" asp-action="" method="delete">
+                                <form asp-controller="Likes" asp-action="DeleteLike" method="post">
                                     <input type="hidden" name="DislikeeID" value="@cards.PrivateId" />
                                     <button type="submit" class="btn btn-primary like-button">UnLike</button>
                                 </form>
