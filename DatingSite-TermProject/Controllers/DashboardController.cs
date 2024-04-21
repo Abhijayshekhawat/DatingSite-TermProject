@@ -26,34 +26,26 @@ namespace DatingSite_TermProject.Controllers
             return View("~/Views/Main/Dashboard.cshtml", Cardslist);
         }
 
-
         [HttpPost]
         public IActionResult AddLikes()
         {
 
             string savedUsername = Request.Cookies["Username"].ToString();
             LikeRequestModel like = new LikeRequestModel();
-
-            // get the data from the form / model PrivateUserInfoModel  
              
             like.LikerUsername = savedUsername;
             like.LIkeeId = Int32.Parse(Request.Form["LikeeID"].ToString());
-            // Serialize an Account object into a JSON string.
             var jsonPayload = JsonSerializer.Serialize(like);
             try
             {
-                // Send the account object to the Web API that will be used to store a new account record in the database.
-                // Setup an HTTP POST Web Request and get the HTTP Web Response from the server.
                 WebRequest request = WebRequest.Create(CreateAccountAPI_Url + "/AddLikes");
                 request.Method = "POST";
                 request.ContentLength = jsonPayload.Length;
                 request.ContentType = "application/json";
-                // Write the JSON data to the Web Request
                 StreamWriter writer = new StreamWriter(request.GetRequestStream());
                 writer.Write(jsonPayload);
                 writer.Flush();
                 writer.Close();
-                // Read the data from the Web Response, which requires working with streams.
                 WebResponse response = request.GetResponse();
                 Stream theDataStream = response.GetResponseStream();
                 StreamReader reader = new StreamReader(theDataStream);
@@ -62,20 +54,14 @@ namespace DatingSite_TermProject.Controllers
                 response.Close();
                 if (data == "true")
                 {
+                    UpdateMatch();
                     string savedUsername2 = Request.Cookies["Username"].ToString();
                     UserProfileModel userProfile = new UserProfileModel();
                     int privateid = userProfile.getPrivateId(savedUsername2);
                     List<CardsModel> Cardslist = PopulateProfiles(privateid);
                     ViewBag.ProfileImage = GetUserImage();
                     PopulateFilters();
-
-
-
-
                     return View("~/Views/Main/Dashboard.cshtml", Cardslist);
-
-                    
-
                 }
                 else
                     ViewBag.ErrorMessage = "A problem occurred while adding the customer to the database. The data wasn't recorded.";
@@ -84,7 +70,6 @@ namespace DatingSite_TermProject.Controllers
             {
                 ViewBag.ErrorMessage = "Error: " + ex.Message;
             }
-
             string savedUsername3 = Request.Cookies["Username"].ToString();
             UserProfileModel userProfile2 = new UserProfileModel();
             int privateid2 = userProfile2.getPrivateId(savedUsername3);
@@ -92,44 +77,6 @@ namespace DatingSite_TermProject.Controllers
             ViewBag.ProfileImage = GetUserImage();
             PopulateFilters();  
             return View("~/Views/Main/Dashboard.cshtml", Cardslist2);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        }
-        private String GetUserImage()
-        {
-            string savedUsername = Request.Cookies["Username"].ToString();
-            DBConnect objDB = new DBConnect();
-            SqlCommand objCommand = new SqlCommand();
-            objCommand.CommandType = CommandType.StoredProcedure;
-            objCommand.CommandText = "TP_GetProfileFromUsername";
-
-            SqlParameter inputParameter1 = new SqlParameter("@Username", savedUsername);
-            objCommand.Parameters.Add(inputParameter1);
-
-
-            DataSet ds = objDB.GetDataSet(objCommand);
-
-            DataTable dt = ds.Tables[0];
-            string picture = "";
-            foreach (DataRow dr in dt.Rows)
-            {
-                picture = dr["ProfilePhotoURL"].ToString();
-                ViewBag.FirstName = dr["FirstName"].ToString();
-            }
-            return picture;
-
         }
 
         [HttpPost]
@@ -164,7 +111,7 @@ namespace DatingSite_TermProject.Controllers
                 cards = new CardsModel(
                 dr["FirstName"].ToString(),
                     dr["LastName"].ToString(),
-                   
+
                     dr["ProfilePhotoURL"].ToString(),
                     dr["City"].ToString(),
                     dr["State"].ToString(),
@@ -203,9 +150,7 @@ namespace DatingSite_TermProject.Controllers
             return View("~/Views/Main/Dashboard.cshtml", Cardslist);
         }
 
-
         [HttpPost]
-
         public IActionResult FilterAction()
         {
 
@@ -260,7 +205,7 @@ namespace DatingSite_TermProject.Controllers
                 cards = new CardsModel(
                     dr["FirstName"].ToString(),
                     dr["LastName"].ToString(),
-                   
+
                     dr["ProfilePhotoURL"].ToString(),
                     dr["City"].ToString(),
                     dr["State"].ToString(),
@@ -283,7 +228,7 @@ namespace DatingSite_TermProject.Controllers
                     dr["Dealbreaker"].ToString(),
                     dr["Biography"].ToString(),
                     int.Parse(dr["Age"].ToString()),
-                   
+
                     dr["Height"].ToString(),
                     dr["Weight"].ToString(),
                     dr["Image1"].ToString(),
@@ -301,6 +246,30 @@ namespace DatingSite_TermProject.Controllers
             return View("~/Views/Main/Dashboard.cshtml", Cardslist);
         }
 
+        private String GetUserImage()
+        {
+            string savedUsername = Request.Cookies["Username"].ToString();
+            DBConnect objDB = new DBConnect();
+            SqlCommand objCommand = new SqlCommand();
+            objCommand.CommandType = CommandType.StoredProcedure;
+            objCommand.CommandText = "TP_GetProfileFromUsername";
+
+            SqlParameter inputParameter1 = new SqlParameter("@Username", savedUsername);
+            objCommand.Parameters.Add(inputParameter1);
+
+
+            DataSet ds = objDB.GetDataSet(objCommand);
+
+            DataTable dt = ds.Tables[0];
+            string picture = "";
+            foreach (DataRow dr in dt.Rows)
+            {
+                picture = dr["ProfilePhotoURL"].ToString();
+                ViewBag.FirstName = dr["FirstName"].ToString();
+            }
+            return picture;
+
+        }
         public List<CardsModel> PopulateProfiles(int privateid)
         {
 
@@ -444,7 +413,6 @@ namespace DatingSite_TermProject.Controllers
 
 
         }
-
         private void PopulateInterests()
         {
             DBConnect DB = new DBConnect();
@@ -470,7 +438,6 @@ namespace DatingSite_TermProject.Controllers
             }
             ViewBag.Interests = uniqueInterests;
         }
-
         private void PopulateCommitmentTypes()
         {
             List<string> uniqueCommitments = new List<string>();
@@ -486,6 +453,66 @@ namespace DatingSite_TermProject.Controllers
                 uniqueCommitments.Add(commitmentType);
             }
             ViewBag.Commitments = uniqueCommitments;
+        }
+        private DataSet GetMutualLikes()
+        {
+            DBConnect DB = new DBConnect();
+            DataSet DS;
+            SqlCommand Cmd = new SqlCommand();
+            Cmd.CommandType = CommandType.StoredProcedure;
+            Cmd.CommandText = "TP_GetMutualLikes";
+            DS = DB.GetDataSet(Cmd);
+            return DS;
+        }
+        private void UpdateMatch()
+        {
+            DataSet dsMutualLikes = GetMutualLikes();
+            if (dsMutualLikes != null && dsMutualLikes.Tables.Count > 0)
+            {
+                foreach (DataRow row in dsMutualLikes.Tables[0].Rows)
+                {
+                    int user1ID = (int)row["User1ID"];
+                    int user2ID = (int)row["User2ID"];
+                    DateTime user1LikesUser2Time = (DateTime)row["User1LikesUser2Time"];
+                    DateTime user2LikesUser1Time = (DateTime)row["User2LikesUser1Time"];
+                    DateTime matchTime = user1LikesUser2Time > user2LikesUser1Time ? user1LikesUser2Time : user2LikesUser1Time;
+                    if (!IsMatchExist(user1ID, user2ID))
+                    {
+                        InsertMatch(user1ID, user2ID, matchTime);
+                    }
+                }
+            }
+
+        }
+        private bool IsMatchExist(int user1ID, int user2ID)
+        {
+            DBConnect DB = new DBConnect();
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "TP_CheckIfMatchExists";
+            cmd.Parameters.AddWithValue("@MatcherID1", user1ID);
+            cmd.Parameters.AddWithValue("@MatcherID2", user2ID);
+
+            SqlParameter outputParam = new SqlParameter("@IsExist", SqlDbType.Bit);
+            outputParam.Direction = ParameterDirection.Output;
+            cmd.Parameters.Add(outputParam);
+
+            DB.GetDataSetUsingCmdObj(cmd);
+            bool isExist = (bool)cmd.Parameters["@IsExist"].Value;
+            return isExist;
+        }
+        private void InsertMatch(int matcherID1, int matcherID2, DateTime matchTime)
+        {
+            DBConnect DB = new DBConnect();
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "TP_InsertMatch";
+            cmd.Parameters.AddWithValue("@MatcherID1", matcherID1);
+            cmd.Parameters.AddWithValue("@MatcherID2", matcherID2);
+            cmd.Parameters.AddWithValue("@MatchTime", matchTime);
+
+            DB.DoUpdateUsingCmdObj(cmd);
+            ViewBag.ErrorMessage = "You have a new match!";
         }
     }
 

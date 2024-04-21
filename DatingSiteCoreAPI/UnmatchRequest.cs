@@ -1,61 +1,47 @@
-﻿using System.Data;
+﻿using System.Data.SqlClient;
+using System.Data;
 using Utilities;
-using System.Data.SqlClient;
+using Microsoft.Extensions.FileSystemGlobbing;
 
-namespace DatingSite_TermProject.Models
+namespace DatingSiteCoreAPI
 {
-    public class DislikeRequestModel
+    public class UnmatchRequest
     {
-
-        private int likeeId;
-        private string likerusername;
-
-        public DislikeRequestModel()
+        private int matcherID;
+        private string matcherUsername;
+        public UnmatchRequest(){}
+        public UnmatchRequest(int mID, string mUN)
         {
-
+            this.matcherID = mID;
+            this.matcherUsername = mUN;
         }
-
-        public DislikeRequestModel(int likeeId, string likerusername)
+        public int MatcherID
         {
-            this.likeeId = likeeId;
-            this.likerusername = likerusername;
+            get { return matcherID; }
+            set { matcherID = value; }
         }
-
-
-        public int LikeeId
+        public string MatcherUsername
         {
-            get { return likeeId; }
-            set { likeeId = value; }
-
-
-
+            get { return matcherUsername; }
+            set { matcherUsername = value; }
         }
-
-        public string LikerUsername { get { return likerusername; } set { likerusername = value; } }
-
-        public int DeleteLikeSuccessfully(string likerusername, int likeeid)
+        public int UnMatch(string likerusername, int likeeid)
         {
             int result = 0;
-
             DBConnect objDB = new DBConnect();
-
             SqlCommand objCommand = new SqlCommand();
-
             objCommand.CommandType = CommandType.StoredProcedure;
-            objCommand.CommandText = "TP_DeleteLike";
+            //objCommand.CommandText = "TP_DeleteLike";
 
             SqlParameter inputParameter2 = new SqlParameter("@LikerUserName", likerusername);
             objCommand.Parameters.Add(inputParameter2);
-
             SqlParameter inputParameter3 = new SqlParameter("@LikeeID", likeeid);
             objCommand.Parameters.Add(inputParameter3);
-
             SqlParameter returnParameter = new SqlParameter("@Result", SqlDbType.Int);
             returnParameter.Direction = ParameterDirection.Output;
             objCommand.Parameters.Add(returnParameter);
 
             result = objDB.DoUpdateUsingCmdObj(objCommand);
-
             return result;
         }
     }

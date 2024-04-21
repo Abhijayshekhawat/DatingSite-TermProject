@@ -75,9 +75,13 @@
                                         data-image5="@cards.Image5">
                                     Show Profile
                                 </button>
-                                <form asp-controller="Dashboard" asp-action="AddLikes" method="post">
+                                <form asp-controller="Matches" asp-action="DeleteMatches" method="post">
                                     <input type="hidden" name="LikeeID" value="@cards.PrivateId" />
-                                    <button type="submit" class="btn btn-primary like-button">Like</button>
+                                    <button type="submit" class="btn btn-primary like-button">UnMatch</button>
+                                </form>
+                                <form asp-controller="Matches" asp-action="AddDateRequest" method="post">
+                                    <input type="hidden" name="MatcherID" value="@cards.PrivateId" />
+                                    <button type="submit" class="btn btn-primary like-button">Request Date</button>
                                 </form>
                             </div>
                         </div>

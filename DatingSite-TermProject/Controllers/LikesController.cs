@@ -17,7 +17,6 @@ namespace DatingSite_TermProject.Controllers
     {
         string CreateAccountAPI_Url = "http://localhost:5046/api/MatchUp";
 
-
         public IActionResult DeleteLike()
         {
             string savedUsername = Request.Cookies["Username"].ToString();

@@ -56,8 +56,18 @@ namespace DatingSiteCoreAPI.Controllers
 
         }
 
-
-
-
+        [HttpDelete()]
+        [HttpDelete("DeleteMatch")]
+        public bool UnMatch(UnmatchRequest unmatchUser)
+        {
+            bool result;
+            int success = unmatchUser.UnMatch(unmatchUser.MatcherUsername, unmatchUser.MatcherID);
+            if (success > 0)
+            {
+               result = true;
+            }
+            else { result = false; }
+            return result;
+        }
     }
 }
