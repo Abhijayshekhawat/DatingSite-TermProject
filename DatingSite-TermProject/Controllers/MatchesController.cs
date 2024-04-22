@@ -18,14 +18,14 @@ namespace DatingSite_TermProject.Controllers
         string CreateAccountAPI_Url = "http://localhost:5046/api/MatchUp";
 
 
-
+        [HttpPost]
         public IActionResult AddDateRequest()
         {
 
             string savedUsername = Request.Cookies["Username"].ToString();
             MatchesModel matchesModel = new MatchesModel();
             matchesModel.MatcherUsername = savedUsername;
-            matchesModel.MatcherID = int.Parse(Request.Form["MatcherID"].ToString());
+            matchesModel.MatcherID = int.Parse(Request.Form["RequesteeID"].ToString());
             // Serialize an Account object into a JSON string.
             var jsonPayload = JsonSerializer.Serialize(matchesModel);
             try
@@ -50,6 +50,7 @@ namespace DatingSite_TermProject.Controllers
                 response.Close();
                 if (data == "true")
                 {
+
                     UserProfileModel userProfile = new UserProfileModel();
                     List<CardsModel> Cardslist1 = PopulateProfiles(savedUsername);
                     ViewBag.ProfileImage = GetUserImage();
