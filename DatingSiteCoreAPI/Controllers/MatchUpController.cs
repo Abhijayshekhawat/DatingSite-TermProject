@@ -67,5 +67,28 @@ namespace DatingSiteCoreAPI.Controllers
             else { result = false; }
             return result;
         }
+
+        [HttpPost()]
+        [HttpPost("AddNewDateRequest")]
+
+        public bool SendDateRequest([FromBody] DateRequest daterequest)
+        {
+            bool result;
+
+            DateRequest Date = daterequest;
+
+            int successfullike = Date.SendRequestSuccessfully(daterequest.RequesterUsername, daterequest.RequesteeId);
+
+
+            if (successfullike > 0)
+            {
+                result = true;
+            }
+            else { result = false; }
+
+
+            return result;
+
+        }
     }
 }
