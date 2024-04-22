@@ -31,14 +31,15 @@ namespace DatingSite_TermProject.Controllers.Tests
                 HttpContext = new DefaultHttpContext()
             };
 
-            // Set up mock data for the request
-            //controller.HttpContext.Request.Cookies["UsernameTest"] = "TestUser";
-            //controller.HttpContext.Request.Form["lessThanAge"] = "25";
-            //controller.HttpContext.Request.Form["filterCity"] = "New York";
-            //controller.HttpContext.Request.Form["filterState"] = "NY";
-            //controller.HttpContext.Request.Form["filterOccupation"] = "Engineer";
-            //controller.HttpContext.Request.Form["interests"] = "Reading, Sports";
-            //controller.HttpContext.Request.Form["filterCommitmentType"] = "Long-term";
+           // Set up mock data for the request
+
+           //controller.HttpContext.Request.Cookies["UsernameTest"] = "TestUser";
+           //controller.HttpContext.Request.Form["lessThanAge"] = "25";
+           // controller.HttpContext.Request.Form["filterCity"] = "New York";
+           // controller.HttpContext.Request.Form["filterState"] = "NY";
+           // controller.HttpContext.Request.Form["filterOccupation"] = "Engineer";
+           // controller.HttpContext.Request.Form["interests"] = "Reading, Sports";
+           // controller.HttpContext.Request.Form["filterCommitmentType"] = "Long-term";
 
             // Act
             var result = controller.FilterAction() as ViewResult;
