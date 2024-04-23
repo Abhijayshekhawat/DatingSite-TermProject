@@ -23,11 +23,12 @@ namespace DatingSite_TermProject.Controllers
         {
 
             string savedUsername = Request.Cookies["Username"].ToString();
-            MatchesModel matchesModel = new MatchesModel();
-            matchesModel.MatcherUsername = savedUsername;
-            matchesModel.MatcherID = int.Parse(Request.Form["RequesteeID"].ToString());
+            DateRequestModel dateRequestModel = new DateRequestModel();
+            dateRequestModel.RequesterUsername = savedUsername;
+            dateRequestModel.RequesteeId = int.Parse(Request.Form["RequesteeID"].ToString());
+
             // Serialize an Account object into a JSON string.
-            var jsonPayload = JsonSerializer.Serialize(matchesModel);
+            var jsonPayload = JsonSerializer.Serialize(dateRequestModel);
             try
             {
                 // Send the account object to the Web API that will be used to store a new account record in the database.
@@ -50,6 +51,7 @@ namespace DatingSite_TermProject.Controllers
                 response.Close();
                 if (data == "true")
                 {
+                   
 
                     UserProfileModel userProfile = new UserProfileModel();
                     List<CardsModel> Cardslist1 = PopulateProfiles(savedUsername);
@@ -68,7 +70,8 @@ namespace DatingSite_TermProject.Controllers
             ViewBag.ProfileImage = GetUserImage();
             return View("~/Views/Main/Matches.cshtml", Cardslist);
         }
-
+      
+     
     
 
     public IActionResult DeleteMatches()
