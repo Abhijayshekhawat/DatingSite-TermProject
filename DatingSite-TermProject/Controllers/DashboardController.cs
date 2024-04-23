@@ -83,9 +83,7 @@ namespace DatingSite_TermProject.Controllers
         public IActionResult ResetFilters()
         {
             // Call methods to repopulate ViewBag properties
-            PopulateStates();
-            PopulateInterests();
-            PopulateCommitmentTypes();
+            PopulateFilters();
 
             string savedUsername2 = Request.Cookies["Username"].ToString();
             ViewBag.ProfileImage = GetUserImage();
@@ -413,31 +411,7 @@ namespace DatingSite_TermProject.Controllers
 
 
         }
-        private void PopulateInterests()
-        {
-            DBConnect DB = new DBConnect();
-            DataSet DS;
-            SqlCommand Cmd = new SqlCommand();
-            Cmd.CommandType = CommandType.StoredProcedure;
-            Cmd.CommandText = "TP_GetUniqueInterests";
-            DS = DB.GetDataSet(Cmd);
-
-            List<string> uniqueInterests = new List<string>();
-            foreach (DataRow row in DS.Tables[0].Rows)
-            {
-                string interestList = row["Interests"].ToString();
-                string[] interests = interestList.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                foreach (string interest in interests)
-                {
-                    string trimmedInterest = interest.Trim();
-                    if (!uniqueInterests.Contains(trimmedInterest))
-                    {
-                        uniqueInterests.Add(trimmedInterest);
-                    }
-                }
-            }
-            ViewBag.Interests = uniqueInterests;
-        }
+     
         private void PopulateCommitmentTypes()
         {
             List<string> uniqueCommitments = new List<string>();
