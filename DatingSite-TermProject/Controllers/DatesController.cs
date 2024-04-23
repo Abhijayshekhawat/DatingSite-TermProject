@@ -171,5 +171,51 @@ namespace DatingSite_TermProject.Controllers
             return picture;
 
         }
+        public IActionResult AcceptDate()
+        {
+            int privateid = int.Parse(Request.Form["PrivateId"].ToString());
+            string savedUsername = Request.Cookies["Username"].ToString();
+            UserProfileModel userProfile = new UserProfileModel();
+            int privateid2 = userProfile.getPrivateId(savedUsername);
+            DBConnect objDB = new DBConnect();
+            SqlCommand objCommand = new SqlCommand();
+            objCommand.CommandType = CommandType.StoredProcedure;
+            objCommand.CommandText = "TP_UpdateDateStatus";
+            SqlParameter resultParameter = new SqlParameter("@Result", SqlDbType.Int);
+            resultParameter.Direction = ParameterDirection.Output;
+            objCommand.Parameters.Add(resultParameter);
+            objCommand.Parameters.AddWithValue("@UserName", savedUsername);
+            objCommand.Parameters.AddWithValue("@OtherID", privateid);
+            objCommand.Parameters.AddWithValue("@NewStatus", "approved");
+            objDB.DoUpdateUsingCmdObj(objCommand);
+            var dateCards = new DatesCardModel
+            {
+                DatesYouSent = DatesYouSent(privateid),
+                DatesYouReceived = DatesYouReceived(privateid)
+            };
+            ViewBag.ProfileImage = GetUserImage();
+            return View("~/Views/Main/Dates/Dates.cshtml", dateCards);
+        }
+        public IActionResult RejectDate()
+        {
+            int privateid = int.Parse(Request.Form["PrivateId"].ToString());
+            string savedUsername = Request.Cookies["Username"].ToString();
+            UserProfileModel userProfile = new UserProfileModel();
+            int privateid2 = userProfile.getPrivateId(savedUsername);
+            DBConnect objDB = new DBConnect();
+            SqlCommand objCommand = new SqlCommand();
+            objCommand.CommandType = CommandType.StoredProcedure;
+            objCommand.CommandText = "TP_DeleteDateRequest";
+            objCommand.Parameters.AddWithValue("@UserName", savedUsername);
+            objCommand.Parameters.AddWithValue("@OtherUserID", privateid);
+            objDB.DoUpdateUsingCmdObj(objCommand);
+            var dateCards = new DatesCardModel
+            {
+                DatesYouSent = DatesYouSent(privateid),
+                DatesYouReceived = DatesYouReceived(privateid)
+            };
+            ViewBag.ProfileImage = GetUserImage();
+            return View("~/Views/Main/Dates/Dates.cshtml", dateCards);
+        }
     }
 }

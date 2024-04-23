@@ -74,10 +74,6 @@
                                         data-image5="@cards.Image5">
                                     Show Profile
                                 </button>
-                                <form asp-controller="Dashboard" asp-action="AddLikes" method="post">
-                                    <input type="hidden" name="LikeeID" value="@cards.PrivateId" />
-                                    <button type="submit" class="btn btn-primary like-button">Like</button>
-                                </form>
                             </div>
                         </div>
                     }
@@ -92,6 +88,10 @@
                                 <h5 class="card-title">@cards.FirstName, @cards.LastName</h5>
                                 <p class="card-text">@cards.Tagline</p>
                                 <p class="card-text">@cards.City,@cards.State</p>
+                                <form asp-controller="Dates" asp-action="AcceptDate" method="post">
+                                    <input type="hidden" name="PrivateId" value="@cards.PrivateId" />
+                                    <button type="submit" class="btn btn-primary like-button">Approve</button>
+                                </form>
                                 <button type="button" class="btn btn-secondary btn-show-profile"
                                         data-bs-toggle="modal" data-bs-target="#detailModal"
                                         data-profile-photo-url="@cards.ProfilePhotoURL"
@@ -116,9 +116,9 @@
                                         data-image5="@cards.Image5">
                                     Show Profile
                                 </button>
-                                <form asp-controller="Likes" asp-action="" method="delete">
-                                    <input type="hidden" name="DislikeeID" value="@cards.PrivateId" />
-                                    <button type="submit" class="btn btn-primary like-button">UnLike</button>
+                                <form asp-controller="Dates" asp-action="RejectDate" method="post">
+                                    <input type="hidden" name="PrivateId" value="@cards.PrivateId" />
+                                    <button type="submit" class="btn btn-primary like-button">Reject</button>
                                 </form>
                             </div>
                         </div>
