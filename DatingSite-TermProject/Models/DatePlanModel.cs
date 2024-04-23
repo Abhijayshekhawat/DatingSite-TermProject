@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DatingSite_TermProject.Models
 {
+    [Serializable]
     public class DatePlanModel
     {
         private int datePlanID;
