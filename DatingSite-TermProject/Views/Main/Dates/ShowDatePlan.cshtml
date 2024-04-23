@@ -1,5 +1,69 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model DatingSite_TermProject.Models.DatePlanModel
 @{
+    Layout = null;
 }
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Plan Date - MatchUp</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/css/update.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/main.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-left">
+            <img src="~/css/logo.png" alt="Logo" class="logo" />
+            <nav>
+                <a asp-controller="Dashboard" asp-action="Dashboard">Dashboard</a>
+                <a asp-controller="Matches" asp-action="Matches">Matches</a>
+                <a asp-controller="Likes" asp-action="Likes">Likes</a>
+                <a asp-controller="Dates" asp-action="Dates">Dates</a>
+                <a asp-controller="PlanDate" asp-action="PlanDate">Plan Date</a>
+                <a asp-controller="Profile" asp-action="Profile">Edit Profile</a>
+                <a class="active">Show Date Plan</a>
+            </nav>
+        </div>
+        <div class="navbar-right">
+            <span class="user-name">Welcome @ViewBag.FirstName</span>
+            <img src="@ViewBag.ProfileImage" alt="User Image" class="user-img" />
+            <form asp-controller="Account" asp-action="Logout" method="post">
+                <button type="submit" class="logout-button">Logout</button>
+            </form>
+        </div>
+    </div>
+<div class="header">
+    <div class="logo">Dating Site</div>
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">Profiles</a>
+        <a href="#">Messages</a>
+    </nav>
+</div>
+
+<div class="content-wrapper">
+    <h3>Date Plan Details</h3>
+    <div id="profileDetail">
+        <h3>@Model.GetFullDateTime()</h3>
+        <p><strong>Location:</strong> @Model.Location</p>
+        <p><strong>Description:</strong> @Model.Description</p>
+        <!-- Embedding Google Map based on location -->
+        <iframe width="600"
+                height="450"
+                style="border:0"
+                loading="lazy"
+                allowfullscreen
+                src="https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=@Uri.EscapeDataString(Model.Location)">
+        </iframe>
+    </div>
+</div>
+
+<footer class="footer">
+    <p>&copy; 2024 Dating Site. All rights reserved.</p>
+    <div class="social-icons">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+    </div>
+</footer>
