@@ -1,16 +1,16 @@
-﻿using System.Data.SqlClient;
-using System.Data;
+﻿using System.Data;
 using Utilities;
+using System.Data.SqlClient;
 
-namespace DatingSiteCoreAPI
+namespace DatingSite_TermProject.Models
 {
-    public class DateRequest
+    public class DateRequestModel
     {
         private string requesterusername;
         private int requesteeid;
 
 
-        public DateRequest() { }
+        public DateRequestModel() { }
 
 
 
@@ -26,10 +26,10 @@ namespace DatingSiteCoreAPI
             objCommand.CommandType = CommandType.StoredProcedure;
             objCommand.CommandText = "TP_AddNewDateRequest";
 
-            SqlParameter inputParameter2 = new SqlParameter("@RequesterUserName", requesterusername);
+            SqlParameter inputParameter2 = new SqlParameter("@LikerUserName", requesterusername);
             objCommand.Parameters.Add(inputParameter2);
 
-            SqlParameter inputParameter3 = new SqlParameter("@RequesteeID", requesteeid);
+            SqlParameter inputParameter3 = new SqlParameter("@LikeeID", requesteeid);
             objCommand.Parameters.Add(inputParameter3);
 
             SqlParameter returnParameter = new SqlParameter("@Result", SqlDbType.Int);
@@ -44,21 +44,24 @@ namespace DatingSiteCoreAPI
 
             return result;
         }
-        public DateRequest(string requestusername, int requesteeid)
+        public DateRequestModel(string requestusername, int requesteeid)
         {
 
             this.requesterusername = requestusername;
-            this.requesteeid = requesteeid; 
+            this.requesteeid = requesteeid;
 
         }
 
-        public string RequesterUsername { 
-            
-            get {  return requesterusername; }
-            set { requesterusername = value; }  
+        public string RequesterUsername
+        {
+
+            get { return requesterusername; }
+            set { requesterusername = value; }
         }
 
         public int RequesteeId { get { return requesteeid; } set { requesteeid = value; } }
 
     }
+
 }
+
