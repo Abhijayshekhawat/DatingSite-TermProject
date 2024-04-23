@@ -9,11 +9,68 @@ using System.Net;
 using Microsoft.AspNetCore.Http; // need for cookies
 using Utilities;
 using DatingSite_TermProject.Controllers;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Data.Common;
 
 namespace DatingSite_TermProject.Controllers
 {
     public class DatesController : Controller
     {
+
+        public IActionResult SaveDatePlan()
+        {
+            DBConnect objDB = new DBConnect();
+
+            SqlCommand objCommand = new SqlCommand();
+
+            DatePlanModel plan = new DatePlanModel();
+            plan.Date = Convert.ToDateTime( Request.Form["Date"].ToString());
+            plan.Time = TimeSpan.Parse(Request.Form["Time"].ToString());
+            plan.Location = Request.Form["Location"].ToString();
+            plan.Description = Request.Form["Description"].ToString();
+
+            BinaryFormatter serializer = new BinaryFormatter();
+            MemoryStream memStream = new MemoryStream();
+
+
+            Byte[] byteArray;
+
+            serializer.Serialize(memStream, plan);
+
+            byteArray = memStream.ToArray();
+
+
+
+
+
+            // Update the account to store the serialized object (binary data) in the database
+
+            objCommand.CommandType = CommandType.StoredProcedure;
+
+            objCommand.CommandText = "StoreCreditCard";
+
+
+
+            objCommand.Parameters.AddWithValue("@theID", id);
+
+            objCommand.Parameters.AddWithValue("@theCreditCard", byteArray);
+
+
+
+            int retVal = objDB.DoUpdateUsingCmdObj(objCommand);
+
+
+
+
+
+
+
+            return View("~/Views/Main/Dates/Dates.cshtml");
+
+
+
+        }
+
         public IActionResult Dates()
         {
             string savedUsername2 = Request.Cookies["Username"].ToString();
