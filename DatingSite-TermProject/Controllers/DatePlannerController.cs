@@ -8,5 +8,9 @@ namespace DatingSite_TermProject.Controllers
         {
             return View("~/Views/Main/Dates/DatePlanner.cshtml");
         }
+        public IActionResult EditDatePlan()
+        {
+            return View("~/Views/Main/Dates/DatePlanner.cshtml");
+        }
     }
 }
