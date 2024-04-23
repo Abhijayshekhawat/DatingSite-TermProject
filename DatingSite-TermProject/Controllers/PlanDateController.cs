@@ -14,6 +14,13 @@ namespace DatingSite_TermProject.Controllers
 {
     public class PlanDateController : Controller
     {
+        public IActionResult CreateDate() {
+            string cookieObject = Request.Form["PrivateId"].ToString();
+            CookieOptions options = new CookieOptions();
+            options.Expires = DateTime.Now.AddMinutes(5);
+            HttpContext.Response.Cookies.Append("DatePersonId", cookieObject, options);
+            return View("~/Views/Main/Dates/DatePlanner.cshtml");
+        }
         public IActionResult PlanDate()
         {
             string savedUsername2 = Request.Cookies["Username"].ToString();

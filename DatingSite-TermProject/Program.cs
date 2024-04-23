@@ -1,5 +1,5 @@
 var builder = WebApplication.CreateBuilder(args);
-
+#pragma warning disable SYSLIB0011
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 

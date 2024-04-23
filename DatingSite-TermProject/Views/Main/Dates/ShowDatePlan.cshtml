@@ -12,37 +12,31 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
+
     <div class="navbar">
-        <div class="navbar-left">
-            <img src="~/css/logo.png" alt="Logo" class="logo" />
-            <nav>
-                <a asp-controller="Dashboard" asp-action="Dashboard">Dashboard</a>
-                <a asp-controller="Matches" asp-action="Matches">Matches</a>
-                <a asp-controller="Likes" asp-action="Likes">Likes</a>
-                <a asp-controller="Dates" asp-action="Dates">Dates</a>
-                <a asp-controller="PlanDate" asp-action="PlanDate">Plan Date</a>
-                <a asp-controller="Profile" asp-action="Profile">Edit Profile</a>
-                <a class="active">Show Date Plan</a>
-            </nav>
-        </div>
-        <div class="navbar-right">
-            <span class="user-name">Welcome @ViewBag.FirstName</span>
-            <img src="@ViewBag.ProfileImage" alt="User Image" class="user-img" />
-            <form asp-controller="Account" asp-action="Logout" method="post">
-                <button type="submit" class="logout-button">Logout</button>
-            </form>
-        </div>
+    <div class="navbar-left">
+        <img src="~/css/logo.png" alt="Logo" class="logo" />
+        <nav>
+            <a asp-controller="Dashboard" asp-action="Dashboard">Dashboard</a>
+            <a asp-controller="Matches" asp-action="Matches">Matches</a>
+            <a asp-controller="Likes" asp-action="Likes">Likes</a>
+            <a asp-controller="Dates" asp-action="Dates">Dates</a>
+            <a asp-controller="PlanDate" asp-action="PlanDate">Plan Date</a>
+            <a asp-controller="Profile" asp-action="Profile">Edit Profile</a>
+            <a class="active">Show Date Plan</a>
+        </nav>
     </div>
-<div class="header">
-    <div class="logo">Dating Site</div>
-    <nav>
-        <a href="#">Home</a>
-        <a href="#">Profiles</a>
-        <a href="#">Messages</a>
-    </nav>
+    <div class="navbar-right">
+        <span class="user-name">Welcome @ViewBag.FirstName</span>
+        <img src="@ViewBag.ProfileImage" alt="User Image" class="user-img" />
+        <form asp-controller="Account" asp-action="Logout" method="post">
+            <button type="submit" class="logout-button">Logout</button>
+        </form>
+    </div>
 </div>
 
-<div class="content-wrapper">
+
+    <div class="content-wrapper">
     <h3>Date Plan Details</h3>
     <div id="profileDetail">
         <h3>@Model.GetFullDateTime()</h3>
@@ -59,7 +53,7 @@
     </div>
 </div>
 
-<footer class="footer">
+    <footer class="footer">
     <p>&copy; 2024 Dating Site. All rights reserved.</p>
     <div class="social-icons">
         <a href="#"><i class="fab fa-facebook-f"></i></a>
@@ -67,3 +61,5 @@
         <a href="#"><i class="fab fa-instagram"></i></a>
     </div>
 </footer>
+</body>
+</html>

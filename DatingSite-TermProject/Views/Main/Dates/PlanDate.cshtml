@@ -74,7 +74,7 @@
                                         data-image5="@cards.Image5">
                                     Show Profile
                                 </button>
-                                <form asp-controller="DatePlanner" asp-action="UpsertDatePlan" method="post">
+                                <form asp-controller="PlanDate" asp-action="CreateDate" method="post">
                                     <input type="hidden" name="PrivateId" value="@cards.PrivateId" />
                                     <button type="submit" class="btn btn-primary like-button">Plan Date</button>
                                 </form>
