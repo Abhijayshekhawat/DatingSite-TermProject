@@ -14,6 +14,24 @@ namespace DatingSite_TermProject.Controllers
 {
     public class DatesController : Controller
     {
+
+        public IActionResult SaveDatePlan()
+        {
+
+
+
+
+
+
+
+
+
+            return View("~/Views/Main/Dates/Dates.cshtml");
+
+
+
+        }
+
         public IActionResult Dates()
         {
             string savedUsername2 = Request.Cookies["Username"].ToString();
