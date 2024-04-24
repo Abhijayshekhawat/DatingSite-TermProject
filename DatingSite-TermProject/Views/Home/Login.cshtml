@@ -11,44 +11,130 @@
     <link href="~/css/login.css" rel="Stylesheet" type="text/css" />
 </head>
 <body>
-    <div class="leftcontainer">
-        <header class="header">
-            <img src="~/css/Logo.png" alt="logo" class="logo" />
-        </header>
-        <div class="form-container">
-            <form asp-controller="Login" asp-action="Login" method="post">
-                <h1>Login</h1>
-                <div class="login-link">
-                    <label>New Here? </label>
-                    <button type="button" class="login" onclick="window.location.href='/Home/CreateAccount';">Join us</button>
-                </div>
-                <div class="input-group">
-                    <div class="input__wrapper">
-                        <input type="text" asp-for="Username" class="form-control input__field" placeholder="" value="@ViewBag.Username" />
-                        <label class="input__label">UserName</label>
+    <div class="content-wrapper">
+        <div class="leftcontainer">
+            <header class="header">
+                <img src="~/css/Logo.png" alt="logo" class="logo" />
+            </header>
+            <div class="form-container">
+                <form asp-controller="Login" asp-action="Login" method="post">
+                    <h1>Login</h1>
+                    <div class="login-link">
+                        <label>New Here? </label>
+                        <button type="button" class="login" onclick="window.location.href='/Home/CreateAccount';">Join us</button>
+                    </div>
+                    <div class="input-group">
+                        <div class="input__wrapper">
+                            <input type="text" asp-for="Username" class="form-control input__field" placeholder="" value="@ViewBag.Username" />
+                            <label class="input__label">UserName</label>
 
+                        </div>
+                        <div class="input__wrapper">
+                            <input type="password" asp-for="Password" class="form-control input__field" placeholder="" value="@ViewBag.Pwd"/>
+                            <label class="input__label">Password</label>
+                        </div>
+                        <div>
+                            <label>Would you like to save your password?</label>
+                            <input type="radio" id="SaveDetails-Yes" name="SaveDetails" value="Yes" checked />
+                            <label for="SaveDetails-Yes">Yes</label>
+                            <input type="radio" id="SaveDetails-No" name="SaveDetails" value="No" />
+                            <label for="SaveDetails-No">No</label>
+                        </div>
+                        <div>
+                            <a href="@Url.Action("ForgotPassword", "ForgotPassword")" class="login">Forgot your password?</a>
+                        </div>
                     </div>
-                    <div class="input__wrapper">
-                        <input type="password" asp-for="Password" class="form-control input__field" placeholder="" value="@ViewBag.Pwd"/>
-                        <label class="input__label">Password</label>
-                    </div>
-                    <div>
-                        <label>Would you like to save your password?</label>
-                        <input type="radio" id="SaveDetails-Yes" name="SaveDetails" value="Yes" checked />
-                        <label for="SaveDetails-Yes">Yes</label>
-                        <input type="radio" id="SaveDetails-No" name="SaveDetails" value="No" />
-                        <label for="SaveDetails-No">No</label>
-                    </div>
-                    <div>
-                        <a href="@Url.Action("ForgotPassword", "ForgotPassword")" class="login">Forgot your password?</a>
-                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                    <label>@ViewBag.ErrorMessage</label> <!--lblLError-->
+                </form>
+            </div>
+        </div>
+        <div class="rightcontainer">
+            <div class="chart-container">
+                <canvas id="ageChart" width="10" height="10"></canvas>
+                <canvas id="commitmentChart" width="10" height="10"></canvas>
+                <canvas id="stateChart" width="10" height="10"></canvas>
+            </div>
+            <div class="chart-message">
+                <p>See our user distribution</p>
+                <div class="chart-buttons">
+                    <button onclick='toggleChart("ageChart")'>Age</button>
+                    <button onclick='toggleChart("commitmentChart")'>Commitment</button>
+                    <button onclick='toggleChart("stateChart")'>State</button>
                 </div>
-                <button type="submit" class="btn btn-primary">Login</button>
-                <label>@ViewBag.ErrorMessage</label> <!--lblLError-->
-            </form>
+            </div>
         </div>
     </div>
-    <div class="rightcontainer">
-    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        function toggleChart(chartId) {
+            // Get all chart canvases
+            const charts = document.querySelectorAll('.chart-container canvas');
+
+            // First, hide all charts
+            charts.forEach(chart => {
+                chart.style.display = 'none';
+            });
+
+            // Then, display the selected chart
+            const selectedChart = document.getElementById(chartId);
+            if (selectedChart) {
+                selectedChart.style.display = 'block';
+            } else {
+                console.error('No chart found with the id:', chartId);
+            }
+        }
+
+        function fetchChartData(url, chartId, label, keyLabel, keyValue) {
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    const ctx = document.getElementById(chartId);
+                    if (ctx) {
+                        const ageChart = new Chart(ctx.getContext('2d'), {
+                            type: 'bar',
+                            data: {
+                                labels: data.map(x => x[keyLabel]),
+                                datasets: [{
+                                    label: label,
+                                    data: data.map(x => x[keyValue]),
+                                    backgroundColor: '#2F5059',
+                                    borderColor: 'rgba(0, 123, 255, 1)',
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    y: {
+                                        beginAtZero: true
+                                    },
+                                    x: {
+                                        ticks: {
+                                            color: '#F72E50' // Coral color for labels
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                    }
+                })
+                .catch(error => console.error('Error loading the chart data: ', error));
+        }
+
+        window.onload = function() {
+            fetchChartData('@Url.Action("AgeData", "Chart")', 'ageChart', 'Users by Age', 'age', 'userCount');
+            fetchChartData('@Url.Action("CommitmentData", "Chart")', 'commitmentChart', 'Users by Commitment', 'commitment', 'userCount');
+            fetchChartData('@Url.Action("StateData", "Chart")', 'stateChart', 'Users by State', 'state', 'userCount');
+            document.querySelectorAll('.chart-container canvas').forEach(canvas => canvas.style.display = 'none');
+            // fetchChartData('@Url.Action("AgeData", "Chart")', 'ageChart', 'Users by Age', 'age', 'userCount');
+            // document.getElementById('ageChart').style.display = 'none';
+            // fetchChartData('@Url.Action("CommitmentData", "Chart")', 'commitmentChart', 'Users by Commitment', 'commitmentType', 'userCount');
+            // document.getElementById('commitmentChart').style.display = 'none';
+            // fetchChartData('@Url.Action("StateData", "Chart")', 'stateChart', 'Users by State', 'stateName', 'userCount');
+            // document.getElementById('stateChart').style.display = 'none';
+        };
+    </script>
+
 </body>
 </html>
