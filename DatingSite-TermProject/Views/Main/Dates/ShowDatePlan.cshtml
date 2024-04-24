@@ -14,52 +14,54 @@
 <body>
 
     <div class="navbar">
-    <div class="navbar-left">
-        <img src="~/css/logo.png" alt="Logo" class="logo" />
-        <nav>
-            <a asp-controller="Dashboard" asp-action="Dashboard">Dashboard</a>
-            <a asp-controller="Matches" asp-action="Matches">Matches</a>
-            <a asp-controller="Likes" asp-action="Likes">Likes</a>
-            <a asp-controller="Dates" asp-action="Dates">Dates</a>
-            <a asp-controller="PlanDate" asp-action="PlanDate">Plan Date</a>
-            <a asp-controller="Profile" asp-action="Profile">Edit Profile</a>
-            <a class="active">Show Date Plan</a>
-        </nav>
+        <!-- Navbar content -->
     </div>
-    <div class="navbar-right">
-        <span class="user-name">Welcome @ViewBag.FirstName</span>
-        <img src="@ViewBag.ProfileImage" alt="User Image" class="user-img" />
-        <form asp-controller="Account" asp-action="Logout" method="post">
-            <button type="submit" class="logout-button">Logout</button>
-        </form>
-    </div>
-</div>
 
-
-    <div class="content-wrapper">
-    <h3>Date Plan Details</h3>
-    <div id="profileDetail">
-        <h3>@Model.GetFullDateTime()</h3>
-        <p><strong>Location:</strong> @Model.Location</p>
-        <p><strong>Description:</strong> @Model.Description</p>
-        <!-- Embedding Google Map based on location -->
-        <iframe width="600"
-                height="450"
-                style="border:0"
-                loading="lazy"
-                allowfullscreen
-                src="https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=@Uri.EscapeDataString(Model.Location)">
-        </iframe>
+    <div class="container">
+        <h3>Date Plan Details</h3>
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Date and Location</h4>
+                <p><strong>Date:</strong> @Model.GetFullDateTime()</p>
+                <p><strong>Location:</strong> @Model.Location</p>
+                <p><strong>Description:</strong> @Model.Description</p>
+                <!-- Embedding Google Map based on location -->
+                <iframe width="100%" height="300"
+                        style="border:0"
+                        loading="lazy"
+                        allowfullscreen
+                        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyD5Zq_-OdrLWo4Wm8Qy0gaefwYNnI2_Mms&q=@Uri.EscapeDataString(Model.Location)">
+                </iframe>
+            </div>
+            <div class="col-md-6">
+                <h4>Profiles</h4>
+                <!-- Profile 1 -->
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@Model.YourProfile.FirstName @Model.YourProfile.LastName</h5>
+                        <!-- Include other profile details -->
+                        <p>Age: @Model.YourProfile.Age</p>
+                        <p>City: @Model.YourProfile.City</p>
+                        <!-- Add more profile details as needed -->
+                    </div>
+                </div>
+                <br />
+                <!-- Profile 2 -->
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@Model.OtherProfile.FirstName @Model.OtherProfile.LastName</h5>
+                        <!-- Include other profile details -->
+                        <p>Age: @Model.OtherProfile.Age</p>
+                        <p>City: @Model.OtherProfile.City</p>
+                        <!-- Add more profile details as needed -->
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
 
-    <footer class="footer">
-    <p>&copy; 2024 Dating Site. All rights reserved.</p>
-    <div class="social-icons">
-        <a href="#"><i class="fab fa-facebook-f"></i></a>
-        <a href="#"><i class="fab fa-twitter"></i></a>
-        <a href="#"><i class="fab fa-instagram"></i></a>
-    </div>
-</footer>
+    <footer>
+        <p>2024 MatchUp by Abhijay & Johnson</p>
+    </footer>
 </body>
 </html>

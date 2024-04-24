@@ -193,7 +193,25 @@ namespace DatingSite_TermProject.Controllers
                 }
                 ViewBag.Commitments = uniqueCommitments;
             }
-
+            //Populate Age Range
+            {
+                DBConnect DB = new DBConnect();
+                SqlCommand Cmd = new SqlCommand();
+                DataSet DS;
+                Cmd.CommandType = CommandType.StoredProcedure;
+                Cmd.CommandText = "TP_GetAgeRange";
+                DS = DB.GetDataSet(Cmd);
+                if (DS.Tables[0].Rows.Count > 0)
+                {
+                    ViewBag.MinAge = DS.Tables[0].Rows[0]["MinAge"].ToString();
+                    ViewBag.MaxAge = DS.Tables[0].Rows[0]["MaxAge"].ToString();
+                }
+                else
+                {
+                    ViewBag.MinAge = 18;  // Default minimum age
+                    ViewBag.MaxAge = 100; // Default maximum age
+                }
+            }
 
 
         }

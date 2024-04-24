@@ -151,6 +151,50 @@ header h1 {
     color: #FF4B2B;
     margin-bottom: 20px;
 }
+.like-card {
+    background-color: #fff; /* White background */
+    border: 1px solid #ddd; /* Light border */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 2px 5px rgba(0,0,0,.1); /* Slight shadow for depth */
+}
+
+.like-card-img {
+    width: 120px; /* Fixed size */
+    height: auto;
+    border-radius: 5px; /* Rounded corners for the image */
+    margin-right: 20px; /* Space between image and text */
+}
+
+.like-card-info h5 {
+    margin-bottom: 0.5rem;
+    color: #333; /* Dark text for names */
+}
+
+.like-card-info p {
+    font-size: 0.9rem;
+    color: #666; /* Lighter text for additional info */
+}
+
+.btn-primary {
+    background-color: #FF6B45; /* A matching button color */
+    border: none;
+    padding: 10px 20px; /* Spacing around the text */
+    border-radius: 5px; /* Rounded corners for the button */
+}
+
+/* Add responsive considerations if needed */
+@media (max-width: 768px) {
+    .like-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .like-card-img {
+        margin-bottom: 10px; /* Space between image and text on small screens */
+    }
+}
+
+
 .btn-primary:hover {
     background-color: #222831;
     color: #F72E50;

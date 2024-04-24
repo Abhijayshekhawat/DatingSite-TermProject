@@ -13,10 +13,12 @@ namespace DatingSite_TermProject.Models
         private string description;
         private string location;
         private int dateId;
+        private CardsModel yourProfile;
+        private CardsModel otherProfile;
         public DatePlanModel()
         {
         }
-        public DatePlanModel(int dpID, DateTime dt, TimeSpan t, string desc, string l, int dID)
+        public DatePlanModel(int dpID, DateTime dt, TimeSpan t, string desc, string l, int dID, CardsModel yP, CardsModel oP)
         {
             DatePlanID = dpID;
             Date = dt;
@@ -24,6 +26,8 @@ namespace DatingSite_TermProject.Models
             Description = desc;
             Location = l;
             DateId = dID;
+            YourProfile = yP;
+            OtherProfile = oP;
         }
 
         public int DatePlanID
@@ -56,9 +60,20 @@ namespace DatingSite_TermProject.Models
             get { return dateId; }
             set { dateId = value; }
         }
+        public CardsModel YourProfile
+        {
+            get { return yourProfile; }
+            set { yourProfile = value; }
+        }
+        public CardsModel OtherProfile
+        {
+            get { return otherProfile; }
+            set { otherProfile = value; }
+        }
         public string GetFullDateTime()
         {            
             return new DateTime(Date.Year, Date.Month, Date.Day, Time.Hours, Time.Minutes, Time.Seconds).ToString("f");   
         }
+
     }
 }

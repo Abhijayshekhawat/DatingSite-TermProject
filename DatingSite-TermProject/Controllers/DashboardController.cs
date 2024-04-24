@@ -21,7 +21,7 @@ namespace DatingSite_TermProject.Controllers
             UserProfileModel userProfile = new UserProfileModel();
             int privateid = userProfile.getPrivateId(savedUsername2);
             List<CardsModel> Cardslist = PopulateProfiles(privateid);
-            ViewBag.ProfileImage = GetUserImage();
+            ViewBag.ProfileImage = GetUserImage(); 
             PopulateFilters();
             return View("~/Views/Main/Dashboard.cshtml", Cardslist);
         }
@@ -168,7 +168,8 @@ namespace DatingSite_TermProject.Controllers
             ViewBag.ProfileImage = GetUserImage();
             UserProfileModel userProfile = new UserProfileModel();
 
-            string lessThanAge = Request.Form["lessThanAge"].ToString();
+            string minAge = Request.Form["ageRangeMin"].ToString();
+            string maxAge = Request.Form["ageRangeMax"].ToString();
             string filterCity = Request.Form["filterCity"].ToString();
             string filterState = Request.Form["filterState"].ToString();
             string filterOccupation = Request.Form["filterOccupation"].ToString();
@@ -186,7 +187,8 @@ namespace DatingSite_TermProject.Controllers
             Cmd.CommandText = "TP_GetFilteredProfiles";
 
             Cmd.Parameters.AddWithValue("@UserName", username);
-            Cmd.Parameters.AddWithValue("@AgeLessThan", string.IsNullOrWhiteSpace(lessThanAge) ? DBNull.Value : (object)Convert.ToInt32(lessThanAge));
+            Cmd.Parameters.AddWithValue("@AgeLessThan", string.IsNullOrWhiteSpace(maxAge) ? DBNull.Value : (object)Convert.ToInt32(maxAge));
+            Cmd.Parameters.AddWithValue("@AgeGreaterThan", string.IsNullOrWhiteSpace(minAge) ? DBNull.Value : (object)Convert.ToInt32(minAge));
             Cmd.Parameters.AddWithValue("@City", string.IsNullOrWhiteSpace(filterCity) ? DBNull.Value : (object)filterCity);
             Cmd.Parameters.AddWithValue("@State", filterState == "" ? DBNull.Value : (object)filterState);
             Cmd.Parameters.AddWithValue("@Occupation", string.IsNullOrWhiteSpace(filterOccupation) ? DBNull.Value : (object)filterOccupation);
@@ -407,7 +409,25 @@ namespace DatingSite_TermProject.Controllers
                 }
                 ViewBag.Commitments = uniqueCommitments;
             }
-
+            //Populate Age Range
+            {
+                DBConnect DB = new DBConnect();
+                SqlCommand Cmd = new SqlCommand();
+                DataSet DS;
+                Cmd.CommandType = CommandType.StoredProcedure;
+                Cmd.CommandText = "TP_GetAgeRange";
+                DS = DB.GetDataSet(Cmd);
+                if (DS.Tables[0].Rows.Count > 0)
+                {
+                    ViewBag.MinAge = DS.Tables[0].Rows[0]["MinAge"].ToString();
+                    ViewBag.MaxAge = DS.Tables[0].Rows[0]["MaxAge"].ToString();
+                }
+                else
+                {
+                    ViewBag.MinAge = 18;  // Default minimum age
+                    ViewBag.MaxAge = 100; // Default maximum age
+                }
+            }
 
 
         }
