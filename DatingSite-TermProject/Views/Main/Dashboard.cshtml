@@ -262,6 +262,10 @@
         function updateAgeDisplayMax(value) {
             document.getElementById('ageDisplayMax').textContent = value + " years";
         }
+        window.onload = function () {
+            updateAgeDisplayMin(document.getElementById('ageRangeMin').value);
+            updateAgeDisplayMax(document.getElementById('ageRangeMax').value);
+        };
     </script>
 
     <footer>
