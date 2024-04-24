@@ -29,6 +29,8 @@ namespace DatingSite_TermProject.Controllers
             ViewBag.States = view.PopulateStates();
             ViewBag.Interests = view.PopulateInterests();
             ViewBag.Commitments = view.PopulateCommitmentType();
+            ViewBag.MaxAge = view.MaxAge();
+            ViewBag.MinAge = view.MinAge();
             return View("~/Views/Main/Dashboard.cshtml", Cardslist);
         }
 
