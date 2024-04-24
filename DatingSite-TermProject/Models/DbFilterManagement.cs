@@ -26,12 +26,12 @@ namespace DatingSite_TermProject.Models
         private string filteroccupation;
         private string interestsString;
         private string filtercommitmenttype;
-        private string AgeGreaterThan
+        private string agegreaterthan;
 
 
         public DbFilterManagement() { }
 
-        public DbFilterManagement(string username, string lessthanage, string filtercity, string filterstate, string filteroccupation, string interestsString, string filtercommitmentType)
+        public DbFilterManagement(string username, string lessthanage, string filtercity, string filterstate, string filteroccupation, string interestsString, string filtercommitmentType, string agegreaterthan)
         {
             this.username = username;
             this.lessthanage = lessthanage;
@@ -40,6 +40,7 @@ namespace DatingSite_TermProject.Models
             this.filteroccupation = filteroccupation;
             this.interestsString = interestsString;
             this.filtercommitmenttype = filtercommitmentType;
+            this.agegreaterthan = agegreaterthan; 
 
 
         }
