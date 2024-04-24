@@ -1,5 +1,6 @@
 ﻿namespace DatingSite_TermProject.Models
 {
+    [Serializable]
     public class CardsModel
     {
         private int age;

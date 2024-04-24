@@ -4,6 +4,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <style>
+        .circle {
+        width: 320px;
+        height: 320px;
+        -moz-border-radius: 50%;
+        -webkit-border-radius: 50%;
+        border-radius: 50%;
+        overflow:hidden;
+        position:relative;
+        }
+    </style>
     <meta charset="UTF-8">
     <title>Map Examples</title>
     <script>
@@ -22,6 +33,7 @@
 
     <!-- Place Mode Example -->
     <h3>Place Mode - Eiffel Tower</h3>
+    <div class="circle">
     <iframe
         width="600"
         height="450"
@@ -30,7 +42,7 @@
         src="https://www.google.com/maps/embed/v1/place?key=AIzaSyD5Zq_-OdrLWo4Wm8Qy0gaefwYNnI2_Mms&q=Eiffel+Tower,Paris+France"
         allowfullscreen>
     </iframe>
-
+    </div>
     <!-- Directions Mode Example -->
     <h3>Directions Mode - Oslo to Telemark, Norway</h3>
     <iframe

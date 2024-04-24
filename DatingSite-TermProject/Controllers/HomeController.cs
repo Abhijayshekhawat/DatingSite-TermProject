@@ -41,6 +41,10 @@ namespace DatingSite_TermProject.Controllers
         {
             return View();
         }
+        public IActionResult Chart()
+        {
+            return View();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

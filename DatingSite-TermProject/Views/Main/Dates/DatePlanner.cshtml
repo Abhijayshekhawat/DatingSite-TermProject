@@ -1,4 +1,5 @@
-﻿@{
+﻿@model DatingSite_TermProject.Models.DatePlanModel
+@{
     Layout = null;
 }
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -29,18 +30,21 @@
         <form asp-controller="DatePlanner" asp-action="SaveDatePlan" method="post">
             <div class="form-section">
                 <h2>Date Information</h2>
+                @if (Model != null && Model.DateId > 0)
+                {
+                    <input asp-for ="DateId" type="hidden" name="DateId" value="@Model.DateId" />
+                }
+                <label asp-for="Date" for="txtDate">Date:</label>
+                <input asp-for="Date" type="date" id="txtDate" name="Date" class="form-control" />
 
-                <label for="txtDate">Date:</label>
-                <input type="date" id="txtDate" name="Date" class="form-control" />
+                <label asp-for="Time" for="txtTime">Time:</label>
+                <input asp-for="Time" type="time" id="txtTime" name="Time" class="form-control" />
 
-                <label for="txtTime">Time:</label>
-                <input type="time" id="txtTime" name="Time" class="form-control" />
+                <label asp-for="Location" for="txtLocation">Location:</label>
+                <input asp-for="Location" type="text" id="txtLocation" name="Location" class="form-control" />
 
-                <label for="txtLocation">Location:</label>
-                <input type="text" id="txtLocation" name="Location" class="form-control" />
-
-                <label for="txtDateDescription">Description:</label>
-                <textarea id="txtDateDescription" name="Description" class="form-control"></textarea>
+                <label asp-for="Description" for="txtDateDescription">Description:</label>
+                <textarea asp-for="Description" id="txtDateDescription" name="Description" class="form-control"></textarea>
             </div>
             <div class="button-container">
                 <button type="submit" class="btn btn-primary">Save Date Plan</button>

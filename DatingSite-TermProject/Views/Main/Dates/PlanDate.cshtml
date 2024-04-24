@@ -116,11 +116,11 @@
                                         data-image5="@cards.Image5">
                                     Show Profile
                                 </button>
-                                <form asp-controller="ShowDatePlan" asp-action="ShowDatePlan" method="post">
+                                <form asp-controller="PlanDate" asp-action="ShowDatePlan" method="post">
                                     <input type="hidden" name="PrivateId" value="@cards.PrivateId" />
                                     <button type="submit" class="btn btn-primary like-button">Show plan for Date</button>
                                 </form>
-                                <form asp-controller="" asp-action="" method="post">
+                                <form asp-controller="PlanDate" asp-action="EditDate" method="post">
                                     <input type="hidden" name="PrivateId" value="@cards.PrivateId" />
                                     <button type="submit" class="btn btn-primary like-button">Edit plan for Date</button>
                                 </form>

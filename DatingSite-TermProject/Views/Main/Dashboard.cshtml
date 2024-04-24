@@ -53,8 +53,13 @@
                     <h2>Filters</h2>
                     <!-- Filters form -->
                     <form asp-controller="Dashboard" asp-action="FilterAction" method="post">
-                        <label for="lessThanAge">Age under:</label>
-                        <input type="text" id="lessThanAge" name="lessThanAge" class="form-control" />
+                        <label for="ageRangeMin">Minimum Age:</label>
+                        <input type="range" id="ageRangeMin" name="ageRangeMin" min="@ViewBag.MinAge" max="@ViewBag.MaxAge" oninput="updateAgeDisplayMin(this.value);">
+                        <span id="ageDisplayMin">@ViewBag.MinAge</span>
+
+                        <label for="ageRangeMax">Maximum Age:</label>
+                        <input type="range" id="ageRangeMax" name="ageRangeMax" min="@ViewBag.MinAge" max="@ViewBag.MaxAge" oninput="updateAgeDisplayMax(this.value);">
+                        <span id="ageDisplayMax">@ViewBag.MaxAge</span>
 
                         <label for="filterCity">City:</label>
                         <input type="text" id="filterCity" name="filterCity" class="form-control" />
@@ -250,6 +255,15 @@
             });
         });
     </script>
+    <script>
+        function updateAgeDisplayMin(value) {
+            document.getElementById('ageDisplayMin').textContent = value + " years";
+        }
+        function updateAgeDisplayMax(value) {
+            document.getElementById('ageDisplayMax').textContent = value + " years";
+        }
+    </script>
+
     <footer>
         <p>2024 MatchUp by Abhijay & Johnson</p>
     </footer>
