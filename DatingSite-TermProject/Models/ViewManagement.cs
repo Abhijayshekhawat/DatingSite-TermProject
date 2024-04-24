@@ -10,6 +10,54 @@ namespace DatingSite_TermProject.Models
 
         public ViewManagement() { }
 
+
+        public string MaxAge()
+        {
+
+            string maxage = "";
+            DBConnect DB = new DBConnect();
+            SqlCommand Cmd = new SqlCommand();
+            DataSet DS;
+            Cmd.CommandType = CommandType.StoredProcedure;
+            Cmd.CommandText = "TP_GetAgeRange";
+            DS = DB.GetDataSet(Cmd);
+            if (DS.Tables[0].Rows.Count > 0)
+            {
+                //ViewBag.MinAge = DS.Tables[0].Rows[0]["MinAge"].ToString();
+                maxage = DS.Tables[0].Rows[0]["MaxAge"].ToString();
+            }
+            else
+            {
+                //ViewBag.MinAge = 18;  // Default minimum age
+                maxage = "100"; // Default maximum age
+            }
+
+            return maxage; 
+
+        }
+
+        public string MinAge()
+        {
+            string minage = "";
+            DBConnect DB = new DBConnect();
+            SqlCommand Cmd = new SqlCommand();
+            DataSet DS;
+            Cmd.CommandType = CommandType.StoredProcedure;
+            Cmd.CommandText = "TP_GetAgeRange";
+            DS = DB.GetDataSet(Cmd);
+            if (DS.Tables[0].Rows.Count > 0)
+            {
+                minage = DS.Tables[0].Rows[0]["MinAge"].ToString();
+                //ViewBag.MaxAge = DS.Tables[0].Rows[0]["MaxAge"].ToString();
+            }
+            else
+            {
+                minage = "18";  // Default minimum age
+                //ViewBag.MaxAge = 100; // Default maximum age
+            }
+            return minage;
+        }
+
         public ProfileSecQuestionModel GetQuestions(string savedUsername)
         {
             DBConnect objDB = new DBConnect();

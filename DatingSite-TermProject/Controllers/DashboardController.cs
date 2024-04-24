@@ -120,8 +120,11 @@ namespace DatingSite_TermProject.Controllers
             ViewBag.States = view.PopulateStates();
             ViewBag.Interests = view.PopulateInterests();
             ViewBag.Commitments = view.PopulateCommitmentType();
+            ViewBag.MaxAge = view.MaxAge();
+            ViewBag.MinAge = view.MinAge(); 
             // properties with request form data 
-            filter.LessThanAge = Request.Form["lessThanAge"].ToString();
+            filter.MaxAge = Request.Form["ageRangeMax"].ToString();
+            filter.MinAge = Request.Form["ageRangeMin"].ToString();
             filter.FilterCity = Request.Form["filterCity"].ToString();
             filter.FilterState = Request.Form["filterState"].ToString();
             filter.FilterOccupation = Request.Form["filterOccupation"].ToString();
@@ -131,7 +134,7 @@ namespace DatingSite_TermProject.Controllers
 
             List<CardsModel> Cardslist = new List<CardsModel>();
 
-            Cardslist = filter.ApplyFilter(filter.Username, filter.LessThanAge, filter.FilterCity, filter.FilterState, filter.FilterOccupation, filter.InterestsString, filter.FilterCommitmentType);
+            Cardslist = filter.ApplyFilter(filter.Username, filter.MaxAge, filter.MinAge, filter.FilterCity, filter.FilterState, filter.FilterOccupation, filter.InterestsString, filter.FilterCommitmentType);
 
 
             return View("~/Views/Main/Dashboard.cshtml", Cardslist);

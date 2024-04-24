@@ -2,6 +2,7 @@
 using Utilities;
 using System.Data.SqlClient;
 using Azure.Core;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace DatingSite_TermProject.Models
 {
@@ -107,7 +108,7 @@ namespace DatingSite_TermProject.Models
 
         }
 
-        public List<CardsModel> ApplyFilter(string username, string lessThanAge, string filterCity, string filterState, string filterOccupation, string interestsString, string filterCommitmentType)
+        public List<CardsModel> ApplyFilter(string username, string maxAge, string minAge, string filterCity, string filterState, string filterOccupation, string interestsString, string filterCommitmentType)
         {
 
             List<CardsModel> Cardslist = new List<CardsModel>();
@@ -120,7 +121,8 @@ namespace DatingSite_TermProject.Models
             Cmd.CommandText = "TP_GetFilteredProfiles";
 
             Cmd.Parameters.AddWithValue("@UserName", username);
-            Cmd.Parameters.AddWithValue("@AgeLessThan", string.IsNullOrWhiteSpace(lessThanAge) ? DBNull.Value : (object)Convert.ToInt32(lessThanAge));
+            Cmd.Parameters.AddWithValue("@AgeLessThan", string.IsNullOrWhiteSpace(maxAge) ? DBNull.Value : (object)Convert.ToInt32(maxAge));
+            Cmd.Parameters.AddWithValue("@AgeGreaterThan", string.IsNullOrWhiteSpace(minAge) ? DBNull.Value : (object)Convert.ToInt32(minAge));
             Cmd.Parameters.AddWithValue("@City", string.IsNullOrWhiteSpace(filterCity) ? DBNull.Value : (object)filterCity);
             Cmd.Parameters.AddWithValue("@State", filterState == "" ? DBNull.Value : (object)filterState);
             Cmd.Parameters.AddWithValue("@Occupation", string.IsNullOrWhiteSpace(filterOccupation) ? DBNull.Value : (object)filterOccupation);
@@ -174,6 +176,7 @@ namespace DatingSite_TermProject.Models
                 Cardslist.Add(cards);
             }
 
+
             return Cardslist;
 
         }
@@ -184,7 +187,13 @@ namespace DatingSite_TermProject.Models
             set { this.username = value; }
 
         }
-        public string LessThanAge
+
+        public string MinAge
+        {
+            get { return this.agegreaterthan; }
+            set { this.agegreaterthan = value; }
+        }
+        public string MaxAge
         {
             get { return this.lessthanage; }
             set { this.lessthanage = value; }
