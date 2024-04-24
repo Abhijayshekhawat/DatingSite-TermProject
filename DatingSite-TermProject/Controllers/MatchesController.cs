@@ -16,8 +16,7 @@ namespace DatingSite_TermProject.Controllers
     public class MatchesController : Controller
     {
         string CreateAccountAPI_Url = "http://localhost:5046/api/MatchUp";
-
-
+        ViewManagement view = new ViewManagement();
         [HttpPost]
         public IActionResult AddDateRequest()
         {
@@ -26,7 +25,6 @@ namespace DatingSite_TermProject.Controllers
             DateRequestModel dateRequestModel = new DateRequestModel();
             dateRequestModel.RequesterUsername = savedUsername;
             dateRequestModel.RequesteeId = int.Parse(Request.Form["RequesteeID"].ToString());
-
             // Serialize an Account object into a JSON string.
             var jsonPayload = JsonSerializer.Serialize(dateRequestModel);
             try
@@ -54,8 +52,8 @@ namespace DatingSite_TermProject.Controllers
                    
 
                     UserProfileModel userProfile = new UserProfileModel();
-                    List<CardsModel> Cardslist1 = PopulateProfiles(savedUsername);
-                    ViewBag.ProfileImage = GetUserImage();
+                    List<CardsModel> Cardslist1 = view.PopulateMatchesProfiles(savedUsername);
+                    ViewBag.ProfileImage = view.GetUserImage(savedUsername);
                     return View("~/Views/Main/Matches.cshtml", Cardslist1);
                 }
                 else
@@ -66,15 +64,11 @@ namespace DatingSite_TermProject.Controllers
                 ViewBag.ErrorMessage = "Error: " + ex.Message;
             }
 
-            List<CardsModel> Cardslist = PopulateProfiles(savedUsername);
-            ViewBag.ProfileImage = GetUserImage();
+            List<CardsModel> Cardslist = view.PopulateMatchesProfiles(savedUsername);
+            ViewBag.ProfileImage = view.GetUserImage(savedUsername);
             return View("~/Views/Main/Matches.cshtml", Cardslist);
         }
-      
-     
-    
-
-    public IActionResult DeleteMatches()
+     public IActionResult DeleteMatches()
         {
             string savedUsername = Request.Cookies["Username"].ToString();
             MatchesModel matchesModel = new MatchesModel();
@@ -104,9 +98,8 @@ namespace DatingSite_TermProject.Controllers
                 response.Close();
                 if (data == "true")
                 {
-                    UserProfileModel userProfile = new UserProfileModel();
-                    List<CardsModel> Cardslist1 = PopulateProfiles(savedUsername);
-                    ViewBag.ProfileImage = GetUserImage();
+                    List<CardsModel> Cardslist1 = view.PopulateMatchesProfiles(savedUsername);
+                    ViewBag.ProfileImage = view.GetUserImage(savedUsername);
                     return View("~/Views/Main/Matches.cshtml", Cardslist1);
                 }
                 else
@@ -117,105 +110,17 @@ namespace DatingSite_TermProject.Controllers
                 ViewBag.ErrorMessage = "Error: " + ex.Message;
             }
 
-            List<CardsModel> Cardslist = PopulateProfiles(savedUsername);
-            ViewBag.ProfileImage = GetUserImage();
+            List<CardsModel> Cardslist = view.PopulateMatchesProfiles(savedUsername);
+            ViewBag.ProfileImage = view.GetUserImage(savedUsername);
             return View("~/Views/Main/Matches.cshtml", Cardslist);
         }
-
-
-
         public IActionResult Matches()
         {
             string savedUsername = Request.Cookies["Username"].ToString();
             UserProfileModel userProfile = new UserProfileModel();
-            List<CardsModel> Cardslist = PopulateProfiles(savedUsername);
-            ViewBag.ProfileImage = GetUserImage();
+            List<CardsModel> Cardslist = view.PopulateMatchesProfiles(savedUsername);
+            ViewBag.ProfileImage = view.GetUserImage(savedUsername);
             return View("~/Views/Main/Matches.cshtml", Cardslist);
-        }
-        public List<CardsModel> PopulateProfiles(string savedUsername2)
-        {
-            List<CardsModel> Cardslist = new List<CardsModel>();
-            CardsModel cards;
-            DBConnect objDB = new DBConnect();
-            SqlCommand objCommand = new SqlCommand();
-            objCommand.CommandType = CommandType.StoredProcedure;
-            objCommand.CommandText = "TP_GetMatches";
-
-            SqlParameter inputParameter1 = new SqlParameter("@UserName", savedUsername2);
-            objCommand.Parameters.Add(inputParameter1);
-
-
-            DataSet ds = objDB.GetDataSet(objCommand);
-
-            DataTable dt2 = ds.Tables[0];
-
-            foreach (DataRow dr in dt2.Rows)
-            {
-                cards = new CardsModel(
-                    dr["FirstName"].ToString(),
-                    dr["LastName"].ToString(),
-
-                    dr["ProfilePhotoURL"].ToString(),
-                    dr["City"].ToString(),
-                    dr["State"].ToString(),
-                    dr["Tagline"].ToString(),
-                    dr["Occupation"].ToString(),
-                    dr["Interests"].ToString(),
-                    dr["FavouriteCuisine"].ToString(),
-                    dr["FavouriteQuote"].ToString(),
-                    dr["Goals"].ToString(),
-                    dr["CommitmentType"].ToString(),
-                    dr["FavouriteMovieGenre"].ToString(),
-                    dr["FavouriteBookGenre"].ToString(),
-                    dr["Address"].ToString(),
-                    dr["PhoneNumber"].ToString(),
-                    dr["FavouriteMovie"].ToString(),
-                    dr["FavouriteBook"].ToString(),
-                    dr["FavouriteRestaurant"].ToString(),
-                    dr["Dislikes"].ToString(),
-                    dr["AdditionalInterests"].ToString(),
-                    dr["Dealbreaker"].ToString(),
-                    dr["Biography"].ToString(),
-                    int.Parse(dr["Age"].ToString()),
-
-                    dr["Height"].ToString(),
-                    dr["Weight"].ToString(),
-                    dr["Image1"].ToString(),
-                    dr["Image2"].ToString(),
-                    dr["Image3"].ToString(),
-                    dr["Image4"].ToString(),
-                    dr["Image5"].ToString(),
-                    int.Parse(dr["PrivateId"].ToString())
-                );
-
-                Cardslist.Add(cards);
-            }
-            return Cardslist;
-
-        }
-        private String GetUserImage()
-        {
-            string savedUsername = Request.Cookies["Username"].ToString();
-            DBConnect objDB = new DBConnect();
-            SqlCommand objCommand = new SqlCommand();
-            objCommand.CommandType = CommandType.StoredProcedure;
-            objCommand.CommandText = "TP_GetProfileFromUsername";
-
-            SqlParameter inputParameter1 = new SqlParameter("@Username", savedUsername);
-            objCommand.Parameters.Add(inputParameter1);
-
-
-            DataSet ds = objDB.GetDataSet(objCommand);
-
-            DataTable dt = ds.Tables[0];
-            string picture = "";
-            foreach (DataRow dr in dt.Rows)
-            {
-                picture = dr["ProfilePhotoURL"].ToString();
-                ViewBag.FirstName = dr["FirstName"].ToString();
-            }
-            return picture;
-
         }
     }
 }
