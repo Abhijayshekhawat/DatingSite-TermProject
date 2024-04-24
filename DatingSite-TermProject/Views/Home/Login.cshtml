@@ -107,11 +107,31 @@
                             options: {
                                 scales: {
                                     y: {
-                                        beginAtZero: true
+                                        beginAtZero: true,
+                                        ticks: {
+                                            color: '#F72E50',
+                                            font: {
+                                                size: 14
+                                            }
+                                        }
                                     },
                                     x: {
                                         ticks: {
-                                            color: '#F72E50' // Coral color for labels
+                                            color: '#F72E50',
+                                            font: {
+                                                size: 14
+                                            }
+                                        }
+                                    }
+                                },
+                                plugins: {
+                                    legend: {
+                                        labels: {
+                                            color: '#F72E50',
+                                            font: {
+                                                size: 14,
+                                                arguments: 'bold'
+                                            }
                                         }
                                     }
                                 }
