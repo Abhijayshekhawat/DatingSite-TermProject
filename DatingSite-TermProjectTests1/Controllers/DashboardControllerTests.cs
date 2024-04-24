@@ -31,14 +31,14 @@ namespace DatingSite_TermProject.Controllers.Tests
             // the reason is because I need data for the cookies/form data getting using post method
             // 
             var mockHttpContext = new Mock<HttpContext>();
-            mockHttpContext.SetupGet(context => context.Request.Cookies["UsernameTest"]).Returns("TestUser");
-            mockHttpContext.SetupGet(context => context.Request.Form["lessThanAge"]).Returns("");
-
+            mockHttpContext.SetupGet(context => context.Request.Cookies["Username"]).Returns("john_doe");
+            mockHttpContext.SetupGet(context => context.Request.Form["ageRangeMax"]).Returns("22");
+            mockHttpContext.SetupGet(context => context.Request.Form["ageRangeMin"]).Returns("40");
             mockHttpContext.SetupGet(context => context.Request.Form["filterCity"]).Returns("");
             mockHttpContext.SetupGet(context => context.Request.Form["filterState"]).Returns("AZ");
             mockHttpContext.SetupGet(context => context.Request.Form["filterOccupation"]).Returns("");
             mockHttpContext.SetupGet(context => context.Request.Form["interests"]).Returns("");
-            mockHttpContext.SetupGet(context => context.Request.Form["filterCommitmentType"]).Returns("");
+            mockHttpContext.SetupGet(context => context.Request.Form["filterCommitmentType"]).Returns("Friends");
 
             var controller = new DashboardController();
             controller.ControllerContext = new ControllerContext
@@ -46,10 +46,20 @@ namespace DatingSite_TermProject.Controllers.Tests
                 HttpContext = mockHttpContext.Object
             };
 
-            // Act
+            
             var result = controller.FilterAction() as ViewResult;
+            // checked to see if the viewname is the same of what it is suppose to return 
+            Assert.AreEqual("~/Views/Main/Dashboard.cshtml", result.ViewName);
 
 
+            var cardsList = result.Model as List<CardsModel>;
+            CardsModel card = cardsList.First();
+
+            string ExpectedValue = "Mike";
+            string ActualValue = card.FirstName;
+
+            Assert.AreEqual(ExpectedValue, ActualValue);
+            
 
 
 
