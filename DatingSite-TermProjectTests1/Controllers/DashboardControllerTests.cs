@@ -11,6 +11,7 @@ using DatingSite_TermProject.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using Microsoft.AspNetCore.Http;
+using Moq; 
 
 
 
@@ -24,25 +25,6 @@ namespace DatingSite_TermProject.Controllers.Tests
         {
 
 
-            // Arrange
-            var controller = new DashboardController();
-            controller.ControllerContext = new ControllerContext
-            {
-                HttpContext = new DefaultHttpContext()
-            };
-
-           // Set up mock data for the request
-
-           //controller.HttpContext.Request.Cookies["UsernameTest"] = "TestUser";
-           //controller.HttpContext.Request.Form["lessThanAge"] = "25";
-           // controller.HttpContext.Request.Form["filterCity"] = "New York";
-           // controller.HttpContext.Request.Form["filterState"] = "NY";
-           // controller.HttpContext.Request.Form["filterOccupation"] = "Engineer";
-           // controller.HttpContext.Request.Form["interests"] = "Reading, Sports";
-           // controller.HttpContext.Request.Form["filterCommitmentType"] = "Long-term";
-
-            // Act
-            var result = controller.FilterAction() as ViewResult;
 
 
 

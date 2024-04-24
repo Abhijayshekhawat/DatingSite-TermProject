@@ -15,7 +15,7 @@ namespace DatingSite_TermProject.Controllers
     public class ProfileImagesController : Controller
     {
         string CreateAccountAPI_Url = "http://localhost:5046/api/CreateAccount";
-        
+        ViewManagement view = new ViewManagement();
         [HttpPost]
         public IActionResult ProfileImages()
         {
@@ -59,7 +59,7 @@ namespace DatingSite_TermProject.Controllers
                 if (data == "true")
                 {
                     ViewBag.ErrorMessage = "UserInfo was successfully added";
-                    ProfileSecQuestionModel security = GetQuestions(savedUsername);
+                    ProfileSecQuestionModel security = view.GetQuestions(savedUsername);
                     return View("~/Views/Profile/ProfileSecQuestion.cshtml", security);
 
                 }
@@ -72,38 +72,5 @@ namespace DatingSite_TermProject.Controllers
             }
             return View("~/Views/Profile/ProfileImages.cshtml");
         }
-
-        private ProfileSecQuestionModel GetQuestions(string savedUsername)
-        {
-            DBConnect objDB = new DBConnect();
-            SqlCommand objCommand = new SqlCommand();
-            objCommand.CommandType = CommandType.StoredProcedure;
-            objCommand.CommandText = "TP_GetSecurityQuestionsForProfile";
-
-            SqlParameter inputParameter1 = new SqlParameter("@Username", savedUsername);
-            objCommand.Parameters.Add(inputParameter1);
-
-
-            DataSet ds = objDB.GetDataSet(objCommand);
-
-            DataTable dt = ds.Tables[0];
-            ProfileSecQuestionModel security = new ProfileSecQuestionModel();
-            if (dt.Rows.Count > 0)
-            {
-                DataRow dr = dt.Rows[0];
-                security.Question_One = dr["Question_One"].ToString();  
-                security.Question_Two = dr["Question_Two"].ToString();  
-                security.Question_Three = dr["Question_Three"].ToString();
-                security.Answer_One = dr["Answer_One"].ToString();  
-                security.Answer_Two = dr["Answer_Two"].ToString();
-                security.Answer_Three = dr["Answer_Three"].ToString();  
-                return security; // Assuming you want to return this model from a method
-            }
-            else
-            {
-                return null; // Or however you wish to handle cases where no profile data is returned
-            }
-        }
-
     }
 }

@@ -14,11 +14,13 @@ namespace DatingSite_TermProject.Controllers
     public class ProfileController : Controller
     {
         string CreateAccountAPI_Url = "http://localhost:5046/api/CreateAccount";
+        ViewManagement view = new ViewManagement();
         [HttpGet]
         public IActionResult Profile()
         {
             string savedUsername = Request.Cookies["Username"].ToString();
-            UserProfileModel profile = GetProfile(savedUsername);
+            UserProfileModel profile = view.GetProfile(savedUsername);
+            ViewBag.FirstName = view.GetUserFirstName(savedUsername);
             ViewBag.CommitmentTypes = new List<string> { "Friends", "Short-Term Relationship", "Long-Term Relationship", "Open-Relationship", "Marriage" };
             ViewBag.BookGenres = new List<string> { "Fiction", "Non-Fiction", "Mystery", "Sci-Fi", "Biography" };
             ViewBag.MovieGenres = new List<string> { "Action", "Comedy", "Drama", "Fantasy", "Horror" };
@@ -69,16 +71,10 @@ namespace DatingSite_TermProject.Controllers
             userProfile.Dealbreaker = Request.Form["Dealbreaker"].ToString();
             userProfile.Biography = Request.Form["Biography"].ToString();
 
-
-            // combine these into one since having two seperate table is hard to insert with
-            // web api --> mvc core
-            // Serialize an Account object into a JSON string.
             var jsonPayload = JsonSerializer.Serialize(userProfile);
             try
 
             {
-                // Send the account object to the Web API that will be used to store a new account record in the database.
-                // Setup an HTTP POST Web Request and get the HTTP Web Response from the server.
                 WebRequest request = WebRequest.Create(CreateAccountAPI_Url + "/AddUserInfo");
                 request.Method = "POST";
                 request.ContentLength = jsonPayload.Length;
@@ -98,9 +94,8 @@ namespace DatingSite_TermProject.Controllers
                 if (data == "true")
                 {
                     ViewBag.ErrorMessage = "User's Information was successfully added";
-                    ProfileImagesModel imageProfile = GetImages(savedUsername);
+                    ProfileImagesModel imageProfile = view.GetImageGallery(savedUsername);
                     return View("~/Views/Profile/ProfileImages.cshtml", imageProfile);
-
                 }
                 else
                     ViewBag.ErrorMessage = "A problem occurred while adding the profile to the database. The data wasn't recorded.";
@@ -111,86 +106,57 @@ namespace DatingSite_TermProject.Controllers
             }
             return View("~/Views/Profile/Profile.cshtml", userProfile);
         }
-        private UserProfileModel GetProfile(string savedUsername)
-        {
-            DBConnect objDB = new DBConnect();
-            SqlCommand objCommand = new SqlCommand();
-            objCommand.CommandType = CommandType.StoredProcedure;
-            objCommand.CommandText = "TP_GetProfileFromUsername";
-
-            SqlParameter inputParameter1 = new SqlParameter("@Username", savedUsername);
-            objCommand.Parameters.Add(inputParameter1);
-
-
-            DataSet ds = objDB.GetDataSet(objCommand);
-
-            DataTable dt = ds.Tables[0];
-            UserProfileModel profile = new UserProfileModel();
-            if (dt.Rows.Count > 0)
-            {
-                DataRow dr = dt.Rows[0];
-                profile.Age = Convert.ToInt32(dr["Age"]);
-                profile.Height = dr["Height"].ToString();
-                profile.Weight = dr["Weight"].ToString();
-                profile.ProfilePhotoURL = dr["ProfilePhotoURL"].ToString();
-                profile.City = dr["City"].ToString();
-                profile.State = dr["State"].ToString();
-                profile.Tagline = dr["Tagline"].ToString();
-                profile.Occupation = dr["Occupation"].ToString();
-                profile.Interests = dr["Interests"].ToString();
-                profile.FavoriteCuisine = dr["FavouriteCuisine"].ToString();
-                profile.FavouriteQuote = dr["FavouriteQuote"].ToString();
-                profile.Goals = dr["Goals"].ToString();
-                profile.CommitmentType = dr["CommitmentType"].ToString();
-                profile.IsVisible = Convert.ToBoolean(dr["IsVisible"]);
-                profile.FavoriteMovieGenre = dr["FavouriteMovieGenre"].ToString();
-                profile.FavoriteBookGenre = dr["FavouriteBookGenre"].ToString();
-                profile.Address = dr["Address"].ToString();
-                profile.PhoneNumber = dr["PhoneNumber"].ToString();
-                profile.FavoriteMovie = dr["FavouriteMovie"].ToString();
-                profile.FavoriteBook = dr["FavouriteBook"].ToString();
-                profile.FavoriteRestaurant = dr["FavouriteRestaurant"].ToString();
-                profile.Dislikes = dr["Dislikes"].ToString();
-                profile.AdditionalInterests = dr["AdditionalInterests"].ToString();
-                profile.Dealbreaker = dr["Dealbreaker"].ToString();
-                profile.Biography = dr["Biography"].ToString();
-
-                return profile; // Assuming you want to return this model from a method
-            }
-            else
-            {
-                return null; // Or however you wish to handle cases where no profile data is returned
-            }
-        }
-        private ProfileImagesModel GetImages(string savedUsername)
-        {
-            DBConnect objDB = new DBConnect();
-            SqlCommand objCommand = new SqlCommand();
-            objCommand.CommandType = CommandType.StoredProcedure;
-            objCommand.CommandText = "TP_GetImagesForProfile";
-
-            SqlParameter inputParameter1 = new SqlParameter("@Username", savedUsername);
-            objCommand.Parameters.Add(inputParameter1);
-
-
-            DataSet ds = objDB.GetDataSet(objCommand);
-
-            DataTable dt = ds.Tables[0];
-            ProfileImagesModel image = new ProfileImagesModel();
-            if (dt.Rows.Count > 0)
-            {
-                DataRow dr = dt.Rows[0];
-                image.Image1 = dr["Image1"].ToString();
-                image.Image2 = dr["Image2"].ToString();
-                image.Image3 = dr["Image3"].ToString();
-                image.Image4 = dr["Image4"].ToString();
-                image.Image5 = dr["Image5"].ToString();
-                return image; // Assuming you want to return this model from a method
-            }
-            else
-            {
-                return null; // Or however you wish to handle cases where no profile data is returned
-            }
-        }
+   
     }
 }
+//private UserProfileModel GetProfile(string savedUsername)
+//{
+//    DBConnect objDB = new DBConnect();
+//    SqlCommand objCommand = new SqlCommand();
+//    objCommand.CommandType = CommandType.StoredProcedure;
+//    objCommand.CommandText = "TP_GetProfileFromUsername";
+
+//    SqlParameter inputParameter1 = new SqlParameter("@Username", savedUsername);
+//    objCommand.Parameters.Add(inputParameter1);
+
+
+//    DataSet ds = objDB.GetDataSet(objCommand);
+
+//    DataTable dt = ds.Tables[0];
+//    UserProfileModel profile = new UserProfileModel();
+//    if (dt.Rows.Count > 0)
+//    {
+//        DataRow dr = dt.Rows[0];
+//        profile.Age = Convert.ToInt32(dr["Age"]);
+//        profile.Height = dr["Height"].ToString();
+//        profile.Weight = dr["Weight"].ToString();
+//        profile.ProfilePhotoURL = dr["ProfilePhotoURL"].ToString();
+//        profile.City = dr["City"].ToString();
+//        profile.State = dr["State"].ToString();
+//        profile.Tagline = dr["Tagline"].ToString();
+//        profile.Occupation = dr["Occupation"].ToString();
+//        profile.Interests = dr["Interests"].ToString();
+//        profile.FavoriteCuisine = dr["FavouriteCuisine"].ToString();
+//        profile.FavouriteQuote = dr["FavouriteQuote"].ToString();
+//        profile.Goals = dr["Goals"].ToString();
+//        profile.CommitmentType = dr["CommitmentType"].ToString();
+//        profile.IsVisible = Convert.ToBoolean(dr["IsVisible"]);
+//        profile.FavoriteMovieGenre = dr["FavouriteMovieGenre"].ToString();
+//        profile.FavoriteBookGenre = dr["FavouriteBookGenre"].ToString();
+//        profile.Address = dr["Address"].ToString();
+//        profile.PhoneNumber = dr["PhoneNumber"].ToString();
+//        profile.FavoriteMovie = dr["FavouriteMovie"].ToString();
+//        profile.FavoriteBook = dr["FavouriteBook"].ToString();
+//        profile.FavoriteRestaurant = dr["FavouriteRestaurant"].ToString();
+//        profile.Dislikes = dr["Dislikes"].ToString();
+//        profile.AdditionalInterests = dr["AdditionalInterests"].ToString();
+//        profile.Dealbreaker = dr["Dealbreaker"].ToString();
+//        profile.Biography = dr["Biography"].ToString();
+
+//        return profile; // Assuming you want to return this model from a method
+//    }
+//    else
+//    {
+//        return null; // Or however you wish to handle cases where no profile data is returned
+//    }
+//}

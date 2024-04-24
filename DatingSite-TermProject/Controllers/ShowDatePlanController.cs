@@ -16,9 +16,17 @@ namespace DatingSite_TermProject.Controllers
 {
     public class ShowDatePlanController : Controller
     {
+        ViewManagement view = new ViewManagement();
         public IActionResult ShowDatePlan()
         {
             var datePlan = new DatePlanModel();
+
+            string savedUsername2 = Request.Cookies["Username"].ToString();
+            UserProfileModel userProfile = new UserProfileModel();
+            int privateid = userProfile.getPrivateId(savedUsername2);
+            ViewBag.ProfileImage = view.GetUserImage(savedUsername2);
+            ViewBag.FirstName = view.GetUserFirstName(savedUsername2);
+            var datePlan = new DatePlanModel(1, DateTime.Now, TimeSpan.FromHours(19), "Dinner and a movie", "1234 Elm Street, Springfield", 1);
             return View("~/Views/Main/Dates/ShowDatePlan.cshtml", datePlan);
         }
         private String GetUserImage()

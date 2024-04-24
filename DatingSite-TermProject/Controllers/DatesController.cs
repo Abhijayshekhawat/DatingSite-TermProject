@@ -11,12 +11,14 @@ using Utilities;
 using DatingSite_TermProject.Controllers;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Data.Common;
+using Azure.Core;
 
 namespace DatingSite_TermProject.Controllers
 {
     public class DatesController : Controller
     {
-
+        ViewManagement view = new ViewManagement();
+        DbDateManagement DateManager = new DbDateManagement();
         public IActionResult Dates()
         {
             string savedUsername2 = Request.Cookies["Username"].ToString();
@@ -24,201 +26,61 @@ namespace DatingSite_TermProject.Controllers
             int privateid = userProfile.getPrivateId(savedUsername2);
             var dateCards = new DatesCardModel
             {
-                DatesYouSent = DatesYouSent(privateid),
-                DatesYouReceived = DatesYouReceived(privateid)
+                DatesYouSent = DateManager.DatesYouSent(privateid, savedUsername2),
+                DatesYouReceived = DateManager.DatesYouReceived(privateid, savedUsername2)
             };
-            ViewBag.ProfileImage = GetUserImage();
+            ViewBag.ProfileImage = view.GetUserImage(savedUsername2);
+            ViewBag.FirstName = view.GetUserFirstName(savedUsername2);
             return View("~/Views/Main/Dates/Dates.cshtml", dateCards);
-        }
-        public List<CardsModel> DatesYouSent(int privateid)
-        {
-            List<CardsModel> Cardslist = new List<CardsModel>();
-            CardsModel cards;
-            DBConnect objDB = new DBConnect();
-            SqlCommand objCommand = new SqlCommand();
-            objCommand.CommandType = CommandType.StoredProcedure;
-            objCommand.CommandText = "TP_GetDateRequestsFromUser";
-            string savedUsername = Request.Cookies["Username"].ToString();
-
-            SqlParameter inputParameter1 = new SqlParameter("@UserName", savedUsername);
-            objCommand.Parameters.Add(inputParameter1);
-
-
-            DataSet ds = objDB.GetDataSet(objCommand);
-
-            DataTable dt2 = ds.Tables[0];
-
-            foreach (DataRow dr in dt2.Rows)
-            {
-                cards = new CardsModel(
-                    dr["FirstName"].ToString(),
-                    dr["LastName"].ToString(),
-                    dr["ProfilePhotoURL"].ToString(),
-                    dr["City"].ToString(),
-                    dr["State"].ToString(),
-                    dr["Tagline"].ToString(),
-                    dr["Occupation"].ToString(),
-                    dr["Interests"].ToString(),
-                    dr["FavouriteCuisine"].ToString(),
-                    dr["FavouriteQuote"].ToString(),
-                    dr["Goals"].ToString(),
-                    dr["CommitmentType"].ToString(),
-                    dr["FavouriteMovieGenre"].ToString(),
-                    dr["FavouriteBookGenre"].ToString(),
-                    dr["Address"].ToString(),
-                    dr["PhoneNumber"].ToString(),
-                    dr["FavouriteMovie"].ToString(),
-                    dr["FavouriteBook"].ToString(),
-                    dr["FavouriteRestaurant"].ToString(),
-                    dr["Dislikes"].ToString(),
-                    dr["AdditionalInterests"].ToString(),
-                    dr["Dealbreaker"].ToString(),
-                    dr["Biography"].ToString(),
-                    int.Parse(dr["Age"].ToString()),
-                    dr["Height"].ToString(),
-                    dr["Weight"].ToString(),
-                    dr["Image1"].ToString(),
-                    dr["Image2"].ToString(),
-                    dr["Image3"].ToString(),
-                    dr["Image4"].ToString(),
-                    dr["Image5"].ToString(),
-                    int.Parse(dr["PrivateId"].ToString())
-                );
-
-                Cardslist.Add(cards);
-            }
-            return Cardslist;
-
-        }
-        public List<CardsModel> DatesYouReceived(int privateid)
-        {
-            List<CardsModel> Cardslist = new List<CardsModel>();
-            CardsModel cards;
-            DBConnect objDB = new DBConnect();
-            SqlCommand objCommand = new SqlCommand();
-            objCommand.CommandType = CommandType.StoredProcedure;
-            objCommand.CommandText = "TP_GetDateRequestsToUser";
-            string savedUsername = Request.Cookies["Username"].ToString();
-
-            SqlParameter inputParameter1 = new SqlParameter("@UserName", savedUsername);
-            objCommand.Parameters.Add(inputParameter1);
-
-
-            DataSet ds = objDB.GetDataSet(objCommand);
-
-            DataTable dt2 = ds.Tables[0];
-
-            foreach (DataRow dr in dt2.Rows)
-            {
-                cards = new CardsModel(
-                    dr["FirstName"].ToString(),
-                    dr["LastName"].ToString(),
-                    dr["ProfilePhotoURL"].ToString(),
-                    dr["City"].ToString(),
-                    dr["State"].ToString(),
-                    dr["Tagline"].ToString(),
-                    dr["Occupation"].ToString(),
-                    dr["Interests"].ToString(),
-                    dr["FavouriteCuisine"].ToString(),
-                    dr["FavouriteQuote"].ToString(),
-                    dr["Goals"].ToString(),
-                    dr["CommitmentType"].ToString(),
-                    dr["FavouriteMovieGenre"].ToString(),
-                    dr["FavouriteBookGenre"].ToString(),
-                    dr["Address"].ToString(),
-                    dr["PhoneNumber"].ToString(),
-                    dr["FavouriteMovie"].ToString(),
-                    dr["FavouriteBook"].ToString(),
-                    dr["FavouriteRestaurant"].ToString(),
-                    dr["Dislikes"].ToString(),
-                    dr["AdditionalInterests"].ToString(),
-                    dr["Dealbreaker"].ToString(),
-                    dr["Biography"].ToString(),
-                    int.Parse(dr["Age"].ToString()),
-                    dr["Height"].ToString(),
-                    dr["Weight"].ToString(),
-                    dr["Image1"].ToString(),
-                    dr["Image2"].ToString(),
-                    dr["Image3"].ToString(),
-                    dr["Image4"].ToString(),
-                    dr["Image5"].ToString(),
-                    int.Parse(dr["PrivateId"].ToString())
-                );
-
-                Cardslist.Add(cards);
-            }
-            return Cardslist;
-
-        }
-        private String GetUserImage()
-        {
-            string savedUsername = Request.Cookies["Username"].ToString();
-            DBConnect objDB = new DBConnect();
-            SqlCommand objCommand = new SqlCommand();
-            objCommand.CommandType = CommandType.StoredProcedure;
-            objCommand.CommandText = "TP_GetProfileFromUsername";
-
-            SqlParameter inputParameter1 = new SqlParameter("@Username", savedUsername);
-            objCommand.Parameters.Add(inputParameter1);
-
-
-            DataSet ds = objDB.GetDataSet(objCommand);
-
-            DataTable dt = ds.Tables[0];
-            string picture = "";
-            foreach (DataRow dr in dt.Rows)
-            {
-                picture = dr["ProfilePhotoURL"].ToString();
-                ViewBag.FirstName = dr["FirstName"].ToString();
-            }
-            return picture;
-
         }
         public IActionResult AcceptDate()
         {
+            DatesCardModel dateCards = new DatesCardModel();
             int privateid = int.Parse(Request.Form["PrivateId"].ToString());
             string savedUsername = Request.Cookies["Username"].ToString();
-            UserProfileModel userProfile = new UserProfileModel();
-            int privateid2 = userProfile.getPrivateId(savedUsername);
-            DBConnect objDB = new DBConnect();
-            SqlCommand objCommand = new SqlCommand();
-            objCommand.CommandType = CommandType.StoredProcedure;
-            objCommand.CommandText = "TP_UpdateDateStatus";
-            SqlParameter resultParameter = new SqlParameter("@Result", SqlDbType.Int);
-            resultParameter.Direction = ParameterDirection.Output;
-            objCommand.Parameters.Add(resultParameter);
-            objCommand.Parameters.AddWithValue("@UserName", savedUsername);
-            objCommand.Parameters.AddWithValue("@OtherID", privateid);
-            objCommand.Parameters.AddWithValue("@NewStatus", "approved");
-            objDB.DoUpdateUsingCmdObj(objCommand);
-            var dateCards = new DatesCardModel
-            {
-                DatesYouSent = DatesYouSent(privateid),
-                DatesYouReceived = DatesYouReceived(privateid)
-            };
-            ViewBag.ProfileImage = GetUserImage();
+            dateCards = DateManager.ApproveDate(privateid, savedUsername);
+            ViewBag.ProfileImage = view.GetUserImage(savedUsername);
+
             return View("~/Views/Main/Dates/Dates.cshtml", dateCards);
         }
         public IActionResult RejectDate()
         {
+            DatesCardModel dateCards = new DatesCardModel();
             int privateid = int.Parse(Request.Form["PrivateId"].ToString());
             string savedUsername = Request.Cookies["Username"].ToString();
-            UserProfileModel userProfile = new UserProfileModel();
-            int privateid2 = userProfile.getPrivateId(savedUsername);
-            DBConnect objDB = new DBConnect();
-            SqlCommand objCommand = new SqlCommand();
-            objCommand.CommandType = CommandType.StoredProcedure;
-            objCommand.CommandText = "TP_DeleteDateRequest";
-            objCommand.Parameters.AddWithValue("@UserName", savedUsername);
-            objCommand.Parameters.AddWithValue("@OtherUserID", privateid);
-            objDB.DoUpdateUsingCmdObj(objCommand);
-            var dateCards = new DatesCardModel
-            {
-                DatesYouSent = DatesYouSent(privateid),
-                DatesYouReceived = DatesYouReceived(privateid)
-            };
-            ViewBag.ProfileImage = GetUserImage();
+            dateCards = DateManager.DenyDate(privateid, savedUsername);
+            ViewBag.ProfileImage = view.GetUserImage(savedUsername);
             return View("~/Views/Main/Dates/Dates.cshtml", dateCards);
         }
     }
 }
+
+
+//public IActionResult AcceptDate()
+//{
+//    int privateid = int.Parse(Request.Form["PrivateId"].ToString());
+//    string savedUsername = Request.Cookies["Username"].ToString();
+//    UserProfileModel userProfile = new UserProfileModel();
+//    int privateid2 = userProfile.getPrivateId(savedUsername);
+//    DBConnect objDB = new DBConnect();
+//    SqlCommand objCommand = new SqlCommand();
+//    objCommand.CommandType = CommandType.StoredProcedure;
+//    objCommand.CommandText = "TP_UpdateDateStatus";
+//    SqlParameter resultParameter = new SqlParameter("@Result", SqlDbType.Int);
+//    resultParameter.Direction = ParameterDirection.Output;
+//    objCommand.Parameters.Add(resultParameter);
+//    objCommand.Parameters.AddWithValue("@UserName", savedUsername);
+//    objCommand.Parameters.AddWithValue("@OtherID", privateid);
+//    objCommand.Parameters.AddWithValue("@NewStatus", "approved");
+//    objDB.DoUpdateUsingCmdObj(objCommand);
+//    DatesCardModel dateCards = new DatesCardModel
+//    {
+//        DatesYouSent = DatesYouSent(privateid),
+//        DatesYouReceived = DatesYouReceived(privateid)
+//    };
+
+
+//    ViewBag.ProfileImage = view.GetUserImage(savedUsername);
+
+//    return View("~/Views/Main/Dates/Dates.cshtml", dateCards);
+//}
