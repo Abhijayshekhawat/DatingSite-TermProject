@@ -32,7 +32,7 @@ namespace DatingSite_TermProject.Models
         private int totalLikesReceived;
         private int totalLikesOverall;
 
-        // Fields for the TP_Charts_GetMatchAndDateStats stored procedure
+        // Fields for the TP_Chart_GetMatchAndDateStats stored procedure
         private int matchesTurnedDates;
         private int totalMatches;
         
@@ -163,7 +163,7 @@ namespace DatingSite_TermProject.Models
             DBConnect objDB = new DBConnect();
             SqlCommand objCommand = new SqlCommand();
             objCommand.CommandType = CommandType.StoredProcedure;
-            objCommand.CommandText = "TP_Charts_GetMatchAndDateStats";
+            objCommand.CommandText = "TP_Chart_GetMatchAndDateStats";
             return objDB.GetDataSetUsingCmdObj(objCommand);
         }
     }
