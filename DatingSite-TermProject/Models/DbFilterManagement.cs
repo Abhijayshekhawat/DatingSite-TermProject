@@ -121,8 +121,8 @@ namespace DatingSite_TermProject.Models
             Cmd.CommandText = "TP_GetFilteredProfiles";
 
             Cmd.Parameters.AddWithValue("@UserName", username);
-            Cmd.Parameters.AddWithValue("@AgeLessThan", string.IsNullOrWhiteSpace(maxAge) ? DBNull.Value : (object)Convert.ToInt32(maxAge));
-            Cmd.Parameters.AddWithValue("@AgeGreaterThan", string.IsNullOrWhiteSpace(minAge) ? DBNull.Value : (object)Convert.ToInt32(minAge));
+            Cmd.Parameters.AddWithValue("@AgeLessThan", string.IsNullOrWhiteSpace(maxAge) ? 18 : (object)Convert.ToInt32(maxAge));
+            Cmd.Parameters.AddWithValue("@AgeGreaterThan", string.IsNullOrWhiteSpace(minAge) ? 100 : (object)Convert.ToInt32(minAge));
             Cmd.Parameters.AddWithValue("@City", string.IsNullOrWhiteSpace(filterCity) ? DBNull.Value : (object)filterCity);
             Cmd.Parameters.AddWithValue("@State", filterState == "" ? DBNull.Value : (object)filterState);
             Cmd.Parameters.AddWithValue("@Occupation", string.IsNullOrWhiteSpace(filterOccupation) ? DBNull.Value : (object)filterOccupation);
