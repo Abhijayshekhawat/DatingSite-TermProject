@@ -32,8 +32,8 @@ namespace DatingSite_TermProject.Controllers.Tests
             // 
             var mockHttpContext = new Mock<HttpContext>();
             mockHttpContext.SetupGet(context => context.Request.Cookies["Username"]).Returns("john_doe");
-            mockHttpContext.SetupGet(context => context.Request.Form["ageRangeMax"]).Returns("");
-            mockHttpContext.SetupGet(context => context.Request.Form["ageRangeMin"]).Returns("");
+            mockHttpContext.SetupGet(context => context.Request.Form["ageRangeMax"]).Returns("22");
+            mockHttpContext.SetupGet(context => context.Request.Form["ageRangeMin"]).Returns("40");
             mockHttpContext.SetupGet(context => context.Request.Form["filterCity"]).Returns("");
             mockHttpContext.SetupGet(context => context.Request.Form["filterState"]).Returns("AZ");
             mockHttpContext.SetupGet(context => context.Request.Form["filterOccupation"]).Returns("");
