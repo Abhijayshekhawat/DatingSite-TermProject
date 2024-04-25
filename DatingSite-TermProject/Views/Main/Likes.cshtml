@@ -12,6 +12,7 @@
     <link href="~/css/update.css" rel="stylesheet" type="text/css" />
     <link href="~/css/main.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="~/css/chart.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
     <div class="navbar">
@@ -40,6 +41,25 @@
             <h3>Likes - MatchUp</h3>
         </header>
         <div class="dashboard-layout">
+            <div class="filters-wrapper">
+                <div class="filters-section">
+                    <h2>Statistics</h2>
+                    <div class="chart-wrapper">
+                        <div class="chart-container">
+                            <canvas id="likesReceivedRatio" width="10" height="10"></canvas>
+                            <canvas id="likesToMatches" width="10" height="10"></canvas>
+                        </div>
+                        <div class="chart-message">
+                            <p>Like Statistics</p>
+                            <div class="chart-buttons">
+                                <button onclick='toggleChart("likesReceivedRatio")'>Likes received ratio</button>
+                                <button onclick='toggleChart("likesToMatches")'>Match chance ratio</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
             <div class="cards-container">
                 <h2 class="likes-title">People that liked you</h2>
                     @foreach (var cards in Model.PeopleWhoLikedYou)
@@ -243,6 +263,158 @@
                 document.getElementById('image5').src = this.dataset.image5;
             });
         });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        function toggleChart(chartId) {
+            // Get all chart canvases
+            const charts = document.querySelectorAll('.chart-container canvas');
+
+            // First, hide all charts
+            charts.forEach(chart => {
+                chart.style.display = 'none';
+            });
+
+            // Then, display the selected chart
+            const selectedChart = document.getElementById(chartId);
+            if (selectedChart) {
+                selectedChart.style.display = 'block';
+            } else {
+                console.error('No chart found with the id:', chartId);
+            }
+        }
+
+        function fetchotherPieChartData(url, chartId, label) {
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data); // Debugging to see data structure
+                    const ctx = document.getElementById(chartId);
+                    if (ctx && data.totalLikes != null && data.likesTurnedMatches != null) {
+                        const pieChart = new Chart(ctx.getContext('2d'), {
+                            type: 'pie',
+                            data: {
+                                labels: ['Matches from Likes', 'Likes Without Matches'], // Labels for the chart
+                                datasets: [{
+                                    label: label,
+                                    data: [
+                                        data.likesTurnedMatches, // Matches that turned into likes
+                                        data.totalLikes - data.likesTurnedMatches // Remaining likes that did not turn into matches
+                                    ],
+                                    backgroundColor: [
+                                        '#F72E50', // Color for 'Total Matches'
+                                        '#2F5059' // Color for 'Remaining Likes'
+                                    ],
+                                    borderColor: [
+                                        '#fff', // White borders
+                                        '#fff'
+                                    ],
+                                    borderWidth: 2
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                plugins: {
+                                    legend: {
+                                        labels: {
+                                            color: '#F72E50', // Color for text in the legend
+                                            font: {
+                                                size: 14,
+                                                weight: 'bold'
+                                            }
+                                        }
+                                    },
+                                    tooltip: {
+                                        callbacks: {
+                                            label: function (tooltipItem) {
+                                                let sum = tooltipItem.dataset.data.reduce((a, b) => a + b, 0);
+                                                let percentage = ((tooltipItem.raw / sum) * 100).toFixed(2) + "%";
+                                                return tooltipItem.label + ': ' + percentage;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                    } else {
+                        console.error('No data available to display the chart.');
+                    }
+                })
+                .catch(error => console.error('Error loading the chart data: ', error));
+        }
+
+        function fetchPieChartData(url, chartId, label) {
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data); // Debugging to see data structure
+                    // Assuming the data is an array and we need the first object
+                    if (data.length > 0) {
+                        const firstItem = data[0]; // Get the first item in the array
+                        const ctx = document.getElementById(chartId);
+                        if (ctx) {
+                            const pieChart = new Chart(ctx.getContext('2d'), {
+                                type: 'pie',
+                                data: {
+                                    labels: ['Total Likes', 'Total Matches'], // Labels for the chart
+                                    datasets: [{
+                                        label: label,
+                                        data: [
+                                            firstItem.totalLikesReceived, // Access 'totalLikesReceived'
+                                            firstItem.totalLikesOverall - firstItem.totalLikesReceived // Calculating other likes for completeness
+                                        ],
+                                        backgroundColor: [
+                                            '#F72E50', // Color for 'Your Likes'
+                                            '#2F5059' // Color for 'Total Likes'
+                                        ],
+                                        borderColor: [
+                                            '#fff', // White borders
+                                            '#fff'
+                                        ],
+                                        borderWidth: 2
+                                    }]
+                                },
+                                options: {
+                                    responsive: true,
+                                    plugins: {
+                                        legend: {
+                                            labels: {
+                                                color: '#F72E50', // Color for text in the legend
+                                                font: {
+                                                    size: 14,
+                                                    weight: 'bold'
+                                                }
+                                            }
+                                        },
+                                        tooltip: {
+                                            callbacks: {
+                                                label: function (tooltipItem) {
+                                                    let sum = 0;
+                                                    let dataArr = tooltipItem.dataset.data;
+                                                    dataArr.map(data => {
+                                                        sum += data;
+                                                    });
+                                                    let percentage = (dataArr[tooltipItem.dataIndex] / sum * 100).toFixed(2) + "%";
+                                                    return tooltipItem.label + ': ' + percentage;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                    } else {
+                        console.error('No data available to display the chart.');
+                    }
+                })
+                .catch(error => console.error('Error loading the chart data: ', error));
+        }
+
+        window.onload = function () {
+            fetchPieChartData('@Url.Action("YourLikeRatio", "Chart")', 'likesReceivedRatio', 'Likes Received as a Ratio');
+            fetchotherPieChartData('@Url.Action("LikesToMatches", "Chart")', 'likesToMatches', 'totalLikes');
+            document.querySelectorAll('.chart-container canvas').forEach(canvas => canvas.style.display = 'none');
+        };
     </script>
     <footer>
         <p>2024 MatchUp by Abhijay & Johnson</p>

@@ -176,14 +176,17 @@ h1 {
 
 .chart-message {
     background-color: #fff;
-    padding: 10px;
+    padding: 5px;
     margin: 5px 0;
     width: 80%;
     text-align: center;
     border-radius: 10px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
 }
-
+.chart-message p {
+    margin: 0;
+    padding: 5px;
+}
 .chart-buttons {
     display: flex;
     justify-content: space-evenly; /* Evenly space the buttons */
