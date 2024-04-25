@@ -11,6 +11,7 @@
     <link href="~/css/update.css" rel="stylesheet" type="text/css" />
     <link href="~/css/main.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="~/css/chart.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <div class="navbar">
@@ -39,6 +40,23 @@
             <h3>@ViewBag.StatusMessage</h3>
         </header>
         <div class="dashboard-layout">
+            <div class="filters-wrapper">
+                <div class="filters-section">
+                    <h2>Statistics</h2>
+                    <div class="chart-wrapper">
+                        <div class="chart-container">
+                            <canvas id="datesToPlannedRatio" width="10" height="10"></canvas>
+                        </div>
+                        <div class="chart-message">
+                            <p>Ratio of dates that get planned</p>
+                            <div class="chart-buttons">
+                                <button onclick='toggleChart("datesToPlannedRatio")'>Plan Date ratio</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
             <div class="cards-container">
                 <h2 class="likes-title">People you've sent a Date-request to</h2>
                 <div class="container">
@@ -231,6 +249,93 @@
                 document.getElementById('image5').src = this.dataset.image5;
             });
         });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        function toggleChart(chartId) {
+            // Get all chart canvases
+            const charts = document.querySelectorAll('.chart-container canvas');
+
+            // First, hide all charts
+            charts.forEach(chart => {
+                chart.style.display = 'none';
+            });
+
+            // Then, display the selected chart
+            const selectedChart = document.getElementById(chartId);
+            if (selectedChart) {
+                selectedChart.style.display = 'block';
+            } else {
+                console.error('No chart found with the id:', chartId);
+            }
+        }
+        function fetchPieChartData(url, chartId, label) {
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data); // Debugging to see data structure
+                    if (data.length > 0) {
+                        const firstItem = data[0];
+                        const ctx = document.getElementById(chartId);
+                        if (ctx && firstItem.totalDatesCount != null && firstItem.plannedDatesCount != null) {
+                            const pieChart = new Chart(ctx.getContext('2d'), {
+                                type: 'pie',
+                                data: {
+                                    labels: ['Planned', 'Not Planed'],
+                                    datasets: [{
+                                        label: label,
+                                        data: [
+                                            firstItem.plannedDatesCount,
+                                            firstItem.totalDatesCount - firstItem.plannedDatesCount
+                                        ],
+                                        backgroundColor: [
+                                            '#F72E50', // Red for matches that turned into dates
+                                            '#2F5059' // Dark blue for matches without dates
+                                        ],
+                                        borderColor: [
+                                            '#fff', // White borders
+                                            '#fff'
+                                        ],
+                                        borderWidth: 2
+                                    }]
+                                },
+                                options: {
+                                    responsive: true,
+                                    plugins: {
+                                        legend: {
+                                            labels: {
+                                                color: '#F72E50', // Coral color for legend labels
+                                                font: {
+                                                    size: 14,
+                                                    weight: 'bold'
+                                                }
+                                            }
+                                        },
+                                        tooltip: {
+                                            callbacks: {
+                                                label: function (tooltipItem) {
+                                                    let sum = tooltipItem.dataset.data.reduce((a, b) => a + b, 0);
+                                                    let percentage = ((tooltipItem.raw / sum) * 100).toFixed(2) + "%";
+                                                    return tooltipItem.label + ': ' + percentage;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+                        } else {
+                            console.error('Required data fields are missing.');
+                        }
+                    } else {
+                        console.error('No data available to display the chart.');
+                    }
+                })
+                .catch(error => console.error('Error loading the chart data: ', error));
+        }
+        window.onload = function () {
+            fetchPieChartData('@Url.Action("DatesToDatesPlanned", "Chart")', 'datesToPlannedRatio', 'Date to Planned Ratio');
+            document.querySelectorAll('.chart-container canvas').forEach(canvas => canvas.style.display = 'none');
+        };
     </script>
     <footer>
         <p>2024 MatchUp by Abhijay & Johnson</p>

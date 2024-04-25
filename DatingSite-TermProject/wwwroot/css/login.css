@@ -153,6 +153,68 @@ h1 {
 .input-group input[type="checkbox"] {
     margin-right: 10px;
 }
+.content-wrapper {
+    display: flex; /* This will enable flexbox */
+    justify-content: space-between; /* This will space out the children */
+    align-items: stretch; /* This will make them the same height */
+    height: 100vh; /* This will take full height of the viewport */
+}
+.leftcontainer, .rightcontainer {
+    width: 50%; /* Each takes half of the space */
+    display: flex;
+    flex-direction: column; /* Makes sure the contents inside are aligned vertically */
+}
+.rightcontainer {
+    width: 50%;
+    float: right;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center items horizontally */
+    justify-content: center; /* Center items vertically */
+    padding: 20px;
+}
+
+.chart-message {
+    background-color: #fff;
+    padding: 5px;
+    margin: 5px 0;
+    width: 80%;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
+}
+.chart-message p {
+    margin: 0;
+    padding: 5px;
+}
+.chart-buttons {
+    display: flex;
+    justify-content: space-evenly; /* Evenly space the buttons */
+    width: 100%;
+}
+
+.chart-buttons button {
+    background-color: #F72E50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin: 0 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.chart-buttons button:hover {
+    background-color: #2F5059;
+}
+
+.chart-container {
+    width: 70%;
+    padding: 10px;
+    text-align: center; /* Center the canvas */
+    background-color: rgba(255, 255, 255, 0.95);
+}
+
 @media (max-width: 768px) {
     .container {
         flex-direction: column;

@@ -1,0 +1,45 @@
+﻿.chart-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center items horizontally */
+    justify-content: center; /* Center items vertically */
+    
+    display: flex;
+}
+
+.chart-message {
+    background-color: #fff;
+    padding: 5px;
+    margin: 2px 0;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
+}
+
+.chart-buttons {
+    display: flex;
+    justify-content: space-evenly; /* Evenly space the buttons */
+    width: 100%;
+}
+
+    .chart-buttons button {
+        background-color: #F72E50;
+        color: white;
+        border: none;
+        padding: 2px 5px;
+        margin: 0 2.5px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+        .chart-buttons button:hover {
+            background-color: #2F5059;
+        }
+
+.chart-container {
+    width: 70%;
+    padding: 5px;
+    text-align: center; /* Center the canvas */
+    background-color: rgba(255, 255, 255, 0.95);
+}
