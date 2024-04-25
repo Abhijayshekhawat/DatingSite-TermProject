@@ -122,14 +122,14 @@ namespace DatingSite_TermProject.Controllers
         {
             // get username
             filter.Username = Request.Cookies["Username"].ToString();
-            // populate all the viewbags
+            //populate all the viewbags
             ViewBag.ProfileImage = view.GetUserImage(filter.Username);
             ViewBag.FirstName = view.GetUserFirstName(filter.Username);
             ViewBag.States = view.PopulateStates();
             ViewBag.Interests = view.PopulateInterests();
             ViewBag.Commitments = view.PopulateCommitmentType();
             ViewBag.MaxAge = view.MaxAge();
-            ViewBag.MinAge = view.MinAge(); 
+            ViewBag.MinAge = view.MinAge();
             // properties with request form data 
             filter.MaxAge = Request.Form["ageRangeMax"].ToString();
             filter.MinAge = Request.Form["ageRangeMin"].ToString();
