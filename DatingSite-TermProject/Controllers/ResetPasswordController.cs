@@ -19,8 +19,13 @@ namespace DatingSite_TermProject.Controllers
         {
             if (string.IsNullOrEmpty(model.Password))
             {
-                ViewBag.ErrorMessage = "Please enter your email.";
-                return View("~/Views/Home/ForgotPassword.cshtml");
+                ViewBag.ErrorMessage = "Please enter a password.";
+                return View("~/Views/Home/ResetPassword.cshtml");
+            }
+            if (Request.Form["Password"].ToString() != Request.Form["ConfirmPassword"].ToString())
+            {
+                ViewBag.ErrorMessage = "Passwords do not match";
+                return View("~/Views/Home/ResetPassword.cshtml");
             }
             if (Request.Cookies.TryGetValue("userDetails", out string encryptedCookie))
             {

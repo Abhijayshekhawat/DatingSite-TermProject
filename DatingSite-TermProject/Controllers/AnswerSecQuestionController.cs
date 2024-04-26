@@ -51,7 +51,7 @@ namespace DatingSite_TermProject.Controllers
                     {
                         var decryptedQuestion = EncryptionHelper.Decrypt(encryptedQuestion);
                         var security = JsonSerializer.Deserialize<SecurityQuestion>(decryptedQuestion);
-                        if (security.Answer == Request.Form["Answer"].ToString())
+                        if (security.Answer.Trim().ToLower() == Request.Form["Answer"].ToString().Trim().ToLower())
                         {
                             return View("~/Views/Home/ResetPassword.cshtml");
                         } else

@@ -18,7 +18,7 @@
             <form asp-controller="AnswerSecQuestion" asp-action="AnswerSecQuestion" method="post">
                 <h1>Answer your Securtiy Question to reset your Password</h1>
                 <div class="input-group">
-                    <input type="text" name="Question" class="form-control" placeholder="Question" value="@ViewBag.Question" />
+                    <input type="text" name="Question" class="form-control" placeholder="Question" value="@ViewBag.Question" readonly />
                     <input type="text" name="Answer" class="form-control" placeholder="Answer" />
                     <input type="hidden" name="token" value="@ViewBag.Token" />
                 </div>

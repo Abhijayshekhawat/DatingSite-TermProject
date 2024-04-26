@@ -15,12 +15,16 @@ namespace DatingSite_TermProject.Controllers
 {
     public class PlanDateController : Controller
     {
+        ViewManagement view = new ViewManagement();
         public IActionResult CreateDate() {
             if (HttpContext.Request.Cookies.TryGetValue("isValid", out string encryptedAuth))
             {
                 var decryptedAuth = EncryptionHelper.Decrypt(encryptedAuth);
                 if (decryptedAuth == "Valid")
                 {
+                    string savedUsername4 = Request.Cookies["Username"].ToString();
+                    ViewBag.FirstName = view.GetUserFirstName(savedUsername4);
+                    ViewBag.ProfileImage = view.GetUserImage(savedUsername4);
                     string cookieObject = Request.Form["PrivateId"].ToString();
                     CookieOptions options = new CookieOptions();
                     options.Expires = DateTime.Now.AddMinutes(5);
@@ -47,6 +51,9 @@ namespace DatingSite_TermProject.Controllers
                 var decryptedAuth = EncryptionHelper.Decrypt(encryptedAuth);
                 if (decryptedAuth == "Valid")
                 {
+                    string savedUsername4 = Request.Cookies["Username"].ToString();
+                    ViewBag.ProfileImage = view.GetUserImage(savedUsername4);
+                    ViewBag.FirstName = view.GetUserFirstName(savedUsername4);
                     string savedUsername2 = Request.Cookies["Username"].ToString();
                     UserProfileModel userProfile = new UserProfileModel();
                     int privateid = userProfile.getPrivateId(savedUsername2);
@@ -258,6 +265,9 @@ namespace DatingSite_TermProject.Controllers
                 var decryptedAuth = EncryptionHelper.Decrypt(encryptedAuth);
                 if (decryptedAuth == "Valid")
                 {
+                    string savedUsername4 = Request.Cookies["Username"].ToString();
+                    ViewBag.ProfileImage = view.GetUserImage(savedUsername4);
+                    ViewBag.FirstName = view.GetUserFirstName(savedUsername4);
                     DatePlanModel plan = new DatePlanModel();
                     int dateId = GetDateId(int.Parse(Request.Form["PrivateId"].ToString()));
                     plan = GetDatePlan(dateId);
