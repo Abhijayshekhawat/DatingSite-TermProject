@@ -73,13 +73,31 @@
         <button onclick="updateMap('parks in Seattle')">Parks</button>
         <button onclick="updateMap('art galleries in Seattle')">Art Galleries</button>
     </div>
-    <iframe id="searchMap"
-            width="600"
-            height="450"
-            style="border:0"
-            referrerpolicy="no-referrer-when-downgrade"
-            src="https://www.google.com/maps/embed/v1/search?key=AIzaSyD5Zq_-OdrLWo4Wm8Qy0gaefwYNnI2_Mms&q=record+stores+in+Seattle"
+    <!-- Map container -->
+    <div id="map-container" style="width: 100%; height: 400px;">
+        <iframe id="searchMap"
+                width="100%"
+                height="100%"
+                frameborder="0"
+                style="border:0"
+                referrerpolicy="no-referrer-when-downgrade"
+                src=""  <!-- This will be set by the JavaScript function -->
             allowfullscreen>
     </iframe>
+    </div>
+
+    <script>
+        window.onload = function () {
+            var favouriteCuisine = '@ViewBag.FavouriteCuisine' || 'romantic';
+            var userCity = '@ViewBag.UserCity';
+            updateMap(`${favouriteCuisine} restaurants in ${userCity}`);
+        };
+
+        function updateMap(searchQuery) {
+            var iframe = document.getElementById('searchMap');
+            iframe.src = 'https://www.google.com/maps/embed/v1/search?key=AIzaSyD5Zq_-OdrLWo4Wm8Qy0gaefwYNnI2_Mms&q=' + encodeURIComponent(searchQuery);
+        }
+    </script>
+
 </body>
 </html>

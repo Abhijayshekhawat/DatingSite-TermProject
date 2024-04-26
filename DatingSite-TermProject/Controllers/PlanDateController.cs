@@ -29,6 +29,8 @@ namespace DatingSite_TermProject.Controllers
                     CookieOptions options = new CookieOptions();
                     options.Expires = DateTime.Now.AddMinutes(5);
                     HttpContext.Response.Cookies.Append("DatePersonId", cookieObject, options);
+                    ViewBag.FavouriteCuisine = GetFavouriteCuisine(Request.Cookies["Username"].ToString(), int.Parse(Request.Form["PrivateId"].ToString()));
+                    ViewBag.UserCity = GetCity(Request.Cookies["Username"].ToString());
                     return View("~/Views/Main/Dates/DatePlanner.cshtml");
                 }
                 else
@@ -275,6 +277,8 @@ namespace DatingSite_TermProject.Controllers
                     CookieOptions options = new CookieOptions();
                     options.Expires = DateTime.Now.AddSeconds(15);
                     HttpContext.Response.Cookies.Append("EditDateId", cookieObject, options);
+                    ViewBag.FavouriteCuisine = GetFavouriteCuisine(Request.Cookies["Username"].ToString(), int.Parse(Request.Form["PrivateId"].ToString()));
+                    ViewBag.UserCity = GetCity(Request.Cookies["Username"].ToString());
                     return View("~/Views/Main/Dates/DatePlanner.cshtml", plan);
                 }
                 else
@@ -325,6 +329,48 @@ namespace DatingSite_TermProject.Controllers
                 plan = (DatePlanModel)serializer.Deserialize(memStream);
             }
             return plan;
+        }
+        private string GetFavouriteCuisine(string username, int privateId)
+        {
+            string cuisine = "romantic";
+            DBConnect objDB = new DBConnect();
+            SqlCommand objCommand = new SqlCommand();
+            objCommand.CommandType = CommandType.StoredProcedure;
+            objCommand.CommandText = "TP_GetFavoriteCuisines";
+            objCommand.Parameters.AddWithValue("@Username", username);
+            objCommand.Parameters.AddWithValue("@OtherUserPrivateId", privateId);
+            DataSet ds = objDB.GetDataSetUsingCmdObj(objCommand);
+            DataTable dt = ds.Tables[0];
+            if (dt.Rows.Count > 0)
+            {
+                var userOneCuisines = dt.Rows[0]["UserOneCuisine"].ToString().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                var userTwoCuisines = dt.Rows[0]["UserTwoCuisine"].ToString().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+                var commonCuisines = userOneCuisines.Intersect(userTwoCuisines).ToList();
+                if (commonCuisines.Any())
+                {
+                    cuisine = commonCuisines.First();
+                }
+            }
+
+            return cuisine;
+        }
+        private string GetCity(string username)
+        {
+            string city = "Philadelphia";
+            DBConnect objDB = new DBConnect();
+            SqlCommand objCommand = new SqlCommand();
+            objCommand.CommandType = CommandType.StoredProcedure;
+            objCommand.CommandText = "TP_GetCityByUsername";
+            objCommand.Parameters.AddWithValue("@Username", username);
+            DataSet ds = objDB.GetDataSetUsingCmdObj(objCommand);
+            DataTable dt = ds.Tables[0];
+            if (dt.Rows.Count > 0)
+            {
+                city = dt.Rows[0]["City"].ToString();
+            }
+
+            return city;
         }
         private CardsModel GetProfile(int privateId)
         {

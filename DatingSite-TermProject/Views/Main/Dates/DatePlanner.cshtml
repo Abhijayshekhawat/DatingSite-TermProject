@@ -28,6 +28,36 @@
             <h1>Plan Your Date</h1>
             <h3>@ViewBag.ErrorMessage</h3>
         </header>
+        <div class="map-container">
+            <h2>Find the perfect place for your date</h2>
+            <p>Use the buttons below to find the perfect place for your date. You can search for restaurants, movie theaters, parks, and art galleries in your city.</p>
+            <div class="map">
+                <iframe id="dateMap"
+                        width="100%"
+                        height="100%"
+                        frameborder="0"
+                        style="border:0"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        src="https://www.google.com/maps/embed/v1/search?key=AIzaSyD5Zq_-OdrLWo4Wm8Qy0gaefwYNnI2_Mms&q=@(ViewBag.FavouriteCuisine)+restaurants+in+@(ViewBag.UserCity)"
+                        allowfullscreen>
+                </iframe>
+            </div>
+            <div class="map-btncontainer">
+                <button class="btn-primary" id="cuisineButton" onclick="updateMap('@(ViewBag.FavouriteCuisine) restaurants in @(ViewBag.UserCity)')">
+                    @if (!string.IsNullOrEmpty(ViewBag.FavouriteCuisine))
+                    {
+                        @:Find @(ViewBag.FavouriteCuisine) Restaurants
+                    }
+                    else
+                    {
+                        @:Find Romantic Restaurants
+                    }
+                </button>
+                <button class="btn-primary" onclick="updateMap('movie theaters in @(ViewBag.UserCity)')">Movie Theaters</button>
+                <button class="btn-primary" onclick="updateMap('parks in @(ViewBag.UserCity)')">Parks</button>
+                <button class="btn-primary" onclick="updateMap('art galleries in @(ViewBag.UserCity)')">Art Galleries</button>
+            </div>
+        </div>
         <form asp-controller="DatePlanner" asp-action="SaveDatePlan" method="post">
             <div class="form-section">
                 <h2>Date Information</h2>
@@ -40,6 +70,7 @@
 
                 <label asp-for="Time" for="txtTime">Time:</label>
                 <input asp-for="Time" type="time" id="txtTime" name="Time" class="form-control" />
+
 
                 <label asp-for="Location" for="txtLocation">Please enter a valid Location:(It will be used for directions)</label>
                 <input asp-for="Location" type="text" id="txtLocation" name="Location" class="form-control" />
@@ -56,5 +87,17 @@
     <footer>
         <p>2024 MatchUp by Abhijay & Johnson</p>
     </footer>
+    <script>
+        function updateMap(searchQuery) {
+            var iframe = document.getElementById('dateMap');
+            iframe.src = 'https://www.google.com/maps/embed/v1/search?key=AIzaSyD5Zq_-OdrLWo4Wm8Qy0gaefwYNnI2_Mms&q=' + encodeURIComponent(searchQuery);
+            document.getElementById('cuisineButton').textContent = searchQuery.includes('restaurants') ?
+                `Find ${searchQuery.replace(' restaurants in ', ' ')} Restaurants` :
+                `Find ${searchQuery.replace(' in ', ' ')} Places`;
+        }
+
+        // Set initial map
+        updateMap('@(ViewBag.FavouriteCuisine) restaurants in @(ViewBag.UserCity)');
+    </script>
 </body>
 </html>
