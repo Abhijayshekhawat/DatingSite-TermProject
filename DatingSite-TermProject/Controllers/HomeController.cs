@@ -27,6 +27,13 @@ namespace DatingSite_TermProject.Controllers
         }
         public IActionResult Login()
         {
+            if (Request.Cookies.TryGetValue("fastLogin", out string encryptedCookie))
+            {
+                string decryptedCookie = EncryptionHelper.Decrypt(encryptedCookie);
+                PrivateUserInfoModel userDetails = JsonSerializer.Deserialize<PrivateUserInfoModel>(decryptedCookie);
+                ViewBag.Username = userDetails.PrivateUsername;
+                ViewBag.Pwd = userDetails.Password;
+            }
             return View();
         }
         public IActionResult CreateAccount()

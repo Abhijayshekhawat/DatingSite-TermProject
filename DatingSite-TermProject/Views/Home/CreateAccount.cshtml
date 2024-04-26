@@ -1,7 +1,4 @@
-﻿
-@{
-    ViewData["Title"] = "CreateAccount";
-}
+﻿@model DatingSite_TermProject.Models.PrivateUserInfoModel
 @{
     Layout = null; // Assuming you don't want to use a layout page
 }
@@ -27,24 +24,34 @@
                 </div>
                 <div class="input-group">
                     <div class="input__wrapper">
-                        <input type="text" name="FirstName" class="form-control input__field" placeholder="" />
+                        <input asp-for="FirstName" type="text" name="FirstName" class="form-control input__field" placeholder="" />
                         <label class="input__label">First Name</label>
+                        <br/>
+                        <span asp-validation-for="FirstName" class="text-danger error-message"></span>
                     </div>
                     <div class="input__wrapper">
-                        <input type="text" name="LastName" class="form-control input__field" placeholder="" />
+                        <input asp-for="LastName" type="text" name="LastName" class="form-control input__field" placeholder="" />
                         <label class="input__label">Last Name</label>
+                        <br />
+                        <span asp-validation-for="LastName" class="text-danger error-message"></span>
                     </div>
                     <div class="input__wrapper">
-                        <input type="email" name="Email" class="form-control input__field" placeholder="" />
+                        <input asp-for="Email" type="email" name="Email" class="form-control input__field" placeholder="" />
                         <label class="input__label">Email</label>
+                        <br />
+                        <span asp-validation-for="Email" class="text-danger error-message"></span>
                     </div>
                     <div class="input__wrapper">
-                        <input type="text" name="UserName" class="form-control input__field" placeholder="" />
+                        <input asp-for="PrivateUsername" type="text" name="UserName" class="form-control input__field" placeholder="" />
                         <label class="input__label">User Name</label>
+                        <br />
+                        <span asp-validation-for="PrivateUsername" class="text-danger error-message"></span>
                     </div>
                     <div class="input__wrapper">
-                        <input type="password" name="Password" class="form-control input__field" placeholder="" />
+                        <input asp-for="Password" type="password" name="Password" class="form-control input__field" placeholder="" />
                         <label class="input__label">Password</label>
+                        <br />
+                        <span asp-validation-for="Password" class="text-danger error-message"></span>
                     </div>
                     <div class="input__wrapper">
                         <input type="password" name="ConfirmPassword" class="form-control input__field" placeholder="" />
@@ -53,6 +60,7 @@
 
                 </div>
                 <button type="submit" class="btn btn-primary">Create account</button>
+                <br />
                 <label name="lblCAError">@ViewBag.ErrorMessage</label> <!--lblCAError-->
             </form>
         </div>

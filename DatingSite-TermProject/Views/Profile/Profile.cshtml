@@ -167,9 +167,9 @@
                 <div class="preference-section">
                     <label for="FavoriteBookGenre">Favorite Book Genre:</label>
                     <select asp-for="FavoriteBookGenre" name="BookGenres" class="form-control">
-                        @foreach (var book in ViewBag.BookGenres as List<string>)
+                        @foreach (var type in ViewBag.BookGenres as List<string>)
                         {
-                            <option value="@book" selected="@(book == Model.FavoriteBookGenre.Trim())">@book</option>
+                            <option value="@type" selected="@(type == Model.FavoriteBookGenre?.Trim())">@type</option>
                         }
                     </select>
                     <span asp-validation-for="FavoriteBookGenre" class="text-danger"></span>

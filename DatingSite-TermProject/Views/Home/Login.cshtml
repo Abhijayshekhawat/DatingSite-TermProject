@@ -26,12 +26,17 @@
                     <div class="input-group">
                         <div class="input__wrapper">
                             <input type="text" asp-for="Username" class="form-control input__field" placeholder="" value="@ViewBag.Username" />
-                            <label class="input__label">UserName</label>
+                            <label asp-for="Username" class="input__label">UserName</label>
+                            <br />
+                            <span asp-validation-for="Username" class="text-danger error-message"></span>
+
 
                         </div>
                         <div class="input__wrapper">
                             <input type="password" asp-for="Password" class="form-control input__field" placeholder="" value="@ViewBag.Pwd"/>
-                            <label class="input__label">Password</label>
+                            <label asp-for="Password" class="input__label">Password</label>
+                            <br />
+                            <span asp-validation-for="Password" class="text-danger error-message"></span>
                         </div>
                         <div>
                             <label>Would you like to save your password?</label>

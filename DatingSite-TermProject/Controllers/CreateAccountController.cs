@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using System.Data.SqlClient;
-using DatingSiteCoreAPI;
 using DatingSite_TermProject.Models;
 using System.Text.Json;  // needed for JSON serializers
 using System.IO;    // needed for Stream and Stream Reader
@@ -18,18 +17,27 @@ namespace DatingSite_TermProject.Controllers
     public class CreateAccountController : Controller
     {
 
-        string CreateAccountAPI_Url = "http://localhost:5046/api/CreateAccount";
+        string CreateAccountAPI_Url = "https://cis-iis2.temple.edu/Spring2024/CIS3342_tuh18229/WebAPITest/api/CreateAccount";
         
         [HttpPost]
-        public IActionResult CreateAccount()
+        public IActionResult CreateAccount(PrivateUserInfoModel pUInfo)
         {
+            if (Request.Form["Password"].ToString() != Request.Form["ConfirmPassword"].ToString())
+            {
+                ViewBag.ErrorMessage = "Passwords do not match";
+                return View("~/Views/Home/CreateAccount.cshtml");
+            }
+            if (!ModelState.IsValid)
+            {
+                return View("~/Views/Home/CreateAccount.cshtml", pUInfo);
+            }
             PrivateUserInfoModel privateinfo = new PrivateUserInfoModel();  
             // get the data from the form / model PrivateUserInfoModel  
             privateinfo.FirstName = Request.Form["FirstName"].ToString();
             privateinfo.LastName = Request.Form["LastName"].ToString();
             privateinfo.Email = Request.Form["Email"].ToString();
             privateinfo.PrivateUsername = Request.Form["Username"].ToString();
-            privateinfo.Password = Request.Form["Password"].ToString();
+            privateinfo.Password = EncryptionHelper.ComputeHash(Request.Form["Password"].ToString());
             
             // Serialize an Account object into a JSON string.
             var jsonPayload = JsonSerializer.Serialize(privateinfo);
@@ -55,11 +63,18 @@ namespace DatingSite_TermProject.Controllers
                 response.Close();
                 if (data == "true")
                 {
-
+                    string auth = "Valid";
+                    CookieOptions options = new CookieOptions();
+                    string SecretCookie = EncryptionHelper.Encrypt(auth);
+                    HttpContext.Response.Cookies.Append("isValid", SecretCookie, options);
 
                     Response.Cookies.Append("Username", privateinfo.PrivateUsername);
                     ViewBag.ErrorMessage = "The customer was successfully saved to the database.";
-                    return View("~/Views/Profile/Profile.cshtml");
+                    ViewBag.CommitmentTypes = new List<string> { "Friends", "Short-Term Relationship", "Long-Term Relationship", "Open-Relationship", "Marriage" };
+                    ViewBag.BookGenres = new List<string> { "Fiction", "Non-Fiction", "Mystery", "Sci-Fi", "Biography" };
+                    ViewBag.MovieGenres = new List<string> { "Action", "Comedy", "Drama", "Fantasy", "Horror" };
+                    UserProfileModel profile = new UserProfileModel();
+                    return View("~/Views/Profile/Profile.cshtml",profile);
 
                 }
                 else

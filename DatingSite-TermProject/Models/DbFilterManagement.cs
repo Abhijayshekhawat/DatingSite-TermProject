@@ -1,8 +1,8 @@
 ﻿using System.Data;
-using Utilities;
 using System.Data.SqlClient;
 using Azure.Core;
 using static System.Net.Mime.MediaTypeNames;
+using Utilities;
 
 namespace DatingSite_TermProject.Models
 {

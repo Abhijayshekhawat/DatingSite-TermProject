@@ -1,5 +1,5 @@
 ﻿using DatingSite_TermProject.Models;
-using DatingSiteCoreAPI;
+
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using System.Data.SqlClient;
@@ -7,13 +7,12 @@ using System.Net;
 using System.Text.Json;
 using System.Xml.Linq;
 using Utilities;
-using Utilities;
 
 namespace DatingSite_TermProject.Controllers
 {
     public class ForgotPasswordController : Controller
     {
-        string CreateAccountAPI_Url = "http://localhost:5046/api/CreateAccount";
+        string CreateAccountAPI_Url = "https://cis-iis2.temple.edu/Spring2024/CIS3342_tuh18229/WebAPITest/api/CreateAccount";
         [HttpGet]
         public IActionResult ForgotPassword()
         {

@@ -22,7 +22,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DatingSiteCoreAPI\DatingSiteCoreAPI.csproj" />
-    <ProjectReference Include="..\Utilities\Utilities.csproj" />
   </ItemGroup>
 
 </Project>

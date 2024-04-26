@@ -1,7 +1,7 @@
 ﻿using System.Data;
-using Utilities;
 using System.Data.SqlClient;
 using Azure.Core;
+using Utilities;
 
 namespace DatingSite_TermProject.Models
 {

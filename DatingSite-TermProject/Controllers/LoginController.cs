@@ -1,6 +1,6 @@
 ﻿using DatingSite_TermProject.Models;
 using Microsoft.AspNetCore.Mvc;
-using DatingSiteCoreAPI;
+
 using System.Text.Json;  // needed for JSON serializers
 using System.IO;    // needed for Stream and Stream Reader
 using System.Net;
@@ -8,6 +8,7 @@ using System.Data;
 using System.Data.SqlClient;
 using Microsoft.AspNetCore.Identity;
 using Utilities;
+using System.Reflection;
 
 
 namespace DatingSite_TermProject.Controllers
@@ -15,10 +16,14 @@ namespace DatingSite_TermProject.Controllers
     public class LoginController : Controller
     {
 
-        string CreateAccountAPI_Url = "http://localhost:5046/api/CreateAccount";
+        string CreateAccountAPI_Url = "https://cis-iis2.temple.edu/Spring2024/CIS3342_tuh18229/WebAPITest/api/CreateAccount";
 
-        public IActionResult Login()
+        public IActionResult Login(LoginModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("~/Views/Home/Login.cshtml",model);
+            }
             if (Request.Cookies.TryGetValue("fastLogin", out string encryptedCookie))
             {
                 string decryptedCookie = EncryptionHelper.Decrypt(encryptedCookie);
@@ -31,7 +36,7 @@ namespace DatingSite_TermProject.Controllers
             privateinfo.LastName = "NoValue";
             privateinfo.Email = "NoValue";
             privateinfo.PrivateUsername = Request.Form["Username"].ToString();
-            privateinfo.Password = Request.Form["Password"].ToString();
+            privateinfo.Password = EncryptionHelper.ComputeHash(Request.Form["Password"].ToString());
             //email
             string UserEmail = "";
             // for email
@@ -105,12 +110,9 @@ namespace DatingSite_TermProject.Controllers
                     return View("~/Views/Home/Verification.cshtml");
 
                 }
-                // **
-                // need to change this to going into the view with two step verification
-                //**
 
                 else { 
-                    ViewBag.ErrorMessage = "A problem occurred while logging in.";
+                    ViewBag.ErrorMessage = "Incorrect Password/UserName. Please try again!";
                 }
 
             }

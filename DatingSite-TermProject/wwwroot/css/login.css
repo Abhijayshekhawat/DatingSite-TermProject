@@ -30,6 +30,11 @@
     text-decoration: none;
     cursor: pointer;
 }
+.error-message {
+    color: #F72E50;
+    font-size: 15px;
+    margin-bottom: 5px;
+}
 .login-link{
     font-size: 14px;
     margin-bottom: 10px;
@@ -59,44 +64,36 @@ h1 {
 .input-group .form-control {
     width: 37%;
 }
-/* Root Variables */
 :root {
-    --primary: #F72E50; /* Primary interaction color */
-    --secondary: #2F5059; /* Text color */
-    --box-background: #fff; /* Background color of input boxes */
+    --primary: #F72E50; /* Primary color */
+    --secondary: #2F5059; /* Secondary color */
+    --box-background: #fff;
 }
-
-/* Input Wrapper Style */
 .input__wrapper {
     position: relative;
     padding: 10px 0 0 0;
-    width: 100%; /* Ensures the input field fills its container */
+    width: 100%;
 }
-
-/* Input Field Style */
 .input__field {
     font-size: 1em;
     color: var(--secondary);
     padding: 10px;
     background: transparent;
-    border: 2px solid #ccc; /* Existing border style */
+    border: 2px solid #ccc; 
     border-radius: 5px;
-    width: 100%; /* Full width */
+    width: 100%; 
     transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-/* Placeholder shown condition for Label */
 .input__field:placeholder-shown + .input__label {
     cursor: text;
-    top: 40%; /* Centers label vertically when placeholder is shown */
+    top: 40%;
     left: 10px;
     font-size: 1em;
 }
-
-/* Label Style */
 .input__label {
     position: absolute;
-    top: 0; /* Set initial position of the label */
+    top: 0; 
     left: 10px;
     color: var(--secondary);
     background-color: var(--box-background);
@@ -105,17 +102,15 @@ h1 {
     transform-origin: left center;
     pointer-events: none;
 }
-
-/* Input Field Focus Styles */
 .input__field:focus {
     border-color: var(--primary);
-    outline: none; /* Removes default focus outline */
+    outline: none;
 }
 
 .input__field:focus + .input__label {
-    top: 15px; /* Pulls the label to the top when focused */
-    font-size: 0.75em; /* Reduces label size when focused */
-    color: var(--primary); /* Changes label color to primary */
+    top: 15px; 
+    font-size: 0.75em; 
+    color: var(--primary); 
 }
 .form-control {
     margin: 10px auto;
@@ -147,30 +142,30 @@ h1 {
 }
 .input-group label {
     font-size: 0.9em;
-    color: #2F5059; /* Matching text color */
+    color: #2F5059; 
 }
 
 .input-group input[type="checkbox"] {
     margin-right: 10px;
 }
 .content-wrapper {
-    display: flex; /* This will enable flexbox */
-    justify-content: space-between; /* This will space out the children */
-    align-items: stretch; /* This will make them the same height */
-    height: 100vh; /* This will take full height of the viewport */
+    display: flex; 
+    justify-content: space-between;
+    align-items: stretch; 
+    height: 100vh; 
 }
 .leftcontainer, .rightcontainer {
-    width: 50%; /* Each takes half of the space */
+    width: 50%; 
     display: flex;
-    flex-direction: column; /* Makes sure the contents inside are aligned vertically */
+    flex-direction: column; 
 }
 .rightcontainer {
     width: 50%;
     float: right;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center items horizontally */
-    justify-content: center; /* Center items vertically */
+    align-items: center;
+    justify-content: center;
     padding: 20px;
 }
 
@@ -189,7 +184,7 @@ h1 {
 }
 .chart-buttons {
     display: flex;
-    justify-content: space-evenly; /* Evenly space the buttons */
+    justify-content: space-evenly;
     width: 100%;
 }
 
@@ -211,7 +206,7 @@ h1 {
 .chart-container {
     width: 70%;
     padding: 10px;
-    text-align: center; /* Center the canvas */
+    text-align: center;
     background-color: rgba(255, 255, 255, 0.95);
 }
 

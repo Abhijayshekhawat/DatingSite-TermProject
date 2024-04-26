@@ -1,104 +1,152 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using System.Data.SqlClient;
-using DatingSiteCoreAPI;
+
 using DatingSite_TermProject.Models;
 using System.Text.Json;  // needed for JSON serializers
 using System.IO;    // needed for Stream and Stream Reader
 using System.Net;
 using Microsoft.AspNetCore.Http; // need for cookies
-using Utilities;
 using DatingSite_TermProject.Controllers;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Data.Common;
 using System.Numerics;
+using Utilities;
 
 namespace DatingSite_TermProject.Controllers
 {
     public class DatePlannerController : Controller
     {
-        public IActionResult SaveDatePlan()
+        public IActionResult SaveDatePlan(DatePlanModel dp)
         {
-            
-            DBConnect objDB = new DBConnect();
-
-            SqlCommand objCommand = new SqlCommand();
-
-            DatePlanModel plan = new DatePlanModel();
-            plan.Date = Convert.ToDateTime(Request.Form["Date"].ToString());
-            plan.Time = TimeSpan.Parse(Request.Form["Time"].ToString());
-            plan.Location = Request.Form["Location"].ToString();
-            plan.Description = Request.Form["Description"].ToString();
-            if (!string.IsNullOrEmpty(Request.Form["DateId"]))
+            if (HttpContext.Request.Cookies.TryGetValue("isValid", out string encryptedAuth))
             {
-                plan.DateId = int.Parse(Request.Form["DateId"].ToString());
-            }
-            else
-            {
-                if (Request.Cookies.TryGetValue("DatePersonId", out string dateIDCookie))
+                var decryptedAuth = EncryptionHelper.Decrypt(encryptedAuth);
+                if (decryptedAuth == "Valid")
                 {
-                    plan.DateId = GetDateId(int.Parse(dateIDCookie));
+                    if (Convert.ToDateTime(Request.Form["Date"].ToString())<DateTime.Now)
+                    {
+                        ViewBag.ErrorMessage = "Please select a future date";
+                        return View("~/Views/Main/Dates/DatePlanner.cshtml", dp);
+                    }
+                    if (Request.Form["Location"].ToString()=="")
+                    {
+                        ViewBag.ErrorMessage = "Please enter a location";
+                        return View("~/Views/Main/Dates/DatePlanner.cshtml", dp);
+                    }
+                    if (Request.Form["Description"].ToString() == "")
+                    {
+                        ViewBag.ErrorMessage = "Please enter a description";
+                        return View("~/Views/Main/Dates/DatePlanner.cshtml", dp);
+                    }
+                    DBConnect objDB = new DBConnect();
+
+                    SqlCommand objCommand = new SqlCommand();
+
+                    DatePlanModel plan = new DatePlanModel();
+                    plan.Date = Convert.ToDateTime(Request.Form["Date"].ToString());
+                    plan.Time = TimeSpan.Parse(Request.Form["Time"].ToString());
+                    plan.Location = Request.Form["Location"].ToString();
+                    plan.Description = Request.Form["Description"].ToString();
+                    if (!string.IsNullOrEmpty(Request.Form["DateId"]))
+                    {
+                        plan.DateId = int.Parse(Request.Form["DateId"].ToString());
+                    }
+                    else
+                    {
+                        if (Request.Cookies.TryGetValue("DatePersonId", out string dateIDCookie))
+                        {
+                            plan.DateId = GetDateId(int.Parse(dateIDCookie));
+                        }
+                    }
+                    BinaryFormatter serializer = new BinaryFormatter();
+                    MemoryStream memStream = new MemoryStream();
+
+                    Byte[] byteArray;
+                    #pragma warning disable SYSLIB0011
+                    serializer.Serialize(memStream, plan);
+
+                    byteArray = memStream.ToArray();
+
+                    objCommand.CommandType = CommandType.StoredProcedure;
+                    int retVal = 0;
+                    int check = CheckForDatePlan(plan.DateId);
+                    if (check >= 0)
+                    {
+                        objCommand.CommandText = "TP_UpdateBinaryDatePlan";
+                        objCommand.Parameters.AddWithValue("@DateID", plan.DateId);
+                        objCommand.Parameters.AddWithValue("@DatePlan", byteArray);
+                        retVal = objDB.DoUpdateUsingCmdObj(objCommand);
+                    }
+                    else
+                    {
+                        objCommand.CommandText = "TP_InsertBinaryDatePlan";
+                        objCommand.Parameters.AddWithValue("@DateID", plan.DateId);
+                        objCommand.Parameters.AddWithValue("@DatePlan", byteArray);
+                        retVal = objDB.DoUpdateUsingCmdObj(objCommand);
+                        UpdateDateStatus();
+                    }
+
+                    if (retVal > 0)
+                    {
+                        string savedUsername2 = Request.Cookies["Username"].ToString();
+                        UserProfileModel userProfile = new UserProfileModel();
+                        int privateid = userProfile.getPrivateId(savedUsername2);
+                        var datePlanCards = new PlanDateCardModel
+                        {
+                            DatesNotYetPlanned = DatesNotYetPlanned(privateid),
+                            PlannedDates = PlannedDates(privateid)
+                        };
+                        return View("~/Views/Main/Dates/PlanDate.cshtml", datePlanCards);
+                    }
+                    else
+                    {
+                        return View("~/Views/Main/Dates/DatePlanner.cshtml");
+                    }
+                }
+                else
+                {
+                    ViewBag.ErrorMessage = "Please Login First";
+                    return View("~/Views/Home/Login.cshtml");
                 }
             }
-            BinaryFormatter serializer = new BinaryFormatter();
-            MemoryStream memStream = new MemoryStream();
-
-            Byte[] byteArray;
-            #pragma warning disable SYSLIB0011
-            serializer.Serialize(memStream, plan);
-
-            byteArray = memStream.ToArray();
-
-            objCommand.CommandType = CommandType.StoredProcedure;
-            int retVal = 0;
-            int check = CheckForDatePlan(plan.DateId);
-            if (check > 0)
-            {
-                objCommand.CommandText = "TP_UpdateBinaryDatePlan";
-                objCommand.Parameters.AddWithValue("@DateID", plan.DateId);
-                objCommand.Parameters.AddWithValue("@DatePlan", byteArray);
-                retVal = objDB.DoUpdateUsingCmdObj(objCommand);
-            }
             else
             {
-                objCommand.CommandText = "TP_InsertBinaryDatePlan";
-                objCommand.Parameters.AddWithValue("@DateID", plan.DateId);
-                objCommand.Parameters.AddWithValue("@DatePlan", byteArray);
-                retVal = objDB.DoUpdateUsingCmdObj(objCommand);
-                UpdateDateStatus();
+                ViewBag.ErrorMessage = "Please Login First";
+                return View("~/Views/Home/Login.cshtml");
             }
-
-            if (retVal > 0)
-            {
-                string savedUsername2 = Request.Cookies["Username"].ToString();
-                UserProfileModel userProfile = new UserProfileModel();
-                int privateid = userProfile.getPrivateId(savedUsername2);
-                var datePlanCards = new PlanDateCardModel
-                {
-                    DatesNotYetPlanned = DatesNotYetPlanned(privateid),
-                    PlannedDates = PlannedDates(privateid)
-                };
-                return View("~/Views/Main/Dates/PlanDate.cshtml", datePlanCards);
-            }
-            else
-            {
-                return View("~/Views/Main/Dates/DatePlanner.cshtml");
-            }
-
         }
         public IActionResult DatePlan()
         {
-            if (Request.Cookies.TryGetValue("EditDatePersonId", out string cookie))
+            if (HttpContext.Request.Cookies.TryGetValue("isValid", out string encryptedAuth))
             {
-                DatePlanModel plan = new DatePlanModel();
-                int dateId = GetDateId(int.Parse(cookie));
-                plan = GetDatePlan(dateId);
-                return View("~/Views/Main/Dates/DatePlanner.cshtml", plan);
+                var decryptedAuth = EncryptionHelper.Decrypt(encryptedAuth);
+                if (decryptedAuth == "Valid")
+                {
+                    if (Request.Cookies.TryGetValue("EditDatePersonId", out string cookie))
+                    {
+                        DatePlanModel plan = new DatePlanModel();
+                        int dateId = GetDateId(int.Parse(cookie));
+                        plan = GetDatePlan(dateId);
+                        return View("~/Views/Main/Dates/DatePlanner.cshtml", plan);
+                    }
+                    else
+                    {
+                        return View("~/Views/Main/Dates/DatePlanner.cshtml");
+                    }
+                }
+                else
+                {
+                    ViewBag.ErrorMessage = "Please Login First";
+                    return View("~/Views/Home/Login.cshtml");
+                }
             }
             else
             {
-                return View("~/Views/Main/Dates/DatePlanner.cshtml");
+                ViewBag.ErrorMessage = "Please Login First";
+                return View("~/Views/Home/Login.cshtml");
             }
+            
         }
         private int GetDateId(int privateId)
         {

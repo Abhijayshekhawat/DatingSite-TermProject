@@ -7,7 +7,11 @@ namespace DatingSiteCoreAPI.Controllers
     [ApiController]
     public class MatchUpController : ControllerBase
     {
-
+        [HttpGet()]
+        public string Get()
+        {
+            return "MatchUp API is working";
+        }
         [HttpPost()]
         [HttpPost("AddLikes")]
         public bool LikeUser([FromBody] LikeRequest likerequest)

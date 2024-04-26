@@ -12,7 +12,7 @@ namespace DatingSite_TermProject.Controllers
             public string Question { get; set; }
             public string Answer { get; set; }
         }
-        string CreateAccountAPI_Url = "http://localhost:5046/api/CreateAccount";
+        string CreateAccountAPI_Url = "https://cis-iis2.temple.edu/Spring2024/CIS3342_tuh18229/WebAPITest/api/CreateAccount";
         [HttpGet]
         public IActionResult AnswerSecQuestion()
         {

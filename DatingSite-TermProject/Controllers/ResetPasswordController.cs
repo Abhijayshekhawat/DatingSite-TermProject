@@ -7,7 +7,7 @@ namespace DatingSite_TermProject.Controllers
 {
     public class ResetPasswordController : Controller
     {
-        string CreateAccountAPI_Url = "http://localhost:5046/api/CreateAccount";
+        string CreateAccountAPI_Url = "https://cis-iis2.temple.edu/Spring2024/CIS3342_tuh18229/WebAPITest/api/CreateAccount";
         [HttpGet]
         public IActionResult ResetPassword()
         {
@@ -27,7 +27,7 @@ namespace DatingSite_TermProject.Controllers
                 string decryptedCookie = EncryptionHelper.Decrypt(encryptedCookie);
                 // Deserialize the decryptedCookie to get back the user details
                 PrivateUserInfoModel userDetails = JsonSerializer.Deserialize<PrivateUserInfoModel>(decryptedCookie);
-                userDetails.Password = Request.Form["Password"].ToString();
+                userDetails.Password = EncryptionHelper.ComputeHash(Request.Form["Password"].ToString());
                 bool result = SaveAccount(userDetails);
                 if (result)
                 {

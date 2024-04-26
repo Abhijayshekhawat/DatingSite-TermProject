@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using System.Data.SqlClient;
-using DatingSiteCoreAPI;
+
 using DatingSite_TermProject.Models;
 using System.Text.Json;  // needed for JSON serializers
 using System.IO;    // needed for Stream and Stream Reader
@@ -15,82 +15,118 @@ namespace DatingSite_TermProject.Controllers
 
     public class LikesController : Controller
     {
-        string CreateAccountAPI_Url = "http://localhost:5046/api/MatchUp";
+        string CreateAccountAPI_Url = "https://cis-iis2.temple.edu/Spring2024/CIS3342_tuh18229/WebAPITest/api/MatchUp";
         ViewManagement view = new ViewManagement();
         DbLikeManagement LikeManager = new DbLikeManagement();
         public IActionResult DeleteLike()
         {
-            string savedUsername = Request.Cookies["Username"].ToString();
-            LikeRequestModel like = new LikeRequestModel();
-            // get the data from the form / model PrivateUserInfoModel  
-            like.LikerUsername = savedUsername;
-            like.LIkeeId = int.Parse(Request.Form["DislikeeID"].ToString());
-            // Serialize an Account object into a JSON string.
-            var jsonPayload = JsonSerializer.Serialize(like);
-            try
+            if (HttpContext.Request.Cookies.TryGetValue("isValid", out string encryptedAuth))
             {
-                // Send the account object to the Web API that will be used to store a new account record in the database.
-                // Setup an HTTP POST Web Request and get the HTTP Web Response from the server.
-                WebRequest request = WebRequest.Create(CreateAccountAPI_Url + "/DeleteLikes");
-                request.Method = "DELETE";
-                request.ContentLength = jsonPayload.Length;
-                request.ContentType = "application/json";
-                // Write the JSON data to the Web Request
-                StreamWriter writer = new StreamWriter(request.GetRequestStream());
-                writer.Write(jsonPayload);
-                writer.Flush();
-                writer.Close();
-                // Read the data from the Web Response, which requires working with streams.
-                WebResponse response = request.GetResponse();
-                Stream theDataStream = response.GetResponseStream();
-                StreamReader reader = new StreamReader(theDataStream);
-                String data = reader.ReadToEnd();
-                reader.Close();
-                response.Close();
-                if (data == "true")
+                var decryptedAuth = EncryptionHelper.Decrypt(encryptedAuth);
+                if (decryptedAuth == "Valid")
                 {
-                    string savedUsername2 = Request.Cookies["Username"].ToString();
-                    ViewBag.ProfileImage = view.GetUserImage(savedUsername2);
-
-                    var likeCards = new LikeCardsModel
+                    string savedUsername = Request.Cookies["Username"].ToString();
+                    LikeRequestModel like = new LikeRequestModel();
+                    // get the data from the form / model PrivateUserInfoModel  
+                    like.LikerUsername = savedUsername;
+                    like.LIkeeId = int.Parse(Request.Form["DislikeeID"].ToString());
+                    // Serialize an Account object into a JSON string.
+                    var jsonPayload = JsonSerializer.Serialize(like);
+                    try
                     {
-                        PeopleWhoLikedYou = LikeManager.PopulatePeopleWhoLikedYou(savedUsername2),
-                        PeopleYouLiked = LikeManager.PopulatePeopleYouLiked(savedUsername2),    
+                        // Send the account object to the Web API that will be used to store a new account record in the database.
+                        // Setup an HTTP POST Web Request and get the HTTP Web Response from the server.
+                        WebRequest request = WebRequest.Create(CreateAccountAPI_Url + "/DeleteLikes");
+                        request.Method = "DELETE";
+                        request.ContentLength = jsonPayload.Length;
+                        request.ContentType = "application/json";
+                        // Write the JSON data to the Web Request
+                        StreamWriter writer = new StreamWriter(request.GetRequestStream());
+                        writer.Write(jsonPayload);
+                        writer.Flush();
+                        writer.Close();
+                        // Read the data from the Web Response, which requires working with streams.
+                        WebResponse response = request.GetResponse();
+                        Stream theDataStream = response.GetResponseStream();
+                        StreamReader reader = new StreamReader(theDataStream);
+                        String data = reader.ReadToEnd();
+                        reader.Close();
+                        response.Close();
+                        if (data == "true")
+                        {
+                            string savedUsername2 = Request.Cookies["Username"].ToString();
+                            ViewBag.ProfileImage = view.GetUserImage(savedUsername2);
+
+                            var likeCards = new LikeCardsModel
+                            {
+                                PeopleWhoLikedYou = LikeManager.PopulatePeopleWhoLikedYou(savedUsername2),
+                                PeopleYouLiked = LikeManager.PopulatePeopleYouLiked(savedUsername2),
+                            };
+                            return View("~/Views/Main/Likes.cshtml", likeCards);
+                        }
+                        else
+                            ViewBag.ErrorMessage = "A problem occurred while adding the customer to the database. The data wasn't recorded.";
+                    }
+                    catch (Exception ex)
+                    {
+                        ViewBag.ErrorMessage = "Error: " + ex.Message;
+                    }
+
+                    string savedUsername3 = Request.Cookies["Username"].ToString();
+
+                    ViewBag.ProfileImage = view.GetUserImage(savedUsername3);
+
+                    var likeCards1 = new LikeCardsModel
+                    {
+                        PeopleWhoLikedYou = LikeManager.PopulatePeopleWhoLikedYou(savedUsername3),
+                        PeopleYouLiked = LikeManager.PopulatePeopleYouLiked(savedUsername3)
                     };
-                    return View("~/Views/Main/Likes.cshtml", likeCards);
+                    return View("~/Views/Main/Likes.cshtml", likeCards1);
                 }
                 else
-                    ViewBag.ErrorMessage = "A problem occurred while adding the customer to the database. The data wasn't recorded.";
+                {
+                    ViewBag.ErrorMessage = "Please Login First";
+                    return View("~/Views/Home/Login.cshtml");
+                }
             }
-            catch (Exception ex)
+            else
             {
-                ViewBag.ErrorMessage = "Error: " + ex.Message;
+                ViewBag.ErrorMessage = "Please Login First";
+                return View("~/Views/Home/Login.cshtml");
             }
-
-            string savedUsername3 = Request.Cookies["Username"].ToString();
             
-            ViewBag.ProfileImage = view.GetUserImage(savedUsername3);
-
-            var likeCards1 = new LikeCardsModel
-            {
-                PeopleWhoLikedYou = LikeManager.PopulatePeopleWhoLikedYou(savedUsername3),
-                PeopleYouLiked = LikeManager.PopulatePeopleYouLiked(savedUsername3)
-            };
-            return View("~/Views/Main/Likes.cshtml", likeCards1);
         }
         public IActionResult Likes()
         {
-            string savedUsername2 = Request.Cookies["Username"].ToString();
-            UserProfileModel userProfile = new UserProfileModel();
-            int privateid = userProfile.getPrivateId(savedUsername2);
-            var likeCards = new LikeCardsModel
+            if (HttpContext.Request.Cookies.TryGetValue("isValid", out string encryptedAuth))
             {
-                PeopleWhoLikedYou = LikeManager.PopulatePeopleWhoLikedYou(savedUsername2),
-                PeopleYouLiked = LikeManager.PopulatePeopleYouLiked(savedUsername2)
-            };
-           
-            ViewBag.ProfileImage = view.GetUserImage(savedUsername2);
-            return View("~/Views/Main/Likes.cshtml", likeCards);
+                var decryptedAuth = EncryptionHelper.Decrypt(encryptedAuth);
+                if (decryptedAuth == "Valid")
+                {
+                    string savedUsername2 = Request.Cookies["Username"].ToString();
+                    UserProfileModel userProfile = new UserProfileModel();
+                    int privateid = userProfile.getPrivateId(savedUsername2);
+                    var likeCards = new LikeCardsModel
+                    {
+                        PeopleWhoLikedYou = LikeManager.PopulatePeopleWhoLikedYou(savedUsername2),
+                        PeopleYouLiked = LikeManager.PopulatePeopleYouLiked(savedUsername2)
+                    };
+
+                    ViewBag.ProfileImage = view.GetUserImage(savedUsername2);
+                    return View("~/Views/Main/Likes.cshtml", likeCards);
+                }
+                else
+                {
+                    ViewBag.ErrorMessage = "Please Login First";
+                    return View("~/Views/Home/Login.cshtml");
+                }
+            }
+            else
+            {
+                ViewBag.ErrorMessage = "Please Login First";
+                return View("~/Views/Home/Login.cshtml");
+            }
+            
         }
      
        

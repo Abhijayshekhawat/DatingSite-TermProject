@@ -1,52 +1,106 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using System.Data.SqlClient;
-using DatingSiteCoreAPI;
+
 using DatingSite_TermProject.Models;
 using System.Text.Json;  // needed for JSON serializers
 using System.IO;    // needed for Stream and Stream Reader
 using System.Net;
 using Microsoft.AspNetCore.Http; // need for cookies
-using Utilities;
 using DatingSite_TermProject.Controllers;
 using System.Runtime.Serialization.Formatters.Binary;
+using Utilities;
 
 namespace DatingSite_TermProject.Controllers
 {
     public class PlanDateController : Controller
     {
         public IActionResult CreateDate() {
-            string cookieObject = Request.Form["PrivateId"].ToString();
-            CookieOptions options = new CookieOptions();
-            options.Expires = DateTime.Now.AddMinutes(5);
-            HttpContext.Response.Cookies.Append("DatePersonId", cookieObject, options);
-            return View("~/Views/Main/Dates/DatePlanner.cshtml");
+            if (HttpContext.Request.Cookies.TryGetValue("isValid", out string encryptedAuth))
+            {
+                var decryptedAuth = EncryptionHelper.Decrypt(encryptedAuth);
+                if (decryptedAuth == "Valid")
+                {
+                    string cookieObject = Request.Form["PrivateId"].ToString();
+                    CookieOptions options = new CookieOptions();
+                    options.Expires = DateTime.Now.AddMinutes(5);
+                    HttpContext.Response.Cookies.Append("DatePersonId", cookieObject, options);
+                    return View("~/Views/Main/Dates/DatePlanner.cshtml");
+                }
+                else
+                {
+                    ViewBag.ErrorMessage = "Please Login First";
+                    return View("~/Views/Home/Login.cshtml");
+                }
+            }
+            else
+            {
+                ViewBag.ErrorMessage = "Please Login First";
+                return View("~/Views/Home/Login.cshtml");
+            }
+            
         }
         public IActionResult PlanDate()
         {
-            string savedUsername2 = Request.Cookies["Username"].ToString();
-            UserProfileModel userProfile = new UserProfileModel();
-            int privateid = userProfile.getPrivateId(savedUsername2);
-            var datePlanCards = new PlanDateCardModel
+            if (HttpContext.Request.Cookies.TryGetValue("isValid", out string encryptedAuth))
             {
-                DatesNotYetPlanned = DatesNotYetPlanned(privateid),
-                PlannedDates = PlannedDates(privateid)
-            };
-            ViewBag.ProfileImage = GetUserImage();
-            return View("~/Views/Main/Dates/PlanDate.cshtml", datePlanCards);
+                var decryptedAuth = EncryptionHelper.Decrypt(encryptedAuth);
+                if (decryptedAuth == "Valid")
+                {
+                    string savedUsername2 = Request.Cookies["Username"].ToString();
+                    UserProfileModel userProfile = new UserProfileModel();
+                    int privateid = userProfile.getPrivateId(savedUsername2);
+                    var datePlanCards = new PlanDateCardModel
+                    {
+                        DatesNotYetPlanned = DatesNotYetPlanned(privateid),
+                        PlannedDates = PlannedDates(privateid)
+                    };
+                    ViewBag.ProfileImage = GetUserImage();
+                    return View("~/Views/Main/Dates/PlanDate.cshtml", datePlanCards);
+                }
+                else
+                {
+                    ViewBag.ErrorMessage = "Please Login First";
+                    return View("~/Views/Home/Login.cshtml");
+                }
+            }
+            else
+            {
+                ViewBag.ErrorMessage = "Please Login First";
+                return View("~/Views/Home/Login.cshtml");
+            }
+            
         }
         public IActionResult ShowDatePlan()
         {
-            string savedUsername2 = Request.Cookies["Username"].ToString();
-            UserProfileModel userProfile = new UserProfileModel();
-            int privateid = userProfile.getPrivateId(savedUsername2);
-            ViewBag.ProfileImage = GetUserImage();
-            DatePlanModel plan = new DatePlanModel();
-            int dateId = GetDateId(int.Parse(Request.Form["PrivateId"].ToString()));
-            plan = GetDatePlan(dateId);
-            plan.YourProfile = GetProfile(privateid);
-            plan.OtherProfile = GetProfile(int.Parse(Request.Form["PrivateId"].ToString()));
-            return View("~/Views/Main/Dates/ShowDatePlan.cshtml", plan);
+            if (HttpContext.Request.Cookies.TryGetValue("isValid", out string encryptedAuth))
+            {
+                var decryptedAuth = EncryptionHelper.Decrypt(encryptedAuth);
+                if (decryptedAuth == "Valid")
+                {
+                    string savedUsername2 = Request.Cookies["Username"].ToString();
+                    UserProfileModel userProfile = new UserProfileModel();
+                    int privateid = userProfile.getPrivateId(savedUsername2);
+                    ViewBag.ProfileImage = GetUserImage();
+                    DatePlanModel plan = new DatePlanModel();
+                    int dateId = GetDateId(int.Parse(Request.Form["PrivateId"].ToString()));
+                    plan = GetDatePlan(dateId);
+                    plan.YourProfile = GetProfile(privateid);
+                    plan.OtherProfile = GetProfile(int.Parse(Request.Form["PrivateId"].ToString()));
+                    return View("~/Views/Main/Dates/ShowDatePlan.cshtml", plan);
+                }
+                else
+                {
+                    ViewBag.ErrorMessage = "Please Login First";
+                    return View("~/Views/Home/Login.cshtml");
+                }
+            }
+            else
+            {
+                ViewBag.ErrorMessage = "Please Login First";
+                return View("~/Views/Home/Login.cshtml");
+            }
+            
         }
         public List<CardsModel> DatesNotYetPlanned(int privateid)
         {
@@ -199,14 +253,32 @@ namespace DatingSite_TermProject.Controllers
         }
         public IActionResult EditDate()
         {
-            DatePlanModel plan = new DatePlanModel();
-            int dateId = GetDateId(int.Parse(Request.Form["PrivateId"].ToString()));
-            plan = GetDatePlan(dateId);
-            string cookieObject = plan.DateId.ToString();
-            CookieOptions options = new CookieOptions();
-            options.Expires = DateTime.Now.AddSeconds(15);
-            HttpContext.Response.Cookies.Append("EditDateId", cookieObject, options);
-            return View("~/Views/Main/Dates/DatePlanner.cshtml", plan);
+            if (HttpContext.Request.Cookies.TryGetValue("isValid", out string encryptedAuth))
+            {
+                var decryptedAuth = EncryptionHelper.Decrypt(encryptedAuth);
+                if (decryptedAuth == "Valid")
+                {
+                    DatePlanModel plan = new DatePlanModel();
+                    int dateId = GetDateId(int.Parse(Request.Form["PrivateId"].ToString()));
+                    plan = GetDatePlan(dateId);
+                    string cookieObject = plan.DateId.ToString();
+                    CookieOptions options = new CookieOptions();
+                    options.Expires = DateTime.Now.AddSeconds(15);
+                    HttpContext.Response.Cookies.Append("EditDateId", cookieObject, options);
+                    return View("~/Views/Main/Dates/DatePlanner.cshtml", plan);
+                }
+                else
+                {
+                    ViewBag.ErrorMessage = "Please Login First";
+                    return View("~/Views/Home/Login.cshtml");
+                }
+            }
+            else
+            {
+                ViewBag.ErrorMessage = "Please Login First";
+                return View("~/Views/Home/Login.cshtml");
+            }
+            
         }
         private int GetDateId(int privateId)
         {

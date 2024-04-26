@@ -1,9 +1,9 @@
 ﻿using Azure.Core;
 using System.Data;
-using Utilities;
 using System.Data.SqlClient;
 using Microsoft.AspNetCore.Mvc;
 using DatingSite_TermProject.Models;
+using Utilities;
 
 namespace DatingSite_TermProject.Models
 {

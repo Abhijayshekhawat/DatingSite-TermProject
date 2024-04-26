@@ -35,21 +35,25 @@ namespace DatingSite_TermProject.Models
             get { return datePlanID; }
             set { datePlanID = value; }
         }
+
         public DateTime Date
         {
             get { return date; }
             set { date = value; }
-        }   
+        }
+
         public TimeSpan Time
         {
             get { return time; }
             set { time = value; }
         }
+
         public string Description
         {
             get { return description; }
             set { description = value; }
         }
+
         public string Location
         {
             get { return location; }

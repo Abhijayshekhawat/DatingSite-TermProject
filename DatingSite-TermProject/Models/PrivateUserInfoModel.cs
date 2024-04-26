@@ -1,4 +1,5 @@
-﻿using DatingSiteCoreAPI;
+﻿
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Data.SqlClient;
 using Utilities;
@@ -38,7 +39,7 @@ namespace DatingSite_TermProject.Models
         {
             //uses email to fetch
             if(username==""){
-                PrivateUserInfo privateinfo = new PrivateUserInfo();
+                PrivateUserInfoModel privateinfo = new PrivateUserInfoModel();
                 DBConnect objDB = new DBConnect();
 
                 SqlCommand objCommand = new SqlCommand();
@@ -56,7 +57,7 @@ namespace DatingSite_TermProject.Models
             //uses username to fetch
             else
             {
-                PrivateUserInfo privateinfo = new PrivateUserInfo();
+                PrivateUserInfoModel privateinfo = new PrivateUserInfoModel();
                 DBConnect objDB = new DBConnect();
 
                 SqlCommand objCommand = new SqlCommand();
@@ -83,17 +84,22 @@ namespace DatingSite_TermProject.Models
             set { privateid = value; }
         }
 
+        [Required(ErrorMessage = "First name is required")]
         public string FirstName
         {
             get { return firstname; }
             set { firstname = value; }
         }
+
+        [Required(ErrorMessage = "Last name is required")]
         public string LastName
         {
             get { return lastname; }
             set { lastname = value; }
         }
 
+        [Required(ErrorMessage = "Email is required")]
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
         public string Email
         {
             get { return email; }
@@ -101,12 +107,15 @@ namespace DatingSite_TermProject.Models
 
         }
 
+        [Required(ErrorMessage = "Username is required")]
         public string PrivateUsername
         {
             get { return privateusername; }
             set { privateusername = value; }
         }
 
+        [Required(ErrorMessage = "Password is required")]
+        [DataType(DataType.Password)]
         public string Password
         {
             get { return password; }

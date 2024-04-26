@@ -18,7 +18,11 @@ namespace DatingSite_TermProject.Controllers
                 ViewBag.Username = userDetails.PrivateUsername;
                 ViewBag.Pwd = userDetails.Password;
             }
-            HttpContext.SignOutAsync(); // Clear the user's session
+            var decryptedAuth = EncryptionHelper.Decrypt(Request.Cookies["isValid"].ToString());
+            CookieOptions options = new CookieOptions();
+            options.Expires = DateTime.Now.AddMilliseconds(1);
+            string SecretCookie = EncryptionHelper.Encrypt(decryptedAuth);
+            HttpContext.Response.Cookies.Append("isValid", SecretCookie, options);
             return View("~/Views/Home/Login.cshtml");
 
         }

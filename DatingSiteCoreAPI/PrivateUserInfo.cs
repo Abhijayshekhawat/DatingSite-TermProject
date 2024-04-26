@@ -1,7 +1,6 @@
-﻿
+﻿using System.Data;
+using System.Data.SqlClient;
 using Utilities;
-using System.Data;
-using System.Data.SqlClient; 
 
 
 

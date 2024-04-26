@@ -1,7 +1,7 @@
 ﻿using System.Data.SqlClient;
 using System.Data;
-using Utilities;
 using Microsoft.Extensions.FileSystemGlobbing;
+using Utilities;
 
 namespace DatingSiteCoreAPI
 {

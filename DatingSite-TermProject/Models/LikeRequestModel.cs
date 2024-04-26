@@ -1,6 +1,6 @@
 ﻿using System.Data;
-using Utilities;
 using System.Data.SqlClient;
+using Utilities;
 
 namespace DatingSite_TermProject.Models
 {

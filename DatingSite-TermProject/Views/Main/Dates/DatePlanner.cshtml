@@ -26,6 +26,7 @@
     <div class="content-wrapper">
         <header>
             <h1>Plan Your Date</h1>
+            <h3>@ViewBag.ErrorMessage</h3>
         </header>
         <form asp-controller="DatePlanner" asp-action="SaveDatePlan" method="post">
             <div class="form-section">
@@ -40,7 +41,7 @@
                 <label asp-for="Time" for="txtTime">Time:</label>
                 <input asp-for="Time" type="time" id="txtTime" name="Time" class="form-control" />
 
-                <label asp-for="Location" for="txtLocation">Location:</label>
+                <label asp-for="Location" for="txtLocation">Please enter a valid Location:(It will be used for directions)</label>
                 <input asp-for="Location" type="text" id="txtLocation" name="Location" class="form-control" />
 
                 <label asp-for="Description" for="txtDateDescription">Description:</label>

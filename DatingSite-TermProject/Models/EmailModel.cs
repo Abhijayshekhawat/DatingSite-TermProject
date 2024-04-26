@@ -59,12 +59,12 @@ namespace DatingSite_TermProject.Models
                     objMail.Bcc.Add(new MailAddress(bcc));
                 }
 
-                // Configure the SmtpClient like below to use Papercut
+                //Configure the SmtpClient like below to use Papercut
                 using (SmtpClient smtpMailClient = new SmtpClient("localhost", 25))
                 {
                     // No need for credentials or SSL with Papercut
-                    smtpMailClient.EnableSsl = false;
-                    smtpMailClient.UseDefaultCredentials = true;
+                    //smtpMailClient.EnableSsl = false;
+                    //smtpMailClient.UseDefaultCredentials = true;
                     smtpMailClient.Send(objMail);
 
                 }
