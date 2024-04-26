@@ -94,5 +94,48 @@ namespace DatingSiteCoreAPI.Controllers
             return result;
 
         }
+
+        [HttpGet()]
+        [HttpGet("GetMatches")]
+
+        public List<Card> GetMatchesProfile([FromBody] Match match)
+        {
+            Match populateProfile = match;
+            List<Card> result = populateProfile.GetMatches(match.MatchUsername);
+           
+            return result;
+
+        }
+
+
+        [HttpGet()]
+        [HttpGet("GetProfiles")]
+
+
+        public List<Card> GetProfiles([FromBody] Profile p)
+        {
+            Profile PopulateProfiles = p;
+
+            List<Card> cardlist = PopulateProfiles.PopulateProfiles(p.ProfilePrivateId);
+
+
+
+
+            return cardlist;    
+
+        }
+
+        [HttpPut()]
+        [HttpPut("UpdateMatch")]
+
+        public void UpdateMatchesCards() 
+        {
+         UpdateMatches update = new UpdateMatches();
+
+         update.UpdateMatch();
+            
+
+           
+        }
     }
 }
