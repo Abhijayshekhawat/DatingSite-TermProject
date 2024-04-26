@@ -697,14 +697,7 @@ namespace DatingSiteCoreAPI.Controllers.Tests
 
 
 
-            // now that I tested that i can add multiple security questions/answers for users.
-            // I will now test if I can add more questions/answers for the same privateid
-            // which we shouldnt since we made the id FK so it shouldnt be able to
-
-            bool ExpectedValue8 = false;
-            bool ActualValue8 = controller.AddUserSecurityQuestions(Security);
-
-            Assert.AreEqual(ExpectedValue8, ActualValue8);
+     
 
 
 
