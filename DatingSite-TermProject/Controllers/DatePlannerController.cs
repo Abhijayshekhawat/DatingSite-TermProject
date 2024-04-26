@@ -17,6 +17,7 @@ namespace DatingSite_TermProject.Controllers
 {
     public class DatePlannerController : Controller
     {
+        ViewManagement view = new ViewManagement();
         public IActionResult SaveDatePlan(DatePlanModel dp)
         {
             if (HttpContext.Request.Cookies.TryGetValue("isValid", out string encryptedAuth))
@@ -24,6 +25,9 @@ namespace DatingSite_TermProject.Controllers
                 var decryptedAuth = EncryptionHelper.Decrypt(encryptedAuth);
                 if (decryptedAuth == "Valid")
                 {
+                    string savedUsername4 = Request.Cookies["Username"].ToString();
+                    ViewBag.ProfileImage = view.GetUserImage(savedUsername4);
+                    ViewBag.FirstName = view.GetUserFirstName(savedUsername4);
                     if (Convert.ToDateTime(Request.Form["Date"].ToString())<DateTime.Now)
                     {
                         ViewBag.ErrorMessage = "Please select a future date";
