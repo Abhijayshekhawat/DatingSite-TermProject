@@ -23,6 +23,15 @@ namespace DatingSite_TermProject.Controllers.Tests
     [TestClass()]
     public class DashboardControllerTests
     {
+        [TestMethod]
+        public void TestEncryptionDecryption()
+        {
+            string valid = "Valid";
+            string encrypted = EncryptionHelper.Encrypt(valid);
+            string decrypted = EncryptionHelper.Decrypt(encrypted);
+            Assert.AreEqual(valid, decrypted, "The decryption did not return the expected value");
+        }
+
         [TestMethod()]
 
         public void FilterActionTest()
@@ -41,6 +50,8 @@ namespace DatingSite_TermProject.Controllers.Tests
 
             string username = "john_doe";
             var mockHttpContext = new Mock<HttpContext>();
+            string x = EncryptionHelper.Encrypt("Valid");
+            mockHttpContext.SetupGet(context => context.Request.Cookies["isValid"]).Returns(x);
             mockHttpContext.SetupGet(context => context.Request.Cookies["Username"]).Returns("will_smith");
             mockHttpContext.SetupGet(context => context.Request.Form["ageRangeMax"]).Returns("40");
             mockHttpContext.SetupGet(context => context.Request.Form["ageRangeMin"]).Returns("22");

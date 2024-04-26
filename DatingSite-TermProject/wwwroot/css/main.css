@@ -264,16 +264,40 @@ header h1 {
 
 .profile-gallery-container img {
     width: 100%; /* each image takes full width of its column */
-    height: 150px; /* fixed height for all images */
+    height: 200px; /* increased height for all images */
     object-fit: cover; /* ensures images are not stretched */
     border-radius: 8px; /* rounded corners */
-    transition: transform 0.5s ease, box-shadow 0.5s ease; /* smooth transition for hover effects */
+    transition: transform 0.4s ease, box-shadow 0.3s ease; /* smooth transition for hover effects */
 }
 
 .profile-gallery-container img:hover {
-    transform: scale(1.05); /* slight increase in size on hover */
-    box-shadow: 0 4px 8px rgba(0,0,0,0.5); /* shadow effect on hover */
+    transform: scale(1.3); /* increased scaling factor on hover */
+    box-shadow: 0 8px 16px rgba(0,0,0,0.5); /* enhanced shadow effect on hover */
 }
+#modalProfilePhoto {
+    width: 100%; /* Set the width you desire */
+    height: 400px; /* Set the height you desire */
+    object-fit: cover; /* This will cover the area, cropping the image if necessary */
+    border-radius: 5px; /* Makes the image round */
+    overflow: hidden; /* Ensures nothing overflows from the container */
+}
+..col-md-6, .map {
+    padding: 10px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+.col-md-6 h3{
+    color: navajowhite;
+}
+iframe {
+    width: 100%; /* Responsive width */
+    height: 450px; /* Fixed height, but you can make it responsive with media queries if needed */
+    border: none; /* Removes the default iframe border */
+    border-radius: 8px; /* Rounds the corners of the iframe */
+}
+
 
 .modal-body {
     background-color: #FFFFFF;
@@ -299,7 +323,7 @@ header h1 {
 .modal-body p {
     font-size: 16px; /* readable font size */
     margin-bottom: 10px; /* space between paragraphs */
-    color: white; /* dark gray text for readability */
+    color: #d9d9d9; /* dark gray text for readability */
 }
 .btn {
     padding: 8px 15px;
@@ -308,6 +332,9 @@ header h1 {
     display: inline-block;
     margin-right: 10px;
     cursor: pointer;
+}
+.modal-body p strong {
+    color: navajowhite;
 }
 .btn-primary {
     background-color: #F72E50;

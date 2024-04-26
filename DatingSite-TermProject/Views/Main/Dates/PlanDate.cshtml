@@ -55,6 +55,8 @@
                                         data-profile-photo-url="@cards.ProfilePhotoURL"
                                         data-name="@cards.FirstName @cards.LastName"
                                         data-tagline="@cards.Tagline"
+                                        data-address="@cards.Address"
+                                        data-phone-number="@cards.PhoneNumber"
                                         data-city="@cards.City" data-state="@cards.State"
                                         data-age="@cards.Age" data-height="@cards.Height"
                                         data-weight="@cards.Weight" data-occupation="@cards.Occupation"
@@ -97,6 +99,8 @@
                                         data-profile-photo-url="@cards.ProfilePhotoURL"
                                         data-name="@cards.FirstName @cards.LastName"
                                         data-tagline="@cards.Tagline"
+                                        data-address="@cards.Address"
+                                        data-phone-number="@cards.PhoneNumber"
                                         data-city="@cards.City" data-state="@cards.State"
                                         data-age="@cards.Age" data-height="@cards.Height"
                                         data-weight="@cards.Weight" data-occupation="@cards.Occupation"
@@ -142,14 +146,17 @@
                     <div class="row">
                         <div class="col-md-6">
                             <img id="modalProfilePhoto" alt="Profile Photo" class="img-fluid">
+                            <br />
+                            <p>
+                                <strong>Biography:</strong><br />
+                                <span id="modalBiography"></span>
+                            </p>
                             <p><strong>Favourite Movie Genre:</strong> <span id="modalFavouriteMovieGenre"></span></p>
                             <p><strong>Favourite Book Genre:</strong> <span id="modalFavouriteBookGenre"></span></p>
                             <p><strong>Favourite Movie:</strong> <span id="modalFavouriteMovie"></span></p>
                             <p><strong>Favourite Book:</strong> <span id="modalFavouriteBook"></span></p>
                             <p><strong>Favourite Restaurant:</strong> <span id="modalFavouriteRestaurant"></span></p>
-                            <p><strong>Dislikes:</strong> <span id="modalDislikes"></span></p>
-                            <p><strong>Additional Interests:</strong> <span id="modalAdditionalInterests"></span></p>
-                            <p><strong>Dealbreaker:</strong> <span id="modalDealbreaker"></span></p>
+
                         </div>
                         <div class="col-md-6">
                             <p><strong>Name:</strong> <span id="modalName"></span></p>
@@ -158,18 +165,24 @@
                             <p><strong>Weight:</strong> <span id="modalWeight"></span></p>
                             <p><strong>City:</strong> <span id="modalCity"></span></p>
                             <p><strong>State:</strong> <span id="modalState"></span></p>
+                            <p><strong>Tagline:</strong> <span id="modalTagline"></span></p>
                             <p><strong>Occupation:</strong> <span id="modalOccupation"></span></p>
                             <p><strong>Interests:</strong> <span id="modalInterests"></span></p>
-                        </div>
-                        <div class="col-md-6">
-                            <p><strong>Tagline:</strong> <span id="modalTagline"></span></p>
+                            <p><strong>Dislikes:</strong> <span id="modalDislikes"></span></p>
+                            <p><strong>Additional Interests:</strong> <span id="modalAdditionalInterests"></span></p>
+                            <p><strong>Dealbreaker:</strong> <span id="modalDealbreaker"></span></p>
+                            <br />
                             <p><strong>Favourite Cuisine:</strong> <span id="modalFavCuisine"></span></p>
                             <p><strong>Favourite Quote:</strong> <span id="modalFavQuote"></span></p>
                             <p><strong>Goals:</strong> <span id="modalGoals"></span></p>
                             <p><strong>Commitment Type:</strong> <span id="modalCommitmentType"></span></p>
-                            <p><strong>Biography:</strong> <span id="modalBiography"></span></p>
                         </div>
                         <div class="col-md-6">
+                            <h3>Private Information:</h3>
+                            <p><strong>Address:</strong> <span id="modalAddress"></span></p>
+                            <p><strong>Phone Number:</strong> <span id="modalPhoneNumber"></span></p>
+                        </div>
+                        <div class="map">
                             <iframe width="600"
                                     height="450"
                                     style="border:0"
@@ -193,10 +206,11 @@
             </div>
         </div>
     </div>
+    @* Modal Script *@
     <script>
+
         document.querySelectorAll('.btn-show-profile').forEach(button => {
             button.addEventListener('click', function () {
-                console.log("Clicked");
                 const name = this.getAttribute('data-name');
                 const description = this.getAttribute('data-description');
                 const city = this.getAttribute('data-city');
@@ -210,7 +224,11 @@
                 document.getElementById('modalState').textContent = this.dataset.state;
                 document.getElementById('modalOccupation').textContent = this.dataset.occupation;
                 document.getElementById('modalInterests').textContent = this.dataset.interests;
+                document.getElementById('modalAddress').textContent = this.dataset.address;
+                document.getElementById('modalPhoneNumber').textContent = this.dataset.phoneNumber;
 
+                console.log(this.dataset.Address); 
+                console.log(this.dataset.phoneNumber);
                 // Update additional details
                 document.getElementById('modalTagline').textContent = this.dataset.tagline;
                 document.getElementById('modalFavCuisine').textContent = this.dataset.favouriteCuisine;
@@ -226,13 +244,21 @@
                 document.getElementById('modalDislikes').textContent = this.dataset.dislikes;
                 document.getElementById('modalAdditionalInterests').textContent = this.dataset.additionalInterests;
                 document.getElementById('modalDealbreaker').textContent = this.dataset.dealbreaker;
-
                 // Update images in the gallery
                 document.getElementById('image1').src = this.dataset.image1;
                 document.getElementById('image2').src = this.dataset.image2;
                 document.getElementById('image3').src = this.dataset.image3;
                 document.getElementById('image4').src = this.dataset.image4;
                 document.getElementById('image5').src = this.dataset.image5;
+
+                //Update Map
+                updateMap(document.getElementById('modalCity').textContent);
+
+                function updateMap(city) {
+                    var apiKey = 'AIzaSyD5Zq_-OdrLWo4Wm8Qy0gaefwYNnI2_Mms'; // Your Google API key
+                    var mapFrame = document.querySelector('iframe');
+                    mapFrame.src = `https://www.google.com/maps/embed/v1/place?key=${apiKey}&q=${encodeURIComponent(city)}`;
+                }
             });
         });
     </script>
