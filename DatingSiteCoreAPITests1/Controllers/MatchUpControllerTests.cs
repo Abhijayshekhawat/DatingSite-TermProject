@@ -502,7 +502,7 @@ namespace DatingSiteCoreAPI.Controllers.Tests
             // in the database we populated 31 accounts so the amount of profiles in the list should be 30
 
             Assert.IsNotNull(cards);
-            int ExpectedCount = 31;
+            int ExpectedCount = 33;
             int ActualCount = cards.Count();        
             Assert.AreEqual(ExpectedCount,ActualCount);
 

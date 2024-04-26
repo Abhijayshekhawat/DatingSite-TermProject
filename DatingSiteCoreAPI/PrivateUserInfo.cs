@@ -4,6 +4,7 @@ using Utilities;
 
 
 
+
 namespace DatingSiteCoreAPI
 {
     public class PrivateUserInfo

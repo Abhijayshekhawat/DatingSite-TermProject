@@ -10,6 +10,11 @@ using System.Data.SqlClient;
 using System.Data;
 using Microsoft.AspNetCore.Builder;
 using Utilities;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Diagnostics;
+using System.Net;
+using DatingSite_TermProject.Models;
+using Microsoft.AspNetCore.Mvc.Formatters;
 
 
 
@@ -43,7 +48,7 @@ namespace DatingSiteCoreAPI.Controllers.Tests
             acc3.FirstName = "Cat"; acc3.LastName = "Hat"; acc3.Email = "3"; acc3.PrivateUsername = "SungJinwoo"; acc3.Password = "password3";
             acc3.FirstName = "Bat"; acc3.LastName = "Man"; acc3.Email = "1"; acc3.PrivateUsername = "hello"; acc3.Password = "password4";
             // this method is bool method so i test to see if the return is true. if it is true then the method works
-            bool ExpectedValue = true;                               
+            bool ExpectedValue = true;
             bool ActualValue = PrivateController.AddPrivateInfo(acc);
             Assert.AreEqual(ExpectedValue, ActualValue);
 
@@ -189,7 +194,7 @@ namespace DatingSiteCoreAPI.Controllers.Tests
         public void AddUserInfoTest()
         {
             // created user info 
-            string username1 = "wonderworld";
+            string username1 = "wonderwho";
 
             UserProfile profile = new UserProfile();
             UserProfile profile2 = new UserProfile();
@@ -208,20 +213,41 @@ namespace DatingSiteCoreAPI.Controllers.Tests
             profile.FavoriteRestaurant = "Sushi Palace"; profile.Dislikes = "Cold weather";
             profile.IsVisible = true;
             profile.AdditionalInterests = "Sushi AdditionalInterests";
-            profile.Dealbreaker = "Sushi Dealbreaker"; 
-            profile.Biography = "Sushi Biography"; 
+            profile.Dealbreaker = "Sushi Dealbreaker";
+            profile.Biography = "Sushi Biography";
 
-
-            //profile 2
             string username2 = "SungJinwoo";
-            profile2.PrivateId = profile2.getPrivateId(username2); profile2.Age = 30; profile2.Height = "5'10"; profile2.Weight = "160 lbs";
-            profile2.ProfilePhotoURL = "bbb"; profile2.City = "Los Angeles"; profile2.State = "CA"; profile2.Tagline = "I work in marketing."; profile2.Occupation = "Marketing Manager";
-            profile2.Interests = "Cooking, painting, traveling"; profile2.FavoriteCuisine = "Mexican"; profile2.FavouriteQuote = "The only way to do great work is to love what you do.";
-            profile2.Goals = "Start my own business"; profile2.CommitmentType = "Open Relationship"; profile2.FavoriteMovieGenre = "Comedy"; profile2.FavoriteBookGenre = "Mystery";
-            profile2.Address = "456 Elm St"; profile2.PhoneNumber = "555-987-6543"; profile2.FavoriteMovie = "The Hangover"; profile2.FavoriteBook = "Gone Girl";
-            profile2.FavoriteRestaurant = "Taco Haven"; profile2.Dislikes = "Traffic jams"; profile2.IsVisible = true;
+            //profile 2
+            profile2.PrivateId = profile2.getPrivateId(username2);
+            profile2.Age = 30;
+            profile2.Height = "5'10";
+            profile2.Weight = "160 lbs";
+            profile2.ProfilePhotoURL = "bbb";
+            profile2.City = "Los Angeles";
+            profile2.State = "CA";
+            profile2.Tagline = "Adventure seeker and nature lover";
+            profile2.Occupation = "Environmental Scientist";
+            profile2.Interests = "Traveling, photography, scuba diving";
+            profile2.FavoriteCuisine = "Thai";
+            profile2.FavouriteQuote = "The only way to do great work is to love what you do.";
+            profile2.Goals = "Explore every national park in the country";
+            profile2.CommitmentType = "Casual";
+            profile2.FavoriteMovieGenre = "Documentary";
+            profile2.FavoriteBookGenre = "Science Fiction";
+            profile2.Address = "456 Elm St";
+            profile2.PhoneNumber = "555-987-6543";
+            profile2.FavoriteMovie = "Planet Earth II";
+            profile2.FavoriteBook = "Dune";
+            profile2.FavoriteRestaurant = "Taco Haven";
+            profile2.Dislikes = "Crowded places";
+            profile2.IsVisible = true;
+            profile2.AdditionalInterests = "Stargazing";
+            profile2.Dealbreaker = "Arrogance";
+            profile2.Biography = "Passionate about preserving the environment and exploring the world.";
 
-            //profile3
+       
+
+        //profile3
 
             string username3 = "SungJinwoo";
             profile3.PrivateId = profile3.getPrivateId(username3); profile3.Age = 50; profile3.Height = "6'10"; profile3.Weight = "130 lbs";
@@ -347,9 +373,11 @@ namespace DatingSiteCoreAPI.Controllers.Tests
         [TestMethod()]
         public void LoginTest()
         {
+
+            acc.Password = "password";
             // here i take the information of account 1 and account 2 
             // these two accounts are the profiles i added from above
-            acc.FirstName = "John"; acc.LastName = "doe"; acc.Email = "1"; acc.PrivateUsername = "wonderworld"; acc.Password = "password";
+            acc.FirstName = "John"; acc.LastName = "doe"; acc.Email = "1"; acc.PrivateUsername = "wonderwho";
 
             acc2.FirstName = "Jay"; acc2.LastName = "Bo"; acc2.Email = "2"; acc2.PrivateUsername = "SungJinwoo"; acc2.Password = "password2";
 
@@ -357,8 +385,9 @@ namespace DatingSiteCoreAPI.Controllers.Tests
             DBUserAccountController PrivateController = new DBUserAccountController();
             // should return true since the account 1 i added to the database
             // 
-
+            
             bool ExpectedValue1 = true;
+            
             bool ActualValue1 = PrivateController.Login(acc);
 
             Assert.AreEqual(ExpectedValue1, ActualValue1);
@@ -395,7 +424,7 @@ namespace DatingSiteCoreAPI.Controllers.Tests
         [TestMethod()]
         public void AddImagesTest()
         {
-            string username = "wonderworld";
+            string username = "wonderwho";
             ImageGallery imageGallery = new ImageGallery();
             DBUserAccountController controller = new DBUserAccountController();
             UserProfile profile = new UserProfile();
@@ -543,7 +572,7 @@ namespace DatingSiteCoreAPI.Controllers.Tests
 
             // check to see if security questions are added to the database
             UserProfile profile = new UserProfile();
-            string username = "wonderworld";
+            string username = "wonderwho";
             SecurityQuestion Security = new SecurityQuestion();
             Security.PrivateId = profile.getPrivateId(username);
             Security.Question_One = "1";
@@ -675,7 +704,7 @@ namespace DatingSiteCoreAPI.Controllers.Tests
             bool ExpectedValue8 = false;
             bool ActualValue8 = controller.AddUserSecurityQuestions(Security);
 
-            Assert.AreEqual(ExpectedValue8, ActualValue8); 
+            Assert.AreEqual(ExpectedValue8, ActualValue8);
 
 
 
@@ -689,5 +718,5 @@ namespace DatingSiteCoreAPI.Controllers.Tests
 
     }
 
-   
+
 }
