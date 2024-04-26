@@ -14,7 +14,8 @@ namespace DatingSite_TermProject.Controllers
 {
     public class DashboardController : Controller
     {
-        string CreateAccountAPI_Url = "https://cis-iis2.temple.edu/Spring2024/CIS3342_tuj64276/WebAPI/api/MatchUp";
+        string TestAPI_Url = "http://localhost:5046/api/MatchUp";
+        string CreateAccountAPI_Url = "https://cis-iis2.temple.edu/Spring2024/CIS3342_tuh18229/WebAPITest/api/MatchUp";
         ViewManagement view = new ViewManagement();
         DbFilterManagement filter = new DbFilterManagement();
         DbUpdateMatch updateMatch = new DbUpdateMatch();
@@ -181,17 +182,17 @@ namespace DatingSite_TermProject.Controllers
 
                         //updateMatch.UpdateMatch();
                         string savedUsername2 = Request.Cookies["Username"].ToString();
-                            List<CardsModel> Cardslist = view.PopulateProfiles(userProfile.getPrivateId(savedUsername2));
-                            ViewBag.ProfileImage = view.GetUserImage(savedUsername2);
-                            ViewBag.FirstName = view.GetUserFirstName(savedUsername2);
-                            ViewBag.States = view.PopulateStates();
-                            ViewBag.Interests = view.PopulateInterests();
-                            ViewBag.Commitments = view.PopulateCommitmentType();
-                            ViewBag.MaxAge = view.MaxAge();
-                            ViewBag.MinAge = view.MinAge();
+                        List<CardsModel> Cardslist = view.PopulateProfiles(userProfile.getPrivateId(savedUsername2));
+                        ViewBag.ProfileImage = view.GetUserImage(savedUsername2);
+                        ViewBag.FirstName = view.GetUserFirstName(savedUsername2);
+                        ViewBag.States = view.PopulateStates();
+                        ViewBag.Interests = view.PopulateInterests();
+                        ViewBag.Commitments = view.PopulateCommitmentType();
+                        ViewBag.MaxAge = view.MaxAge();
+                        ViewBag.MinAge = view.MinAge();
                         return View("~/Views/Main/Dashboard.cshtml", Cardslist);
-                
-               
+
+
                     }
                     catch (Exception ex)
                     {

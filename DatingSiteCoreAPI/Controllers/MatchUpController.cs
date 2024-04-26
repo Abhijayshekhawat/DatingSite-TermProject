@@ -128,14 +128,46 @@ namespace DatingSiteCoreAPI.Controllers
         [HttpPut()]
         [HttpPut("UpdateMatch")]
 
-        public void UpdateMatchesCards() 
+        public void UpdateMatchesCards()
         {
-         UpdateMatches update = new UpdateMatches();
+            UpdateMatches update = new UpdateMatches();
 
-         update.UpdateMatch();
-            
+            update.UpdateMatch();
 
-           
+
+
         }
+
+
+
+        private static List<User> users = new List<User>
+    {
+        new User { Id = 1, Name = "John Doe", Email = "john.doe@example.com" },
+        new User { Id = 2, Name = "Jane Doe", Email = "jane.doe@example.com" }
+    };
+
+        // PUT api/users/5
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, [FromBody] User user)
+        {
+            try
+            {
+                var existingUser = users.Find(x => x.Id == id);
+                if (existingUser == null)
+                {
+                    return NotFound();
+                }
+
+                existingUser.Name = user.Name;
+                existingUser.Email = user.Email;
+
+                return Ok(existingUser);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
+        }
+
     }
 }

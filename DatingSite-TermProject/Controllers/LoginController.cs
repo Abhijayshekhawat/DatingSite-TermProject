@@ -15,7 +15,7 @@ namespace DatingSite_TermProject.Controllers
 {
     public class LoginController : Controller
     {
-
+        string TestAPI_Url = "http://localhost:5046/api/MatchUp/5";
         string CreateAccountAPI_Url = "https://cis-iis2.temple.edu/Spring2024/CIS3342_tuh18229/WebAPITest/api/CreateAccount";
 
         public IActionResult Login(LoginModel model)
