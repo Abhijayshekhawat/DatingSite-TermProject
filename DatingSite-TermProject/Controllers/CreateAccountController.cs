@@ -29,6 +29,17 @@ namespace DatingSite_TermProject.Controllers
             }
             if (!ModelState.IsValid)
             {
+                foreach (var entry in ModelState)
+                {
+                    if (entry.Value.Errors.Count > 0)
+                    {
+                        Console.WriteLine($"{entry.Key} errors:");
+                        foreach (var error in entry.Value.Errors)
+                        {
+                            Console.WriteLine($" - {error.ErrorMessage}");
+                        }
+                    }
+                }
                 return View("~/Views/Home/CreateAccount.cshtml", pUInfo);
             }
             PrivateUserInfoModel privateinfo = new PrivateUserInfoModel();  
@@ -36,7 +47,7 @@ namespace DatingSite_TermProject.Controllers
             privateinfo.FirstName = Request.Form["FirstName"].ToString();
             privateinfo.LastName = Request.Form["LastName"].ToString();
             privateinfo.Email = Request.Form["Email"].ToString();
-            privateinfo.PrivateUsername = Request.Form["Username"].ToString();
+            privateinfo.PrivateUsername = Request.Form["PrivateUsername"].ToString();
             privateinfo.Password = EncryptionHelper.ComputeHash(Request.Form["Password"].ToString());
             
             // Serialize an Account object into a JSON string.
