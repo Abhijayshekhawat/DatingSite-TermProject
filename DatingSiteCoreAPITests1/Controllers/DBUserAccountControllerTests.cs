@@ -43,7 +43,7 @@ namespace DatingSiteCoreAPI.Controllers.Tests
             acc3.FirstName = "Cat"; acc3.LastName = "Hat"; acc3.Email = "3"; acc3.PrivateUsername = "SungJinwoo"; acc3.Password = "password3";
             acc3.FirstName = "Bat"; acc3.LastName = "Man"; acc3.Email = "1"; acc3.PrivateUsername = "hello"; acc3.Password = "password4";
             // this method is bool method so i test to see if the return is true. if it is true then the method works
-            bool ExpectedValue = true;
+            bool ExpectedValue = true;                               
             bool ActualValue = PrivateController.AddPrivateInfo(acc);
             Assert.AreEqual(ExpectedValue, ActualValue);
 

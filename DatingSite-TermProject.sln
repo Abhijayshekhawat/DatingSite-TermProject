@@ -8,8 +8,14 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatingSiteCoreAPI", "DatingSiteCoreAPI\DatingSiteCoreAPI.csproj", "{AD80AB60-3E37-4D44-807D-07D01B906417}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatingSiteCoreAPITests1", "DatingSiteCoreAPITests1\DatingSiteCoreAPITests1.csproj", "{86543BD3-72FC-4A9E-B924-F64EB7540B4B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4EE9981A-3573-4FD7-B718-42F5A5E158C3} = {4EE9981A-3573-4FD7-B718-42F5A5E158C3}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatingSite-TermProjectTests1", "DatingSite-TermProjectTests1\DatingSite-TermProjectTests1.csproj", "{69EE583C-9B9E-4D29-97BF-681C72B74F8E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4EE9981A-3573-4FD7-B718-42F5A5E158C3} = {4EE9981A-3573-4FD7-B718-42F5A5E158C3}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilities", "Utilities\Utilities.csproj", "{4EE9981A-3573-4FD7-B718-42F5A5E158C3}"
 EndProject

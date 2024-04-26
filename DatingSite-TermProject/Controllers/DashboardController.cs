@@ -14,7 +14,7 @@ namespace DatingSite_TermProject.Controllers
 {
     public class DashboardController : Controller
     {
-        string CreateAccountAPI_Url = "https://cis-iis2.temple.edu/Spring2024/CIS3342_tuh18229/WebAPITest/api/MatchUp";
+        string CreateAccountAPI_Url = "https://cis-iis2.temple.edu/Spring2024/CIS3342_tuj64276/WebAPI/api/MatchUp";
         ViewManagement view = new ViewManagement();
         DbFilterManagement filter = new DbFilterManagement();
         DbUpdateMatch updateMatch = new DbUpdateMatch();
