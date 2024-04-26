@@ -26,13 +26,26 @@ namespace DatingSite_TermProject.Controllers
                 {
                     var datePlan = new DatePlanModel();
 
-            string savedUsername2 = Request.Cookies["Username"].ToString();
-            UserProfileModel userProfile = new UserProfileModel();
-            int privateid = userProfile.getPrivateId(savedUsername2);
-            ViewBag.ProfileImage = view.GetUserImage(savedUsername2);
-            ViewBag.FirstName = view.GetUserFirstName(savedUsername2);
-            return View("~/Views/Main/Dates/ShowDatePlan.cshtml", datePlan);
-        }   
+                    string savedUsername2 = Request.Cookies["Username"].ToString();
+                    UserProfileModel userProfile = new UserProfileModel();
+                    int privateid = userProfile.getPrivateId(savedUsername2);
+                    ViewBag.ProfileImage = view.GetUserImage(savedUsername2);
+                    ViewBag.FirstName = view.GetUserFirstName(savedUsername2);
+                    return View("~/Views/Main/Dates/ShowDatePlan.cshtml", datePlan);
+                }
+                else
+                {
+                    ViewBag.ErrorMessage = "Please Login First";
+                    return View("~/Views/Home/Login.cshtml");
+                }
+            }   
+            else
+            {
+                ViewBag.ErrorMessage = "Please Login First";
+                return View("~/Views/Home/Login.cshtml");
+            }
+
+        }  
     }
 }
 // every date method was move to datemanagement class model
