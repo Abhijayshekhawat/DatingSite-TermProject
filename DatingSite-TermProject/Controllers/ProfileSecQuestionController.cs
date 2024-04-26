@@ -12,6 +12,8 @@ namespace DatingSite_TermProject.Controllers
 {
     public class ProfileSecQuestionController : Controller
     {
+        ViewManagement view = new ViewManagement();
+
         string CreateAccountAPI_Url = "https://cis-iis2.temple.edu/Spring2024/CIS3342_tuh18229/WebAPITest/api/CreateAccount";
         // string CreateAccountAPI_Url = "" ;     // have your URL then we comment and uncomment off whenever who uses it.
 
@@ -27,6 +29,7 @@ namespace DatingSite_TermProject.Controllers
                     UserProfileModel userProfile = new UserProfileModel();
 
                     string savedUsername = Request.Cookies["Username"].ToString();
+                    List<CardsModel> Cardslist = view.PopulateProfiles(userProfile.getPrivateId(savedUsername));
                     // get the data from the form / model UserProfileModel  
                     secQuestion.PrivateId = userProfile.getPrivateId(savedUsername); // get method in userprofilemodel --> get id by username ?cookie? response?
 
@@ -64,7 +67,14 @@ namespace DatingSite_TermProject.Controllers
                         if (data == "true")
                         {
                             ViewBag.ErrorMessage = "UserInfo was successfully added";
-                            return View("~/Views/Main/Dashboard.cshtml");
+                            ViewBag.ProfileImage = view.GetUserImage(savedUsername);
+                            ViewBag.FirstName = view.GetUserFirstName(savedUsername);
+                            ViewBag.States = view.PopulateStates();
+                            ViewBag.Interests = view.PopulateInterests();
+                            ViewBag.Commitments = view.PopulateCommitmentType();
+                            ViewBag.MaxAge = view.MaxAge();
+                            ViewBag.MinAge = view.MinAge();
+                            return View("~/Views/Main/Dashboard.cshtml", Cardslist);
 
                         }
                         else
