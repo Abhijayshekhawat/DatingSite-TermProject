@@ -255,6 +255,30 @@ header h1 {
     font-size: 14px;
     color: #666;
 }
+.profilecontainer {
+    background: #ffffff; /* White background */
+    padding: 20px;
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Shadow for depth */
+    margin-bottom: 20px; /* Space between profiles */
+    transition: all .3s ease-in-out; /* Smooth transition for hover effect */
+}
+.profilecontainer:hover {
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2); /* Larger shadow when hovered */
+}
+.profilecontainer h2 {
+    color: #F72E50; /* Theme color for headings */
+    margin-bottom: 16px; /* Space after heading */
+}
+
+.dateplanprofileimage {
+    width: 100%; /* Full width */
+    max-width: 150px; /* Max width, keeps image responsive */
+    object-fit: cover;
+    height: 120px;
+    border-radius: 50%; /* Circle image */
+    margin-bottom: 16px; /* Space after image */
+}
 .profile-gallery-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr); /* 3 images per row */

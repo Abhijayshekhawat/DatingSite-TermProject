@@ -96,6 +96,7 @@ namespace DatingSite_TermProject.Controllers
                     plan = GetDatePlan(dateId);
                     plan.YourProfile = GetProfile(privateid);
                     plan.OtherProfile = GetProfile(int.Parse(Request.Form["PrivateId"].ToString()));
+                    ViewBag.UserCity = GetCity(Request.Cookies["Username"].ToString());
                     return View("~/Views/Main/Dates/ShowDatePlan.cshtml", plan);
                 }
                 else

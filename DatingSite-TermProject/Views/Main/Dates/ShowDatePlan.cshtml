@@ -12,54 +12,152 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-
     <div class="navbar">
-        <!-- Navbar content -->
+        <div class="navbar-left">
+            <img src="~/css/logo.png" alt="Logo" class="logo" />
+            <nav>
+                <a asp-controller="Dashboard" asp-action="Dashboard" class="active">Dashboard</a>
+                <a asp-controller="Matches" asp-action="Matches">Matches</a>
+                <a asp-controller="Likes" asp-action="Likes">Likes</a>
+                <a asp-controller="Dates" asp-action="Dates">Dates</a>
+                <a asp-controller="PlanDate" asp-action="PlanDate">Plan Date</a>
+                <a asp-controller="Profile" asp-action="Profile">Edit Profile</a>
+            </nav>
+        </div>
+        <div class="navbar-right">
+            <span class="user-name">Welcome @ViewBag.FirstName</span>
+            <img src="@ViewBag.ProfileImage" alt="User Image" class="user-img" />
+            <form asp-controller="Account" asp-action="Logout" method="post">
+                <button type="submit" class="logout-button">Logout</button>
+            </form>
+        </div>
     </div>
-
-    <div class="container">
-        <h3>Date Plan Details</h3>
+    <header>
+        <h1>Dashboard</h1>
+    </header>
+    <div class="dateplan-container">
         <div class="row">
-            <div class="col-md-6">
-                <h4>Date and Location</h4>
-                <p><strong>Date:</strong> @Model.GetFullDateTime()</p>
-                <p><strong>Location:</strong> @Model.Location</p>
-                <p><strong>Description:</strong> @Model.Description</p>
-                <!-- Embedding Google Map based on location -->
-                <iframe width="100%" height="300"
-                        style="border:0"
-                        loading="lazy"
-                        allowfullscreen
-                        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyD5Zq_-OdrLWo4Wm8Qy0gaefwYNnI2_Mms&q=@Uri.EscapeDataString(Model.Location)">
-                </iframe>
-            </div>
-            <div class="col-md-6">
-                <h4>Profiles</h4>
-                <!-- Profile 1 -->
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">@Model.YourProfile.FirstName @Model.YourProfile.LastName</h5>
-                        <!-- Include other profile details -->
-                        <p>Age: @Model.YourProfile.Age</p>
-                        <p>City: @Model.YourProfile.City</p>
-                        <!-- Add more profile details as needed -->
+            
+            <div class="col-lg-3">
+                <div class="profilecontainer">
+                    <h2> Your Profile</h2>
+                    <img src="@Model.YourProfile.ProfilePhotoURL" alt="Profile Photo" class="dateplanprofileimage">
+                    <h5>@Model.YourProfile.FirstName @Model.YourProfile.LastName</h5>
+                    <p><strong>Biography:</strong> @Model.YourProfile.Biography</p>
+                    <p><strong>Age:</strong> @Model.YourProfile.Age</p>
+                    <p><strong>Height:</strong> @Model.YourProfile.Height</p>
+                    <p><strong>Weight:</strong> @Model.YourProfile.Weight</p>
+                    <p><strong>City:</strong> @Model.YourProfile.City</p>
+                    <p><strong>State:</strong> @Model.YourProfile.State</p>
+                    <p><strong>Tagline:</strong> @Model.YourProfile.Tagline</p>
+                    <p><strong>Occupation:</strong> @Model.YourProfile.Occupation</p>
+                    <p><strong>Interests:</strong> @Model.YourProfile.Interests</p>
+                    <p><strong>Dislikes:</strong> @Model.YourProfile.Dislikes</p>
+                    <p><strong>Additional Interests:</strong> @Model.YourProfile.AdditionalInterests</p>
+                    <p><strong>Dealbreaker:</strong> @Model.YourProfile.Dealbreaker</p>
+                    <p><strong>Favourite Quote:</strong> @Model.YourProfile.FavouriteQuote</p>
+                    <p><strong>Goals:</strong> @Model.YourProfile.Goals</p>
+                    <p><strong>Commitment:</strong> @Model.YourProfile.CommitmentType</p>
+
+                    <p><strong>Favourite Movie Genre:</strong> @Model.YourProfile.FavouriteMovieGenre</p>
+                    <p><strong>Favourite Book Genre:</strong> @Model.YourProfile.FavouriteBookGenre</p>
+                    <p><strong>Favourite Movie:</strong> @Model.YourProfile.FavouriteMovie</p>
+                    <p><strong>Favourite Book:</strong> @Model.YourProfile.FavouriteBook</p>
+                    <p><strong>Favourite Restaurant:</strong> @Model.YourProfile.FavouriteRestaurant</p>
+                    <p><strong>Favourite Cuisine:</strong> @Model.YourProfile.FavouriteCuisine</p>
+                    <h3>Private Information:</h3>
+                    <p><strong>Address:</strong> @Model.YourProfile.Address</p>
+                    <p><strong>Phone Number:</strong> @Model.YourProfile.PhoneNumber</p>
+                    <div class="profile-gallery-container">
+                        <img src="@Model.YourProfile.Image1" alt="Gallery Image 1" class="img-fluid">
+                        <img src="@Model.YourProfile.Image2" alt="Gallery Image 2" class="img-fluid">
+                        <img src="@Model.YourProfile.Image3" alt="Gallery Image 3" class="img-fluid">
+                        <img src="@Model.YourProfile.Image4" alt="Gallery Image 4" class="img-fluid">
+                        <img src="@Model.YourProfile.Image5" alt="Gallery Image 5" class="img-fluid">
                     </div>
                 </div>
-                <br />
-                <!-- Profile 2 -->
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">@Model.OtherProfile.FirstName @Model.OtherProfile.LastName</h5>
-                        <!-- Include other profile details -->
-                        <p>Age: @Model.OtherProfile.Age</p>
-                        <p>City: @Model.OtherProfile.City</p>
-                        <!-- Add more profile details as needed -->
+            </div>
+            <div class="col-lg-6">
+                <h2>Your Date Details</h2>
+                <h4>Date and Location</h4>
+                <p>Your Date is on:<strong> @Model.GetFullDateTime()</strong></p>
+                <p>Location:<strong> @Model.Location</strong> @Model.Location</p>
+                <p>Date Description:<strong> @Model.Description</strong></p>
+
+                <h3>Location of Your Date</h3>
+                <iframe id="placeMap"
+                        width="100%"
+                        height="300"
+                        style="border:0"
+                        loading="lazy"
+                        allowfullscreen>
+                </iframe>
+
+                <h3>Directions to Your Date</h3>
+                <iframe id="directionsMap"
+                        width="100%"
+                        height="300"
+                        style="border:0"
+                        loading="lazy"
+                        allowfullscreen>
+                </iframe>
+            </div>
+            <div class="col-lg-3">
+                <div class="profilecontainer">
+                    <div class="profilecontainer">
+                        <h2> Their Profile</h2>
+                        <img src="@Model.OtherProfile.ProfilePhotoURL" alt="Profile Photo" class="dateplanprofileimage">
+                        <h5>@Model.OtherProfile.FirstName @Model.OtherProfile.LastName</h5>
+                        <p><strong>Biography:</strong> @Model.OtherProfile.Biography</p>
+                        <p><strong>Age:</strong> @Model.OtherProfile.Age</p>
+                        <p><strong>Height:</strong> @Model.OtherProfile.Height</p>
+                        <p><strong>Weight:</strong> @Model.OtherProfile.Weight</p>
+                        <p><strong>City:</strong> @Model.OtherProfile.City</p>
+                        <p><strong>State:</strong> @Model.OtherProfile.State</p>
+                        <p><strong>Tagline:</strong> @Model.OtherProfile.Tagline</p>
+                        <p><strong>Occupation:</strong> @Model.OtherProfile.Occupation</p>
+                        <p><strong>Interests:</strong> @Model.OtherProfile.Interests</p>
+                        <p><strong>Dislikes:</strong> @Model.OtherProfile.Dislikes</p>
+                        <p><strong>Additional Interests:</strong> @Model.OtherProfile.AdditionalInterests</p>
+                        <p><strong>Dealbreaker:</strong> @Model.OtherProfile.Dealbreaker</p>
+                        <p><strong>Favourite Quote:</strong> @Model.OtherProfile.FavouriteQuote</p>
+                        <p><strong>Goals:</strong> @Model.OtherProfile.Goals</p>
+                        <p><strong>Commitment:</strong> @Model.OtherProfile.CommitmentType</p>
+
+                        <p><strong>Favourite Movie Genre:</strong> @Model.OtherProfile.FavouriteMovieGenre</p>
+                        <p><strong>Favourite Book Genre:</strong> @Model.OtherProfile.FavouriteBookGenre</p>
+                        <p><strong>Favourite Movie:</strong> @Model.OtherProfile.FavouriteMovie</p>
+                        <p><strong>Favourite Book:</strong> @Model.OtherProfile.FavouriteBook</p>
+                        <p><strong>Favourite Restaurant:</strong> @Model.OtherProfile.FavouriteRestaurant</p>
+                        <p><strong>Favourite Cuisine:</strong> @Model.OtherProfile.FavouriteCuisine</p>
+                        <h3>Private Information:</h3>
+                        <p><strong>Address:</strong> @Model.OtherProfile.Address</p>
+                        <p><strong>Phone Number:</strong> @Model.OtherProfile.PhoneNumber</p>
+                        <div class="profile-gallery-container">
+                            <img src="@Model.OtherProfile.Image1" alt="Gallery Image 1" class="img-fluid">
+                            <img src="@Model.OtherProfile.Image2" alt="Gallery Image 2" class="img-fluid">
+                            <img src="@Model.OtherProfile.Image3" alt="Gallery Image 3" class="img-fluid">
+                            <img src="@Model.OtherProfile.Image4" alt="Gallery Image 4" class="img-fluid">
+                            <img src="@Model.OtherProfile.Image5" alt="Gallery Image 5" class="img-fluid">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        window.onload = function () {
+            // Set the Place Mode Map source
+            var placeMapIframe = document.getElementById('placeMap');
+            var locationQuery = '@Uri.EscapeDataString(Model.Location)';
+            placeMapIframe.src = `https://www.google.com/maps/embed/v1/place?key=AIzaSyD5Zq_-OdrLWo4Wm8Qy0gaefwYNnI2_Mms&q=${locationQuery}`;
 
+            // Set the Directions Mode Map source
+            var directionsMapIframe = document.getElementById('directionsMap');
+            var userCity = '@ViewBag.UserCity';
+            directionsMapIframe.src = `https://www.google.com/maps/embed/v1/directions?key=AIzaSyD5Zq_-OdrLWo4Wm8Qy0gaefwYNnI2_Mms&origin=${userCity}&destination=${locationQuery}&avoid=tolls|highways`;
+        };
+    </script>
     <footer>
         <p>2024 MatchUp by Abhijay & Johnson</p>
     </footer>
