@@ -146,6 +146,27 @@ header h1 {
     border: 2px solid #222831;
     color: #F72E50;
 }
+.container-glass {
+    background-color: rgba(255, 255, 255, 0.75); /* White background with opacity for glass effect */
+    border-radius: 10px; /* Rounded corners */
+    padding: 20px; /* Padding around the content */
+    margin: 20px 0; /* Space between containers */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+    backdrop-filter: blur(10px); /* Blur effect for the glass-like appearance */
+}
+.container-a {
+    border: 5px solid rgba(247, 46, 80, 0.95); /* Gold border with some transparency */
+}
+
+/* Specific styling for container B */
+.container-b {
+    border: 5px solid rgba(47, 80, 89, 0.95); /* Light blue border with some transparency */
+}
+
+/* Optional: Adding hover effects to enhance interactivity */
+.container-glass:hover {
+    backdrop-filter: blur(15px); /* Increase blur on hover for a dynamic effect */
+}
 .likes-title {
     text-align: center;
     color: #FF4B2B;
@@ -159,10 +180,11 @@ header h1 {
 }
 
 .like-card-img {
-    width: 120px; /* Fixed size */
-    height: auto;
+    width: 100%; /* Fixed size */
+    height: 160px;
     border-radius: 5px; /* Rounded corners for the image */
     margin-right: 20px; /* Space between image and text */
+    object-fit: cover;
 }
 
 .like-card-info h5 {

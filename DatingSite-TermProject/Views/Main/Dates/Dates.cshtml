@@ -58,17 +58,34 @@
                 </div>
             </div>
             <div class="cards-container">
-                <h2 class="likes-title">People you've sent a Date-request to</h2>
-                <div class="container">
+                <div class="container-glass container-a">
+                    <h2 class="likes-title">People you've sent a Date-request to</h2>
+
                     @foreach (var cards in Model.DatesYouSent)
                     {
-                        <div class="card">
-                            <img src=@cards.ProfilePhotoURL alt="Profile Image">
-                            <div class="card-body">
-                                <h5 class="card-title">@cards.FirstName, @cards.LastName</h5>
-                                <p class="card-text">@cards.Tagline</p>
-                                <p class="card-text">@cards.City,@cards.State</p>
-                                <button type="button" class="btn btn-secondary btn-show-profile"
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <div class="like-card p-3">
+                                    <div class="row align-items-center">
+                                        <div class="col-2">
+                                            <img src="@cards.ProfilePhotoURL" class="like-card-img rounded-circle" alt="Profile Image">
+                                        </div>
+                                        <div class="col-2">
+                                            <h5>@cards.FirstName, @cards.LastName</h5>
+                                            <p>@cards.Age years</p>
+                                            <p>@cards.City, @cards.State</p>
+                                        </div>
+                                        <div class="col-3">
+                                            <p>@cards.Tagline</p>
+                                            <p>Occupation: @cards.Occupation</p>
+                                            <p>Interests: @cards.Interests, @cards.AdditionalInterests</p>
+                                        </div>
+                                        <div class="col-3">
+                                            <p>Dislikes: @cards.Dislikes</p>
+                                            <p>Dealbreaker: @cards.Dealbreaker</p>
+                                        </div>
+                                        <div class="col-2 d-flex flex-column align-items-center">
+                                            <button type="button" class="btn btn-secondary btn-show-profile"
                                         data-bs-toggle="modal" data-bs-target="#detailModal"
                                         data-profile-photo-url="@cards.ProfilePhotoURL"
                                         data-name="@cards.FirstName @cards.LastName"
@@ -92,52 +109,75 @@
                                         data-image5="@cards.Image5">
                                     Show Profile
                                 </button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     }
                 </div>
-                <h2 class="likes-title">People that sent you a Date-request</h2>
-                <div class="container">
+                <div class="container-glass container-b">
+                    <h2 class="likes-title">People that sent you a Date-request</h2>
+
                     @foreach (var cards in Model.DatesYouReceived)
                     {
-                        <div class="card">
-                            <img src=@cards.ProfilePhotoURL alt="Profile Image">
-                            <div class="card-body">
-                                <h5 class="card-title">@cards.FirstName, @cards.LastName</h5>
-                                <p class="card-text">@cards.Tagline</p>
-                                <p class="card-text">@cards.City,@cards.State</p>
-                                <form asp-controller="Dates" asp-action="AcceptDate" method="post">
-                                    <input type="hidden" name="PrivateId" value="@cards.PrivateId" />
-                                    <button type="submit" class="btn btn-primary like-button">Approve</button>
-                                </form>
-                                <button type="button" class="btn btn-secondary btn-show-profile"
-                                        data-bs-toggle="modal" data-bs-target="#detailModal"
-                                        data-profile-photo-url="@cards.ProfilePhotoURL"
-                                        data-name="@cards.FirstName @cards.LastName"
-                                        data-tagline="@cards.Tagline"
-                                        data-city="@cards.City" data-state="@cards.State"
-                                        data-age="@cards.Age" data-height="@cards.Height"
-                                        data-weight="@cards.Weight" data-occupation="@cards.Occupation"
-                                        data-interests="@cards.Interests" data-favourite-cuisine="@cards.FavouriteCuisine"
-                                        data-favourite-quote="@cards.FavouriteQuote" data-goals="@cards.Goals"
-                                        data-commitment-type="@cards.CommitmentType" data-biography="@cards.Biography"
-                                        data-favourite-movie-genre="@cards.FavouriteMovieGenre"
-                                        data-favourite-book-genre="@cards.FavouriteBookGenre"
-                                        data-favourite-movie="@cards.FavouriteMovie"
-                                        data-favourite-book="@cards.FavouriteBook"
-                                        data-favourite-restaurant="@cards.FavouriteRestaurant"
-                                        data-dislikes="@cards.Dislikes"
-                                        data-additional-interests="@cards.AdditionalInterests"
-                                        data-dealbreaker="@cards.Dealbreaker"
-                                        data-image1="@cards.Image1" data-image2="@cards.Image2"
-                                        data-image3="@cards.Image3" data-image4="@cards.Image4"
-                                        data-image5="@cards.Image5">
-                                    Show Profile
-                                </button>
-                                <form asp-controller="Dates" asp-action="RejectDate" method="post">
-                                    <input type="hidden" name="PrivateId" value="@cards.PrivateId" />
-                                    <button type="submit" class="btn btn-primary like-button">Reject</button>
-                                </form>
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <div class="like-card p-3">
+                                    <div class="row align-items-center">
+                                        <div class="col-2">
+                                            <img src="@cards.ProfilePhotoURL" class="like-card-img rounded-circle" alt="Profile Image">
+                                        </div>
+                                        <div class="col-2">
+                                            <h5>@cards.FirstName, @cards.LastName</h5>
+                                            <p>@cards.Age years</p>
+                                            <p>@cards.City, @cards.State</p>
+                                        </div>
+                                        <div class="col-3">
+                                            <p>@cards.Tagline</p>
+                                            <p>Occupation: @cards.Occupation</p>
+                                            <p>Interests: @cards.Interests, @cards.AdditionalInterests</p>
+                                        </div>
+                                        <div class="col-3">
+                                            <p>Dislikes: @cards.Dislikes</p>
+                                            <p>Dealbreaker: @cards.Dealbreaker</p>
+                                        </div>
+                                        <div class="col-2 d-flex flex-column align-items-center">
+                                            <form asp-controller="Dates" asp-action="AcceptDate" method="post">
+                                                <input type="hidden" name="PrivateId" value="@cards.PrivateId" />
+                                                <button type="submit" class="btn btn-primary like-button">Approve</button>
+                                            </form>
+                                            <button type="button" class="btn btn-secondary btn-show-profile"
+                                                    data-bs-toggle="modal" data-bs-target="#detailModal"
+                                                    data-profile-photo-url="@cards.ProfilePhotoURL"
+                                                    data-name="@cards.FirstName @cards.LastName"
+                                                    data-tagline="@cards.Tagline"
+                                                    data-city="@cards.City" data-state="@cards.State"
+                                                    data-age="@cards.Age" data-height="@cards.Height"
+                                                    data-weight="@cards.Weight" data-occupation="@cards.Occupation"
+                                                    data-interests="@cards.Interests" data-favourite-cuisine="@cards.FavouriteCuisine"
+                                                    data-favourite-quote="@cards.FavouriteQuote" data-goals="@cards.Goals"
+                                                    data-commitment-type="@cards.CommitmentType" data-biography="@cards.Biography"
+                                                    data-favourite-movie-genre="@cards.FavouriteMovieGenre"
+                                                    data-favourite-book-genre="@cards.FavouriteBookGenre"
+                                                    data-favourite-movie="@cards.FavouriteMovie"
+                                                    data-favourite-book="@cards.FavouriteBook"
+                                                    data-favourite-restaurant="@cards.FavouriteRestaurant"
+                                                    data-dislikes="@cards.Dislikes"
+                                                    data-additional-interests="@cards.AdditionalInterests"
+                                                    data-dealbreaker="@cards.Dealbreaker"
+                                                    data-image1="@cards.Image1" data-image2="@cards.Image2"
+                                                    data-image3="@cards.Image3" data-image4="@cards.Image4"
+                                                    data-image5="@cards.Image5">
+                                                Show Profile
+                                            </button>
+                                            <form asp-controller="Dates" asp-action="RejectDate" method="post">
+                                                <input type="hidden" name="PrivateId" value="@cards.PrivateId" />
+                                                <button type="submit" class="btn btn-primary like-button">Reject</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     }

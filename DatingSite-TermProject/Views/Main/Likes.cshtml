@@ -60,98 +60,125 @@
 
                 </div>
             </div>
-            <div class="cards-container">
+            <div class="cards-container ">
+                <div class="container-glass container-a">
                 <h2 class="likes-title">People that liked you</h2>
                     @foreach (var cards in Model.PeopleWhoLikedYou)
                     {
-                        <div class="row mb-3"><!-- Margin bottom for spacing -->
+                        <div class="row mb-3">
                             <div class="col-12">
-                                <div class="like-card p-3"><!-- Padding for spacing inside the card -->
-                                    <div class="like-card d-flex align-items-center justify-content-between">
-                                        <div class="d-flex align-items-center">
-                                            <img src="@cards.ProfilePhotoURL" class="like-card-img" alt="Profile Image">
-                                            <div class="like-card-info">
-                                                <h5 class="card-title">@cards.FirstName, @cards.LastName</h5>
-                                                <p class="card-text">@cards.Tagline</p>
-                                                <p class="card-text">@cards.City,@cards.State</p>
-                                                <p class="card-text">@cards.City,@cards.State</p>
-                                                <p class="card-text">@cards.City,@cards.State</p>
-                                                <p class="card-text">@cards.City,@cards.State</p>
-                                                <p class="card-text">@cards.City,@cards.State</p>
-                                            </div>
+                                <div class="like-card p-3">
+                                    <div class="row align-items-center">
+                                        <div class="col-2">
+                                            <img src="@cards.ProfilePhotoURL" class="like-card-img rounded-circle" alt="Profile Image">
                                         </div>
-                                        <button type="button" class="btn btn-secondary btn-show-profile"
-                                                data-bs-toggle="modal" data-bs-target="#detailModal"
-                                                data-profile-photo-url="@cards.ProfilePhotoURL"
-                                                data-name="@cards.FirstName @cards.LastName"
-                                                data-tagline="@cards.Tagline"
-                                                data-city="@cards.City" data-state="@cards.State"
-                                                data-age="@cards.Age" data-height="@cards.Height"
-                                                data-weight="@cards.Weight" data-occupation="@cards.Occupation"
-                                                data-interests="@cards.Interests" data-favourite-cuisine="@cards.FavouriteCuisine"
-                                                data-favourite-quote="@cards.FavouriteQuote" data-goals="@cards.Goals"
-                                                data-commitment-type="@cards.CommitmentType" data-biography="@cards.Biography"
-                                                data-favourite-movie-genre="@cards.FavouriteMovieGenre"
-                                                data-favourite-book-genre="@cards.FavouriteBookGenre"
-                                                data-favourite-movie="@cards.FavouriteMovie"
-                                                data-favourite-book="@cards.FavouriteBook"
-                                                data-favourite-restaurant="@cards.FavouriteRestaurant"
-                                                data-dislikes="@cards.Dislikes"
-                                                data-additional-interests="@cards.AdditionalInterests"
-                                                data-dealbreaker="@cards.Dealbreaker"
-                                                data-image1="@cards.Image1" data-image2="@cards.Image2"
-                                                data-image3="@cards.Image3" data-image4="@cards.Image4"
-                                                data-image5="@cards.Image5">
-                                            Show Profile
-                                        </button>
-                                        <form asp-controller="Dashboard" asp-action="AddLikes" method="post">
-                                            <input type="hidden" name="LikeeID" value="@cards.PrivateId" />
-                                            <button type="submit" class="btn btn-primary like-button">Like</button>
-                                        </form>
+                                        <div class="col-2">
+                                            <h5>@cards.FirstName, @cards.LastName</h5>
+                                            <p>@cards.Age years</p>
+                                            <p>@cards.City, @cards.State</p>
+                                        </div>
+                                        <div class="col-3">
+                                            <p>@cards.Tagline</p>
+                                            <p>Occupation: @cards.Occupation</p>
+                                            <p>Interests: @cards.Interests, @cards.AdditionalInterests</p>
+                                        </div>
+                                        <div class="col-3">
+                                            <p>Dislikes: @cards.Dislikes</p>
+                                            <p>Dealbreaker: @cards.Dealbreaker</p>
+                                        </div>
+                                        <div class="col-2 d-flex flex-column align-items-center">
+                                            <button type="button" class="btn btn-secondary btn-show-profile"
+                                                    data-bs-toggle="modal" data-bs-target="#detailModal"
+                                                    data-profile-photo-url="@cards.ProfilePhotoURL"
+                                                    data-name="@cards.FirstName @cards.LastName"
+                                                    data-tagline="@cards.Tagline"
+                                                    data-city="@cards.City" data-state="@cards.State"
+                                                    data-age="@cards.Age" data-height="@cards.Height"
+                                                    data-weight="@cards.Weight" data-occupation="@cards.Occupation"
+                                                    data-interests="@cards.Interests" data-favourite-cuisine="@cards.FavouriteCuisine"
+                                                    data-favourite-quote="@cards.FavouriteQuote" data-goals="@cards.Goals"
+                                                    data-commitment-type="@cards.CommitmentType" data-biography="@cards.Biography"
+                                                    data-favourite-movie-genre="@cards.FavouriteMovieGenre"
+                                                    data-favourite-book-genre="@cards.FavouriteBookGenre"
+                                                    data-favourite-movie="@cards.FavouriteMovie"
+                                                    data-favourite-book="@cards.FavouriteBook"
+                                                    data-favourite-restaurant="@cards.FavouriteRestaurant"
+                                                    data-dislikes="@cards.Dislikes"
+                                                    data-additional-interests="@cards.AdditionalInterests"
+                                                    data-dealbreaker="@cards.Dealbreaker"
+                                                    data-image1="@cards.Image1" data-image2="@cards.Image2"
+                                                    data-image3="@cards.Image3" data-image4="@cards.Image4"
+                                                    data-image5="@cards.Image5">
+                                                Show Profile
+                                            </button>
+                                            <form asp-controller="Dashboard" asp-action="AddLikes" method="post">
+                                                <input type="hidden" name="LikeeID" value="@cards.PrivateId" />
+                                                <button type="submit" class="btn btn-primary like-button">Like</button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     }
-                
+                </div>
+                <div class="container-glass container-b">
                 <h2 class="likes-title">People that you liked</h2>
-                <div class="container container-b">
                     @foreach (var cards in Model.PeopleYouLiked)
                     {
-                        <div class="card">
-                            <img src=@cards.ProfilePhotoURL alt="Profile Image">
-                            <div class="card-body">
-                                <h5 class="card-title">@cards.FirstName, @cards.LastName</h5>
-                                <p class="card-text">@cards.Tagline</p>
-                                <p class="card-text">@cards.City,@cards.State</p>
-                                <button type="button" class="btn btn-secondary btn-show-profile"
-                                        data-bs-toggle="modal" data-bs-target="#detailModal"
-                                        data-profile-photo-url="@cards.ProfilePhotoURL"
-                                        data-name="@cards.FirstName @cards.LastName"
-                                        data-tagline="@cards.Tagline"
-                                        data-city="@cards.City" data-state="@cards.State"
-                                        data-age="@cards.Age" data-height="@cards.Height"
-                                        data-weight="@cards.Weight" data-occupation="@cards.Occupation"
-                                        data-interests="@cards.Interests" data-favourite-cuisine="@cards.FavouriteCuisine"
-                                        data-favourite-quote="@cards.FavouriteQuote" data-goals="@cards.Goals"
-                                        data-commitment-type="@cards.CommitmentType" data-biography="@cards.Biography"
-                                        data-favourite-movie-genre="@cards.FavouriteMovieGenre"
-                                        data-favourite-book-genre="@cards.FavouriteBookGenre"
-                                        data-favourite-movie="@cards.FavouriteMovie"
-                                        data-favourite-book="@cards.FavouriteBook"
-                                        data-favourite-restaurant="@cards.FavouriteRestaurant"
-                                        data-dislikes="@cards.Dislikes"
-                                        data-additional-interests="@cards.AdditionalInterests"
-                                        data-dealbreaker="@cards.Dealbreaker"
-                                        data-image1="@cards.Image1" data-image2="@cards.Image2"
-                                        data-image3="@cards.Image3" data-image4="@cards.Image4"
-                                        data-image5="@cards.Image5">
-                                    Show Profile
-                                </button>
-                                <form asp-controller="Likes" asp-action="DeleteLike" method="post">
-                                    <input type="hidden" name="DislikeeID" value="@cards.PrivateId" />
-                                    <button type="submit" class="btn btn-primary like-button">UnLike</button>
-                                </form>
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <div class="like-card p-3">
+                                    <div class="row align-items-center">
+                                        <div class="col-2">
+                                            <img src="@cards.ProfilePhotoURL" class="like-card-img rounded-circle" alt="Profile Image">
+                                        </div>
+                                        <div class="col-2">
+                                            <h5>@cards.FirstName, @cards.LastName</h5>
+                                            <p>@cards.Age years</p>
+                                            <p>@cards.City, @cards.State</p>
+                                        </div>
+                                        <div class="col-3">
+                                            <p>@cards.Tagline</p>
+                                            <p>Occupation: @cards.Occupation</p>
+                                            <p>Interests: @cards.Interests, @cards.AdditionalInterests</p>
+                                        </div>
+                                        <div class="col-3">
+                                            <p>Dislikes: @cards.Dislikes</p>
+                                            <p>Dealbreaker: @cards.Dealbreaker</p>
+                                        </div>
+                                        <div class="col-2 d-flex flex-column align-items-center">
+                                            <button type="button" class="btn btn-secondary btn-show-profile"
+                                                    data-bs-toggle="modal" data-bs-target="#detailModal"
+                                                    data-profile-photo-url="@cards.ProfilePhotoURL"
+                                                    data-name="@cards.FirstName @cards.LastName"
+                                                    data-tagline="@cards.Tagline"
+                                                    data-city="@cards.City" data-state="@cards.State"
+                                                    data-age="@cards.Age" data-height="@cards.Height"
+                                                    data-weight="@cards.Weight" data-occupation="@cards.Occupation"
+                                                    data-interests="@cards.Interests" data-favourite-cuisine="@cards.FavouriteCuisine"
+                                                    data-favourite-quote="@cards.FavouriteQuote" data-goals="@cards.Goals"
+                                                    data-commitment-type="@cards.CommitmentType" data-biography="@cards.Biography"
+                                                    data-favourite-movie-genre="@cards.FavouriteMovieGenre"
+                                                    data-favourite-book-genre="@cards.FavouriteBookGenre"
+                                                    data-favourite-movie="@cards.FavouriteMovie"
+                                                    data-favourite-book="@cards.FavouriteBook"
+                                                    data-favourite-restaurant="@cards.FavouriteRestaurant"
+                                                    data-dislikes="@cards.Dislikes"
+                                                    data-additional-interests="@cards.AdditionalInterests"
+                                                    data-dealbreaker="@cards.Dealbreaker"
+                                                    data-image1="@cards.Image1" data-image2="@cards.Image2"
+                                                    data-image3="@cards.Image3" data-image4="@cards.Image4"
+                                                    data-image5="@cards.Image5">
+                                                Show Profile
+                                            </button>
+                                            <form asp-controller="Likes" asp-action="DeleteLike" method="post">
+                                                <input type="hidden" name="DislikeeID" value="@cards.PrivateId" />
+                                                <button type="submit" class="btn btn-primary like-button">UnLike</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     }
@@ -159,7 +186,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal fade" id="detailModal" tabinddex="-1" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
