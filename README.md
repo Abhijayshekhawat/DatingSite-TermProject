@@ -1,28 +1,34 @@
 CIS 3342 Team Project – Core MVC Web Application & Web APIs
 Overview
-This project is designed to showcase your understanding of the techniques and concepts learned in the CIS 3342 course. You will work in teams of two to develop an ASP.NET Core MVC Web application, implementing key features such as login and registration systems, Web APIs, dynamic data displays, and more.
+This project was developed as part of the CIS 3342 course, where my teammate and I applied all the techniques and concepts we learned throughout the semester. Our goal was to build a fully functional ASP.NET Core MVC Web application, incorporating features such as user login and registration, Web APIs, dynamic data displays, and secure data handling. We also focused on utilizing modern web development practices, including Razor Views, Web API integration, and the use of third-party APIs.
 
-Project Features
-ASP.NET Core MVC Requirement
-The project involves converting an existing ASP.NET Web Application (from Project 3) to an ASP.NET Core MVC application using Razor Views.
+Project Contributions
+ASP.NET Core MVC Application
+We began by converting the ASP.NET Web Application we developed in Project 3 into an ASP.NET Core MVC application. My teammate and I worked together to replace the ASPX pages with Razor Views to give the application a more modern and efficient front-end. I focused on the back-end integration with APIs, while my teammate handled much of the front-end Razor View design, ensuring consistency and ease of navigation.
 
-Login & Registration
-Login: The login page allows users to log in or register a new account. Cookie support is implemented for faster logins. Users can also recover their username or password.
-Registration: The registration process creates a new user account with a unique username and email. The system includes security questions for account recovery and two-step verification via email.
-Web API Integration
-Custom Web APIs: You will build and integrate at least 2 RESTful Web APIs that perform HTTP GET, POST, PUT, and DELETE operations. The APIs will use custom types (JSON/XML) and be consumed by the server-side code.
-Third-Party Web API: The project must also integrate a third-party Web API, approved by the instructor.
-Other Requirements
-Stored Procedures: All database operations are performed using stored procedures to prevent SQL injection.
-Multiple Images: Users can upload multiple profile images, which are displayed in a photo gallery on the profile detail page.
-Dynamic Data Displays: Razor Views must feature dynamic, professional-looking content presentation, especially for user profiles and galleries.
-Security: Sensitive data such as passwords are encrypted using methods beyond those demonstrated in class.
-Serialization: The project must creatively use serialization and deserialization for data persistence beyond Web API serialization.
-Learning Opportunity: Each team member will research and implement a new feature not covered in class, such as dynamic charts or SOAP ASMX services.
-CSS Styling: The application must be styled using CSS and include images to create an attractive and professional design.
-Navigation System
-Provide a user-friendly and professional navigation system on all pages.
+Login & Registration System
+We implemented a login and registration system that supports cookie-based login for faster access. This included adding features like retrieving a forgotten username or password and a two-step email verification process for new registrations. I was primarily responsible for setting up the security questions and handling two-step verification through the Web API, while my teammate handled the design and logic for storing and retrieving cookies.
 
-Design & Development Guidelines
-Component-based design: Use reusable components, classes, and functions instead of embedding logic in GUI/controller classes.
-Equal Contribution: Both team members must contribute equally to design, database, APIs, and other project components.
+Web API Development
+Our project required the development of at least two Web APIs. We worked together to design RESTful APIs that perform CRUD (Create, Read, Update, Delete) operations. These APIs use custom user-defined types for data exchange in JSON format. I built the server-side logic for making Web API requests from the Razor Views, while my teammate focused on ensuring the APIs were secure and efficient. Together, we also integrated a third-party Web API to meet the project’s requirement, and I ensured that the Web APIs were properly utilized in our application without relying on client-side code.
+
+Multiple Profile Images & Dynamic Data Displays
+One of the key features of our application is the ability to upload and display multiple profile images. My teammate implemented the image upload and gallery features for user profiles, while I worked on the dynamic data display and content layout. We ensured that the photo gallery was visually appealing and easy to navigate when viewing detailed profiles.
+
+Stored Procedures & Security
+We used stored procedures for all database operations to ensure security and prevent SQL injection attacks. I handled most of the database interactions and encryption of sensitive data, such as passwords, using more advanced encryption techniques than those demonstrated in class. My teammate worked on optimizing the stored procedures for performance and security.
+
+Serialization & Learning Opportunity
+As part of the project requirements, we implemented serialization and deserialization for data persistence. I explored ways to apply serialization beyond the built-in functionality of Web APIs, using it creatively to store and retrieve data in our application. Additionally, each of us researched a new feature to implement. I explored dynamic chart generation, while my teammate learned and implemented a SOAP ASMX Web Service, both of which enhanced the overall functionality of the project.
+
+CSS Styling & Navigation
+We made sure our web application was visually appealing by using CSS and Bootstrap for styling. I contributed to styling the layout, while my teammate worked on improving the navigation system to ensure it was intuitive and user-friendly. Each page includes clear instructional labels and error messages to guide users through the site.
+
+Equal Contribution
+Throughout the project, my teammate and I made sure to split the work equally. We both contributed to the design, database, Web APIs, and styling to ensure the project was a true team effort. I focused more on back-end API integration, security, and serialization, while my teammate excelled at front-end design, image handling, and implementing the SOAP web service.
+
+Submission
+We have published our web application on the cis-iis2 Web server under the TermProject folder. The project is also submitted as a zip file on Canvas, with a detailed submission comment explaining how we implemented each project requirement and providing URLs for the relevant pages.
+https://cis-iis2.temple.edu/Spring2024/CIS3342_tuh18229/index.html
+
+Feel free to explore our work, and we welcome any feedback on the design or implementation
